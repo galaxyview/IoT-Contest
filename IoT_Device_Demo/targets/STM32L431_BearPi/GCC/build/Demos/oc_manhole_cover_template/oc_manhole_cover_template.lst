@@ -1,0 +1,1724 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"oc_manhole_cover_template.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.comm	E53_SC2_Data,20,4
+  18              		.comm	E53_SC2_Data3,20,4
+  19              		.comm	Manhole_Cover,13,4
+  20              		.section	.bss.s_rcv_buffer,"aw",%nobits
+  21              		.align	2
+  24              	s_rcv_buffer:
+  25 0000 00000000 		.space	512
+  25      00000000 
+  25      00000000 
+  25      00000000 
+  25      00000000 
+  26              		.section	.bss.s_rcv_datalen,"aw",%nobits
+  27              		.align	2
+  30              	s_rcv_datalen:
+  31 0000 00000000 		.space	4
+  32              		.section	.bss.s_rcv_sync,"aw",%nobits
+  33              		.align	2
+  36              	s_rcv_sync:
+  37 0000 00000000 		.space	4
+  38              		.section	.rodata
+  39              		.align	2
+  40              	.LC0:
+  41 0000 4F432072 		.ascii	"OC respond message received! \012\015\000"
+  41      6573706F 
+  41      6E64206D 
+  41      65737361 
+  41      67652072 
+  42              		.section	.text.app_msg_deal,"ax",%progbits
+  43              		.align	1
+  44              		.arch armv7e-m
+  45              		.syntax unified
+  46              		.thumb
+  47              		.thumb_func
+  48              		.fpu fpv4-sp-d16
+  50              	app_msg_deal:
+  51              	.LFB287:
+  52              		.file 1 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template/oc_manhol
+   1:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** /*----------------------------------------------------------------------------
+   2:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * All rights reserved.
+   4:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * Redistribution and use in source and binary forms, with or without modification,
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 2
+
+
+   5:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * are permitted provided that the following conditions are met:
+   6:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * conditions and the following disclaimer.
+   8:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * provided with the distribution.
+  11:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * permission.
+  14:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  *---------------------------------------------------------------------------*/
+  26:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** /*----------------------------------------------------------------------------
+  27:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * Notice of Export Control Law
+  28:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * ===============================================
+  29:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  * applicable export control laws and regulations.
+  33:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  *---------------------------------------------------------------------------*/
+  34:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** /**
+  35:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  *  2019-11-27 10:12  zhangzhongfeng  The first version  
+  37:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  *
+  38:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****  */
+  39:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  40:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <stdint.h>
+  41:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <stddef.h>
+  42:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <string.h>
+  43:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <math.h>
+  44:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  45:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  46:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <osal.h>
+  47:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <oc_lwm2m_al.h>
+  48:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****   
+  49:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <link_endian.h>
+  50:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  51:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include "E53_SC2.h"
+  52:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include "lcd.h"
+  53:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  54:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <gpio.h>
+  55:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <stm32l4xx_it.h>
+  56:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <stm32l4xx.h>
+  57:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <SEGGER_RTT.h>
+  58:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <SEGGER_RTT_Conf.h>
+  59:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #include <inv_mpu.h>
+  60:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  61:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #define cn_endpoint_id        "Vz_SC2_20193021103711"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 3
+
+
+  62:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #define cn_app_server         "119.3.250.80"
+  63:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #define cn_app_port           "5683"
+  64:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  65:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef unsigned char int8u;
+  66:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef char int8s;
+  67:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef unsigned short int16u;
+  68:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef short int16s;
+  69:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef unsigned char int24u;
+  70:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef char int24s;
+  71:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef int int32s;
+  72:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef char string;
+  73:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef char array;
+  74:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef char varstring;
+  75:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef char variant;
+  76:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  77:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #define cn_app_Manhole_Cover 0x0
+  78:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  79:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  80:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #pragma pack(1)
+  81:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** typedef struct
+  82:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** {
+  83:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int8u messageId;
+  84:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     /*
+  85:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int8_t Temperature;
+  86:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t Accel_x;
+  87:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t Accel_y;
+  88:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t Accel_z;
+  89:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     string Status[5];
+  90:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t Gyro_x;
+  91:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t Gyro_y;
+  92:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t Gyro_z;
+  93:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     */
+  94:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t pitch,roll,yaw;
+  95:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int16_t pitch3,roll3,yaw3;
+  96:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** } tag_app_Manhole_Cover;
+  97:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #pragma pack()
+  98:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+  99:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 100:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** E53_SC2_Data_TypeDef E53_SC2_Data;
+ 101:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** E53_SC2_Data_TypeDef E53_SC2_Data3;
+ 102:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** tag_app_Manhole_Cover Manhole_Cover;
+ 103:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 104:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 105:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** //if your command is very fast,please use a queue here--TODO
+ 106:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** #define cn_app_rcv_buf_len 128
+ 107:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** static int             s_rcv_buffer[cn_app_rcv_buf_len];
+ 108:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** static int             s_rcv_datalen;
+ 109:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** static osal_semp_t     s_rcv_sync;
+ 110:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 111:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 112:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** //use this function to push all the message to the buffer
+ 113:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** static int app_msg_deal(void *usr_data, en_oc_lwm2m_msg_t type, void *data, int len)
+ 114:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** {
+  53              		.loc 1 114 1
+  54              		.cfi_startproc
+  55              		@ args = 0, pretend = 0, frame = 24
+  56              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 4
+
+
+  57 0000 80B5     		push	{r7, lr}
+  58              	.LCFI0:
+  59              		.cfi_def_cfa_offset 8
+  60              		.cfi_offset 7, -8
+  61              		.cfi_offset 14, -4
+  62 0002 86B0     		sub	sp, sp, #24
+  63              	.LCFI1:
+  64              		.cfi_def_cfa_offset 32
+  65 0004 00AF     		add	r7, sp, #0
+  66              	.LCFI2:
+  67              		.cfi_def_cfa_register 7
+  68 0006 F860     		str	r0, [r7, #12]
+  69 0008 7A60     		str	r2, [r7, #4]
+  70 000a 3B60     		str	r3, [r7]
+  71 000c 0B46     		mov	r3, r1
+  72 000e FB72     		strb	r3, [r7, #11]
+ 115:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     unsigned char *msg;
+ 116:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     msg = data;
+  73              		.loc 1 116 9
+  74 0010 7B68     		ldr	r3, [r7, #4]
+  75 0012 3B61     		str	r3, [r7, #16]
+ 117:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int ret = -1;
+  76              		.loc 1 117 9
+  77 0014 4FF0FF33 		mov	r3, #-1
+  78 0018 7B61     		str	r3, [r7, #20]
+ 118:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 119:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     if(len <= cn_app_rcv_buf_len)
+  79              		.loc 1 119 7
+  80 001a 3B68     		ldr	r3, [r7]
+  81 001c 802B     		cmp	r3, #128
+  82 001e 1DDC     		bgt	.L2
+ 120:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     {
+ 121:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     	if (msg[0] == 0xaa && msg[1] == 0xaa)
+  83              		.loc 1 121 13
+  84 0020 3B69     		ldr	r3, [r7, #16]
+  85 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  86              		.loc 1 121 9
+  87 0024 AA2B     		cmp	r3, #170
+  88 0026 09D1     		bne	.L3
+  89              		.loc 1 121 31 discriminator 1
+  90 0028 3B69     		ldr	r3, [r7, #16]
+  91 002a 0133     		adds	r3, r3, #1
+  92 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  93              		.loc 1 121 25 discriminator 1
+  94 002e AA2B     		cmp	r3, #170
+  95 0030 04D1     		bne	.L3
+ 122:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     	{
+ 123:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     		printf("OC respond message received! \n\r");
+  96              		.loc 1 123 7
+  97 0032 0D48     		ldr	r0, .L5
+  98 0034 FFF7FEFF 		bl	printf
+ 124:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     		return ret;
+  99              		.loc 1 124 14
+ 100 0038 7B69     		ldr	r3, [r7, #20]
+ 101 003a 10E0     		b	.L4
+ 102              	.L3:
+ 125:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     	}
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 5
+
+
+ 126:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         memcpy(s_rcv_buffer,msg,len);
+ 103              		.loc 1 126 9
+ 104 003c 3B68     		ldr	r3, [r7]
+ 105 003e 1A46     		mov	r2, r3
+ 106 0040 3969     		ldr	r1, [r7, #16]
+ 107 0042 0A48     		ldr	r0, .L5+4
+ 108 0044 FFF7FEFF 		bl	memcpy
+ 127:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         s_rcv_datalen = len;
+ 109              		.loc 1 127 23
+ 110 0048 094A     		ldr	r2, .L5+8
+ 111 004a 3B68     		ldr	r3, [r7]
+ 112 004c 1360     		str	r3, [r2]
+ 128:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 129:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         osal_semp_post(s_rcv_sync);
+ 113              		.loc 1 129 9
+ 114 004e 094B     		ldr	r3, .L5+12
+ 115 0050 1B68     		ldr	r3, [r3]
+ 116 0052 1846     		mov	r0, r3
+ 117 0054 FFF7FEFF 		bl	osal_semp_post
+ 130:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         ret = 0;
+ 118              		.loc 1 130 13
+ 119 0058 0023     		movs	r3, #0
+ 120 005a 7B61     		str	r3, [r7, #20]
+ 121              	.L2:
+ 131:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 132:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     }
+ 133:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     return ret;
+ 122              		.loc 1 133 12
+ 123 005c 7B69     		ldr	r3, [r7, #20]
+ 124              	.L4:
+ 134:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** }
+ 125              		.loc 1 134 1
+ 126 005e 1846     		mov	r0, r3
+ 127 0060 1837     		adds	r7, r7, #24
+ 128              	.LCFI3:
+ 129              		.cfi_def_cfa_offset 8
+ 130 0062 BD46     		mov	sp, r7
+ 131              	.LCFI4:
+ 132              		.cfi_def_cfa_register 13
+ 133              		@ sp needed
+ 134 0064 80BD     		pop	{r7, pc}
+ 135              	.L6:
+ 136 0066 00BF     		.align	2
+ 137              	.L5:
+ 138 0068 00000000 		.word	.LC0
+ 139 006c 00000000 		.word	s_rcv_buffer
+ 140 0070 00000000 		.word	s_rcv_datalen
+ 141 0074 00000000 		.word	s_rcv_sync
+ 142              		.cfi_endproc
+ 143              	.LFE287:
+ 145              		.section	.rodata
+ 146              		.align	2
+ 147              	.LC1:
+ 148 0020 3131392E 		.ascii	"119.3.250.80\000"
+ 148      332E3235 
+ 148      302E3830 
+ 148      00
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 6
+
+
+ 149 002d 000000   		.align	2
+ 150              	.LC2:
+ 151 0030 35363833 		.ascii	"5683\000"
+ 151      00
+ 152 0035 000000   		.align	2
+ 153              	.LC3:
+ 154 0038 567A5F53 		.ascii	"Vz_SC2_20193021103711\000"
+ 154      43325F32 
+ 154      30313933 
+ 154      30323131 
+ 154      30333731 
+ 155              		.section	.text.app_report_task_entry,"ax",%progbits
+ 156              		.align	1
+ 157              		.syntax unified
+ 158              		.thumb
+ 159              		.thumb_func
+ 160              		.fpu fpv4-sp-d16
+ 162              	app_report_task_entry:
+ 163              	.LFB288:
+ 135:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 136:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** static int app_report_task_entry()
+ 137:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** {
+ 164              		.loc 1 137 1
+ 165              		.cfi_startproc
+ 166              		@ args = 0, pretend = 0, frame = 64
+ 167              		@ frame_needed = 1, uses_anonymous_args = 0
+ 168 0000 80B5     		push	{r7, lr}
+ 169              	.LCFI5:
+ 170              		.cfi_def_cfa_offset 8
+ 171              		.cfi_offset 7, -8
+ 172              		.cfi_offset 14, -4
+ 173 0002 90B0     		sub	sp, sp, #64
+ 174              	.LCFI6:
+ 175              		.cfi_def_cfa_offset 72
+ 176 0004 00AF     		add	r7, sp, #0
+ 177              	.LCFI7:
+ 178              		.cfi_def_cfa_register 7
+ 138:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int ret = -1;
+ 179              		.loc 1 138 9
+ 180 0006 4FF0FF33 		mov	r3, #-1
+ 181 000a FB63     		str	r3, [r7, #60]
+ 139:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 140:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     oc_config_param_t      oc_param;
+ 141:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     
+ 142:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     memset(&oc_param,0,sizeof(oc_param));
+ 182              		.loc 1 142 5
+ 183 000c 3B46     		mov	r3, r7
+ 184 000e 3C22     		movs	r2, #60
+ 185 0010 0021     		movs	r1, #0
+ 186 0012 1846     		mov	r0, r3
+ 187 0014 FFF7FEFF 		bl	memset
+ 143:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 144:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     oc_param.app_server.address = cn_app_server;
+ 188              		.loc 1 144 33
+ 189 0018 3B4B     		ldr	r3, .L11
+ 190 001a 3B62     		str	r3, [r7, #32]
+ 145:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     oc_param.app_server.port = cn_app_port;
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 7
+
+
+ 191              		.loc 1 145 30
+ 192 001c 3B4B     		ldr	r3, .L11+4
+ 193 001e 7B62     		str	r3, [r7, #36]
+ 146:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     oc_param.app_server.ep_id = cn_endpoint_id;
+ 194              		.loc 1 146 31
+ 195 0020 3B4B     		ldr	r3, .L11+8
+ 196 0022 FB61     		str	r3, [r7, #28]
+ 147:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     oc_param.boot_mode = en_oc_boot_strap_mode_factory;
+ 197              		.loc 1 147 24
+ 198 0024 0023     		movs	r3, #0
+ 199 0026 3B70     		strb	r3, [r7]
+ 148:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     oc_param.rcv_func = app_msg_deal;
+ 200              		.loc 1 148 23
+ 201 0028 3A4B     		ldr	r3, .L11+12
+ 202 002a 7B63     		str	r3, [r7, #52]
+ 149:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 150:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     ret = oc_lwm2m_config( &oc_param);
+ 203              		.loc 1 150 11
+ 204 002c 3B46     		mov	r3, r7
+ 205 002e 1846     		mov	r0, r3
+ 206 0030 FFF7FEFF 		bl	oc_lwm2m_config
+ 207 0034 F863     		str	r0, [r7, #60]
+ 151:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     if (0 != ret)
+ 208              		.loc 1 151 8
+ 209 0036 FB6B     		ldr	r3, [r7, #60]
+ 210 0038 002B     		cmp	r3, #0
+ 211 003a 01D0     		beq	.L8
+ 152:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     {
+ 153:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     	return ret;
+ 212              		.loc 1 153 13
+ 213 003c FB6B     		ldr	r3, [r7, #60]
+ 214 003e 5FE0     		b	.L10
+ 215              	.L8:
+ 154:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     }
+ 155:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     //install a dealer for the led message received
+ 156:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     while(1) //--TODO ,you could add your own code here
+ 157:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     {
+ 158:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         /*
+ 159:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.messageId = cn_app_Manhole_Cover;
+ 160:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.Temperature = (int)E53_SC2_Data.Temperature;
+ 161:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.Accel_x = htons(E53_SC2_Data.Accel[0] & 0x0000FFFF);
+ 162:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.Accel_y = htons(E53_SC2_Data.Accel[1] & 0x0000FFFF);
+ 163:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.Accel_z = htons(E53_SC2_Data.Accel[2] & 0x0000FFFF);
+ 164:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.Gyro_x = htons(E53_SC2_Data.Gyro[0] & 0x0000FFFF);
+ 165:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.Gyro_y = htons(E53_SC2_Data.Gyro[1] & 0x0000FFFF);
+ 166:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.Gyro_z = htons(E53_SC2_Data.Gyro[2] & 0x0000FFFF);
+ 167:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.roll = E53_SC2_Data.roll;
+ 168:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.pitch = E53_SC2_Data.pitch;
+ 169:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.yaw = 90;
+ 170:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         */
+ 171:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.messageId = cn_app_Manhole_Cover;
+ 216              		.loc 1 171 33 discriminator 1
+ 217 0040 354B     		ldr	r3, .L11+16
+ 218 0042 0022     		movs	r2, #0
+ 219 0044 1A70     		strb	r2, [r3]
+ 172:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.roll = htons(E53_SC2_Data.roll & 0x0000FFFF);
+ 220              		.loc 1 172 30 discriminator 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 8
+
+
+ 221 0046 354B     		ldr	r3, .L11+20
+ 222 0048 B3F91030 		ldrsh	r3, [r3, #16]
+ 223 004c 1B12     		asrs	r3, r3, #8
+ 224 004e 1BB2     		sxth	r3, r3
+ 225 0050 DBB2     		uxtb	r3, r3
+ 226 0052 1AB2     		sxth	r2, r3
+ 227 0054 314B     		ldr	r3, .L11+20
+ 228 0056 B3F91030 		ldrsh	r3, [r3, #16]
+ 229 005a 1B02     		lsls	r3, r3, #8
+ 230 005c 1BB2     		sxth	r3, r3
+ 231 005e 1343     		orrs	r3, r3, r2
+ 232 0060 1AB2     		sxth	r2, r3
+ 233              		.loc 1 172 28 discriminator 1
+ 234 0062 2D4B     		ldr	r3, .L11+16
+ 235 0064 A3F80320 		strh	r2, [r3, #3]	@ unaligned
+ 173:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.pitch = htons(E53_SC2_Data.pitch & 0x0000FFFF);
+ 236              		.loc 1 173 31 discriminator 1
+ 237 0068 2C4B     		ldr	r3, .L11+20
+ 238 006a B3F90E30 		ldrsh	r3, [r3, #14]
+ 239 006e 1B12     		asrs	r3, r3, #8
+ 240 0070 1BB2     		sxth	r3, r3
+ 241 0072 DBB2     		uxtb	r3, r3
+ 242 0074 1AB2     		sxth	r2, r3
+ 243 0076 294B     		ldr	r3, .L11+20
+ 244 0078 B3F90E30 		ldrsh	r3, [r3, #14]
+ 245 007c 1B02     		lsls	r3, r3, #8
+ 246 007e 1BB2     		sxth	r3, r3
+ 247 0080 1343     		orrs	r3, r3, r2
+ 248 0082 1AB2     		sxth	r2, r3
+ 249              		.loc 1 173 29 discriminator 1
+ 250 0084 244B     		ldr	r3, .L11+16
+ 251 0086 A3F80120 		strh	r2, [r3, #1]	@ unaligned
+ 174:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.yaw = htons(90 & 0x0000FFFF);
+ 252              		.loc 1 174 27 discriminator 1
+ 253 008a 234B     		ldr	r3, .L11+16
+ 254 008c 0022     		movs	r2, #0
+ 255 008e 5A71     		strb	r2, [r3, #5]
+ 256 0090 0022     		movs	r2, #0
+ 257 0092 42F05A02 		orr	r2, r2, #90
+ 258 0096 9A71     		strb	r2, [r3, #6]
+ 175:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.roll3 = htons(E53_SC2_Data3.roll & 0x0000FFFF);
+ 259              		.loc 1 175 31 discriminator 1
+ 260 0098 214B     		ldr	r3, .L11+24
+ 261 009a B3F91030 		ldrsh	r3, [r3, #16]
+ 262 009e 1B12     		asrs	r3, r3, #8
+ 263 00a0 1BB2     		sxth	r3, r3
+ 264 00a2 DBB2     		uxtb	r3, r3
+ 265 00a4 1AB2     		sxth	r2, r3
+ 266 00a6 1E4B     		ldr	r3, .L11+24
+ 267 00a8 B3F91030 		ldrsh	r3, [r3, #16]
+ 268 00ac 1B02     		lsls	r3, r3, #8
+ 269 00ae 1BB2     		sxth	r3, r3
+ 270 00b0 1343     		orrs	r3, r3, r2
+ 271 00b2 1AB2     		sxth	r2, r3
+ 272              		.loc 1 175 29 discriminator 1
+ 273 00b4 184B     		ldr	r3, .L11+16
+ 274 00b6 A3F80920 		strh	r2, [r3, #9]	@ unaligned
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 9
+
+
+ 176:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.pitch3 = htons(E53_SC2_Data3.pitch & 0x0000FFFF);
+ 275              		.loc 1 176 32 discriminator 1
+ 276 00ba 194B     		ldr	r3, .L11+24
+ 277 00bc B3F90E30 		ldrsh	r3, [r3, #14]
+ 278 00c0 1B12     		asrs	r3, r3, #8
+ 279 00c2 1BB2     		sxth	r3, r3
+ 280 00c4 DBB2     		uxtb	r3, r3
+ 281 00c6 1AB2     		sxth	r2, r3
+ 282 00c8 154B     		ldr	r3, .L11+24
+ 283 00ca B3F90E30 		ldrsh	r3, [r3, #14]
+ 284 00ce 1B02     		lsls	r3, r3, #8
+ 285 00d0 1BB2     		sxth	r3, r3
+ 286 00d2 1343     		orrs	r3, r3, r2
+ 287 00d4 1AB2     		sxth	r2, r3
+ 288              		.loc 1 176 30 discriminator 1
+ 289 00d6 104B     		ldr	r3, .L11+16
+ 290 00d8 A3F80720 		strh	r2, [r3, #7]	@ unaligned
+ 177:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.yaw3 = htons(90 & 0x0000FFFF);
+ 291              		.loc 1 177 28 discriminator 1
+ 292 00dc 0E4B     		ldr	r3, .L11+16
+ 293 00de 0022     		movs	r2, #0
+ 294 00e0 DA72     		strb	r2, [r3, #11]
+ 295 00e2 0022     		movs	r2, #0
+ 296 00e4 42F05A02 		orr	r2, r2, #90
+ 297 00e8 1A73     		strb	r2, [r3, #12]
+ 178:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         oc_lwm2m_report((char *)&Manhole_Cover, sizeof(Manhole_Cover), 1000);
+ 298              		.loc 1 178 9 discriminator 1
+ 299 00ea 4FF47A72 		mov	r2, #1000
+ 300 00ee 0D21     		movs	r1, #13
+ 301 00f0 0948     		ldr	r0, .L11+16
+ 302 00f2 FFF7FEFF 		bl	oc_lwm2m_report
+ 179:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         osal_task_sleep(2*1000);
+ 303              		.loc 1 179 9 discriminator 1
+ 304 00f6 4FF4FA60 		mov	r0, #2000
+ 305 00fa FFF7FEFF 		bl	osal_task_sleep
+ 171:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         Manhole_Cover.roll = htons(E53_SC2_Data.roll & 0x0000FFFF);
+ 306              		.loc 1 171 33 discriminator 1
+ 307 00fe 9FE7     		b	.L8
+ 308              	.L10:
+ 180:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     }
+ 181:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 182:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     return ret;
+ 183:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** }
+ 309              		.loc 1 183 1 discriminator 1
+ 310 0100 1846     		mov	r0, r3
+ 311 0102 4037     		adds	r7, r7, #64
+ 312              	.LCFI8:
+ 313              		.cfi_def_cfa_offset 8
+ 314 0104 BD46     		mov	sp, r7
+ 315              	.LCFI9:
+ 316              		.cfi_def_cfa_register 13
+ 317              		@ sp needed
+ 318 0106 80BD     		pop	{r7, pc}
+ 319              	.L12:
+ 320              		.align	2
+ 321              	.L11:
+ 322 0108 20000000 		.word	.LC1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 10
+
+
+ 323 010c 30000000 		.word	.LC2
+ 324 0110 38000000 		.word	.LC3
+ 325 0114 00000000 		.word	app_msg_deal
+ 326 0118 00000000 		.word	Manhole_Cover
+ 327 011c 00000000 		.word	E53_SC2_Data
+ 328 0120 00000000 		.word	E53_SC2_Data3
+ 329              		.cfi_endproc
+ 330              	.LFE288:
+ 332              		.global	X
+ 333              		.section	.bss.X,"aw",%nobits
+ 334              		.align	2
+ 337              	X:
+ 338 0000 00000000 		.space	4
+ 339              		.global	Y
+ 340              		.section	.bss.Y,"aw",%nobits
+ 341              		.align	2
+ 344              	Y:
+ 345 0000 00000000 		.space	4
+ 346              		.global	Z
+ 347              		.section	.bss.Z,"aw",%nobits
+ 348              		.align	2
+ 351              	Z:
+ 352 0000 00000000 		.space	4
+ 353              		.global	__aeabi_i2d
+ 354              		.global	__aeabi_dmul
+ 355              		.global	__aeabi_ddiv
+ 356              		.section	.rodata
+ 357 004e 0000     		.align	2
+ 358              	.LC4:
+ 359 0050 25662000 		.ascii	"%f \000"
+ 360              		.align	2
+ 361              	.LC5:
+ 362 0054 0D00     		.ascii	"\015\000"
+ 363 0056 0000     		.align	2
+ 364              	.LC6:
+ 365 0058 726F6C6C 		.ascii	"roll:\000"
+ 365      3A00
+ 366 005e 0000     		.align	2
+ 367              	.LC7:
+ 368 0060 70697463 		.ascii	"pitch:\000"
+ 368      683A00
+ 369 0067 00       		.align	2
+ 370              	.LC8:
+ 371 0068 726F6C6C 		.ascii	"roll3:\000"
+ 371      333A00
+ 372 006f 00       		.align	2
+ 373              	.LC9:
+ 374 0070 70697463 		.ascii	"pitch3:\000"
+ 374      68333A00 
+ 375              		.section	.text.app_collect_task_entry,"ax",%progbits
+ 376              		.align	1
+ 377              		.syntax unified
+ 378              		.thumb
+ 379              		.thumb_func
+ 380              		.fpu fpv4-sp-d16
+ 382              	app_collect_task_entry:
+ 383              	.LFB289:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 11
+
+
+ 184:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 185:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** int X = 0,Y = 0,Z = 0;
+ 186:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 187:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 188:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** static int app_collect_task_entry()
+ 189:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** {
+ 384              		.loc 1 189 1
+ 385              		.cfi_startproc
+ 386              		@ args = 0, pretend = 0, frame = 8
+ 387              		@ frame_needed = 1, uses_anonymous_args = 0
+ 388 0000 80B5     		push	{r7, lr}
+ 389              	.LCFI10:
+ 390              		.cfi_def_cfa_offset 8
+ 391              		.cfi_offset 7, -8
+ 392              		.cfi_offset 14, -4
+ 393 0002 84B0     		sub	sp, sp, #16
+ 394              	.LCFI11:
+ 395              		.cfi_def_cfa_offset 24
+ 396 0004 02AF     		add	r7, sp, #8
+ 397              	.LCFI12:
+ 398              		.cfi_def_cfa 7, 16
+ 190:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     int i = 0;
+ 399              		.loc 1 190 9
+ 400 0006 0023     		movs	r3, #0
+ 401 0008 7B60     		str	r3, [r7, #4]
+ 191:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     Init_E53_SC2();
+ 402              		.loc 1 191 5
+ 403 000a FFF7FEFF 		bl	Init_E53_SC2
+ 404              	.L18:
+ 192:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     while (1)
+ 193:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     {
+ 194:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         E53_SC2_Read_Data();
+ 405              		.loc 1 194 9
+ 406 000e FFF7FEFF 		bl	E53_SC2_Read_Data
+ 195:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         //printf("%d ",i);
+ 196:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         //printf("%d ",(int)E53_SC2_Data.roll);
+ 197:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         //printf("%d ",(int)E53_SC2_Data.pitch);
+ 198:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%f ",((2*9.8*(int)E53_SC2_Data.Accel[0])/32768));
+ 407              		.loc 1 198 53
+ 408 0012 B14B     		ldr	r3, .L19+8
+ 409 0014 B3F90230 		ldrsh	r3, [r3, #2]
+ 410              		.loc 1 198 29
+ 411 0018 1846     		mov	r0, r3
+ 412 001a FFF7FEFF 		bl	__aeabi_i2d
+ 413              	.LVL0:
+ 414 001e ACA3     		adr	r3, .L19
+ 415 0020 D3E90023 		ldrd	r2, [r3]
+ 416 0024 FFF7FEFF 		bl	__aeabi_dmul
+ 417              	.LVL1:
+ 418 0028 0246     		mov	r2, r0
+ 419 002a 0B46     		mov	r3, r1
+ 420 002c 1046     		mov	r0, r2
+ 421 002e 1946     		mov	r1, r3
+ 422              		.loc 1 198 9
+ 423 0030 4FF00002 		mov	r2, #0
+ 424 0034 A94B     		ldr	r3, .L19+12
+ 425 0036 FFF7FEFF 		bl	__aeabi_ddiv
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 12
+
+
+ 426              	.LVL2:
+ 427 003a 0246     		mov	r2, r0
+ 428 003c 0B46     		mov	r3, r1
+ 429 003e A848     		ldr	r0, .L19+16
+ 430 0040 FFF7FEFF 		bl	printf
+ 199:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%f ",((2*9.8*(int)E53_SC2_Data.Accel[1])/32768));
+ 431              		.loc 1 199 53
+ 432 0044 A44B     		ldr	r3, .L19+8
+ 433 0046 B3F90430 		ldrsh	r3, [r3, #4]
+ 434              		.loc 1 199 29
+ 435 004a 1846     		mov	r0, r3
+ 436 004c FFF7FEFF 		bl	__aeabi_i2d
+ 437              	.LVL3:
+ 438 0050 9FA3     		adr	r3, .L19
+ 439 0052 D3E90023 		ldrd	r2, [r3]
+ 440 0056 FFF7FEFF 		bl	__aeabi_dmul
+ 441              	.LVL4:
+ 442 005a 0246     		mov	r2, r0
+ 443 005c 0B46     		mov	r3, r1
+ 444 005e 1046     		mov	r0, r2
+ 445 0060 1946     		mov	r1, r3
+ 446              		.loc 1 199 9
+ 447 0062 4FF00002 		mov	r2, #0
+ 448 0066 9D4B     		ldr	r3, .L19+12
+ 449 0068 FFF7FEFF 		bl	__aeabi_ddiv
+ 450              	.LVL5:
+ 451 006c 0246     		mov	r2, r0
+ 452 006e 0B46     		mov	r3, r1
+ 453 0070 9B48     		ldr	r0, .L19+16
+ 454 0072 FFF7FEFF 		bl	printf
+ 200:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%f ",((2*9.8*(int)E53_SC2_Data.Accel[2])/32768));
+ 455              		.loc 1 200 53
+ 456 0076 984B     		ldr	r3, .L19+8
+ 457 0078 B3F90630 		ldrsh	r3, [r3, #6]
+ 458              		.loc 1 200 29
+ 459 007c 1846     		mov	r0, r3
+ 460 007e FFF7FEFF 		bl	__aeabi_i2d
+ 461              	.LVL6:
+ 462 0082 93A3     		adr	r3, .L19
+ 463 0084 D3E90023 		ldrd	r2, [r3]
+ 464 0088 FFF7FEFF 		bl	__aeabi_dmul
+ 465              	.LVL7:
+ 466 008c 0246     		mov	r2, r0
+ 467 008e 0B46     		mov	r3, r1
+ 468 0090 1046     		mov	r0, r2
+ 469 0092 1946     		mov	r1, r3
+ 470              		.loc 1 200 9
+ 471 0094 4FF00002 		mov	r2, #0
+ 472 0098 904B     		ldr	r3, .L19+12
+ 473 009a FFF7FEFF 		bl	__aeabi_ddiv
+ 474              	.LVL8:
+ 475 009e 0246     		mov	r2, r0
+ 476 00a0 0B46     		mov	r3, r1
+ 477 00a2 8F48     		ldr	r0, .L19+16
+ 478 00a4 FFF7FEFF 		bl	printf
+ 201:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         /*
+ 202:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%d ",((2000*(int)E53_SC2_Data.Gyro[0])/32768));
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 13
+
+
+ 203:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%d ",((2000*(int)E53_SC2_Data.Gyro[1])/32768));
+ 204:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%d\r\n",((2000*(int)E53_SC2_Data.Gyro[2])/32768));
+ 205:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         
+ 206:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%d ",(int)E53_SC2_Data3.roll);
+ 207:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%d ",(int)E53_SC2_Data3.pitch);
+ 208:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         */
+ 209:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%f ",((2*9.8*(int)E53_SC2_Data3.Accel[0])/32768));
+ 479              		.loc 1 209 54
+ 480 00a8 8E4B     		ldr	r3, .L19+20
+ 481 00aa B3F90230 		ldrsh	r3, [r3, #2]
+ 482              		.loc 1 209 29
+ 483 00ae 1846     		mov	r0, r3
+ 484 00b0 FFF7FEFF 		bl	__aeabi_i2d
+ 485              	.LVL9:
+ 486 00b4 86A3     		adr	r3, .L19
+ 487 00b6 D3E90023 		ldrd	r2, [r3]
+ 488 00ba FFF7FEFF 		bl	__aeabi_dmul
+ 489              	.LVL10:
+ 490 00be 0246     		mov	r2, r0
+ 491 00c0 0B46     		mov	r3, r1
+ 492 00c2 1046     		mov	r0, r2
+ 493 00c4 1946     		mov	r1, r3
+ 494              		.loc 1 209 9
+ 495 00c6 4FF00002 		mov	r2, #0
+ 496 00ca 844B     		ldr	r3, .L19+12
+ 497 00cc FFF7FEFF 		bl	__aeabi_ddiv
+ 498              	.LVL11:
+ 499 00d0 0246     		mov	r2, r0
+ 500 00d2 0B46     		mov	r3, r1
+ 501 00d4 8248     		ldr	r0, .L19+16
+ 502 00d6 FFF7FEFF 		bl	printf
+ 210:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%f ",((2*9.8*(int)E53_SC2_Data3.Accel[1])/32768));
+ 503              		.loc 1 210 54
+ 504 00da 824B     		ldr	r3, .L19+20
+ 505 00dc B3F90430 		ldrsh	r3, [r3, #4]
+ 506              		.loc 1 210 29
+ 507 00e0 1846     		mov	r0, r3
+ 508 00e2 FFF7FEFF 		bl	__aeabi_i2d
+ 509              	.LVL12:
+ 510 00e6 7AA3     		adr	r3, .L19
+ 511 00e8 D3E90023 		ldrd	r2, [r3]
+ 512 00ec FFF7FEFF 		bl	__aeabi_dmul
+ 513              	.LVL13:
+ 514 00f0 0246     		mov	r2, r0
+ 515 00f2 0B46     		mov	r3, r1
+ 516 00f4 1046     		mov	r0, r2
+ 517 00f6 1946     		mov	r1, r3
+ 518              		.loc 1 210 9
+ 519 00f8 4FF00002 		mov	r2, #0
+ 520 00fc 774B     		ldr	r3, .L19+12
+ 521 00fe FFF7FEFF 		bl	__aeabi_ddiv
+ 522              	.LVL14:
+ 523 0102 0246     		mov	r2, r0
+ 524 0104 0B46     		mov	r3, r1
+ 525 0106 7648     		ldr	r0, .L19+16
+ 526 0108 FFF7FEFF 		bl	printf
+ 211:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%f ",((2*9.8*(int)E53_SC2_Data3.Accel[2])/32768));
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 14
+
+
+ 527              		.loc 1 211 54
+ 528 010c 754B     		ldr	r3, .L19+20
+ 529 010e B3F90630 		ldrsh	r3, [r3, #6]
+ 530              		.loc 1 211 29
+ 531 0112 1846     		mov	r0, r3
+ 532 0114 FFF7FEFF 		bl	__aeabi_i2d
+ 533              	.LVL15:
+ 534 0118 6DA3     		adr	r3, .L19
+ 535 011a D3E90023 		ldrd	r2, [r3]
+ 536 011e FFF7FEFF 		bl	__aeabi_dmul
+ 537              	.LVL16:
+ 538 0122 0246     		mov	r2, r0
+ 539 0124 0B46     		mov	r3, r1
+ 540 0126 1046     		mov	r0, r2
+ 541 0128 1946     		mov	r1, r3
+ 542              		.loc 1 211 9
+ 543 012a 4FF00002 		mov	r2, #0
+ 544 012e 6B4B     		ldr	r3, .L19+12
+ 545 0130 FFF7FEFF 		bl	__aeabi_ddiv
+ 546              	.LVL17:
+ 547 0134 0246     		mov	r2, r0
+ 548 0136 0B46     		mov	r3, r1
+ 549 0138 6948     		ldr	r0, .L19+16
+ 550 013a FFF7FEFF 		bl	printf
+ 212:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         /*printf("%d ",((2000*(int)E53_SC2_Data3.Gyro[0])/32768));
+ 213:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%d ",((2000*(int)E53_SC2_Data3.Gyro[1])/32768));
+ 214:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("%d ",((2000*(int)E53_SC2_Data3.Gyro[2])/32768));
+ 215:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         */
+ 216:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         printf("\r\n");
+ 551              		.loc 1 216 9
+ 552 013e 6A48     		ldr	r0, .L19+24
+ 553 0140 FFF7FEFF 		bl	puts
+ 217:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         
+ 218:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         i++;
+ 554              		.loc 1 218 10
+ 555 0144 7B68     		ldr	r3, [r7, #4]
+ 556 0146 0133     		adds	r3, r3, #1
+ 557 0148 7B60     		str	r3, [r7, #4]
+ 219:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         if( X == 0 && Y == 0 && Z == 0)
+ 558              		.loc 1 219 15
+ 559 014a 684B     		ldr	r3, .L19+28
+ 560 014c 1B68     		ldr	r3, [r3]
+ 561              		.loc 1 219 11
+ 562 014e 002B     		cmp	r3, #0
+ 563 0150 1AD1     		bne	.L14
+ 564              		.loc 1 219 25 discriminator 1
+ 565 0152 674B     		ldr	r3, .L19+32
+ 566 0154 1B68     		ldr	r3, [r3]
+ 567              		.loc 1 219 20 discriminator 1
+ 568 0156 002B     		cmp	r3, #0
+ 569 0158 16D1     		bne	.L14
+ 570              		.loc 1 219 35 discriminator 2
+ 571 015a 664B     		ldr	r3, .L19+36
+ 572 015c 1B68     		ldr	r3, [r3]
+ 573              		.loc 1 219 30 discriminator 2
+ 574 015e 002B     		cmp	r3, #0
+ 575 0160 12D1     		bne	.L14
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 15
+
+
+ 220:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         {
+ 221:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             X = (int)E53_SC2_Data.Accel[0];
+ 576              		.loc 1 221 40
+ 577 0162 5D4B     		ldr	r3, .L19+8
+ 578 0164 B3F90230 		ldrsh	r3, [r3, #2]
+ 579              		.loc 1 221 17
+ 580 0168 1A46     		mov	r2, r3
+ 581              		.loc 1 221 15
+ 582 016a 604B     		ldr	r3, .L19+28
+ 583 016c 1A60     		str	r2, [r3]
+ 222:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             Y = (int)E53_SC2_Data.Accel[1];
+ 584              		.loc 1 222 40
+ 585 016e 5A4B     		ldr	r3, .L19+8
+ 586 0170 B3F90430 		ldrsh	r3, [r3, #4]
+ 587              		.loc 1 222 17
+ 588 0174 1A46     		mov	r2, r3
+ 589              		.loc 1 222 15
+ 590 0176 5E4B     		ldr	r3, .L19+32
+ 591 0178 1A60     		str	r2, [r3]
+ 223:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             Z = (int)E53_SC2_Data.Accel[2];
+ 592              		.loc 1 223 40
+ 593 017a 574B     		ldr	r3, .L19+8
+ 594 017c B3F90630 		ldrsh	r3, [r3, #6]
+ 595              		.loc 1 223 17
+ 596 0180 1A46     		mov	r2, r3
+ 597              		.loc 1 223 15
+ 598 0182 5C4B     		ldr	r3, .L19+36
+ 599 0184 1A60     		str	r2, [r3]
+ 600 0186 48E0     		b	.L15
+ 601              	.L14:
+ 224:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         }
+ 225:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         else
+ 226:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         {
+ 227:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             if(X+100<E53_SC2_Data.Accel[0]||X-100>E53_SC2_Data.Accel[0]||Y+100<E53_SC2_Data.Accel[1
+ 602              		.loc 1 227 17
+ 603 0188 584B     		ldr	r3, .L19+28
+ 604 018a 1B68     		ldr	r3, [r3]
+ 605 018c 6433     		adds	r3, r3, #100
+ 606              		.loc 1 227 40
+ 607 018e 524A     		ldr	r2, .L19+8
+ 608 0190 B2F90220 		ldrsh	r2, [r2, #2]
+ 609              		.loc 1 227 15
+ 610 0194 9342     		cmp	r3, r2
+ 611 0196 27DB     		blt	.L16
+ 612              		.loc 1 227 46 discriminator 1
+ 613 0198 544B     		ldr	r3, .L19+28
+ 614 019a 1B68     		ldr	r3, [r3]
+ 615 019c 643B     		subs	r3, r3, #100
+ 616              		.loc 1 227 69 discriminator 1
+ 617 019e 4E4A     		ldr	r2, .L19+8
+ 618 01a0 B2F90220 		ldrsh	r2, [r2, #2]
+ 619              		.loc 1 227 43 discriminator 1
+ 620 01a4 9342     		cmp	r3, r2
+ 621 01a6 1FDC     		bgt	.L16
+ 622              		.loc 1 227 75 discriminator 2
+ 623 01a8 514B     		ldr	r3, .L19+32
+ 624 01aa 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 16
+
+
+ 625 01ac 6433     		adds	r3, r3, #100
+ 626              		.loc 1 227 98 discriminator 2
+ 627 01ae 4A4A     		ldr	r2, .L19+8
+ 628 01b0 B2F90420 		ldrsh	r2, [r2, #4]
+ 629              		.loc 1 227 72 discriminator 2
+ 630 01b4 9342     		cmp	r3, r2
+ 631 01b6 17DB     		blt	.L16
+ 632              		.loc 1 227 104 discriminator 3
+ 633 01b8 4D4B     		ldr	r3, .L19+32
+ 634 01ba 1B68     		ldr	r3, [r3]
+ 635 01bc 643B     		subs	r3, r3, #100
+ 636              		.loc 1 227 127 discriminator 3
+ 637 01be 464A     		ldr	r2, .L19+8
+ 638 01c0 B2F90420 		ldrsh	r2, [r2, #4]
+ 639              		.loc 1 227 101 discriminator 3
+ 640 01c4 9342     		cmp	r3, r2
+ 641 01c6 0FDC     		bgt	.L16
+ 642              		.loc 1 227 133 discriminator 4
+ 643 01c8 4A4B     		ldr	r3, .L19+36
+ 644 01ca 1B68     		ldr	r3, [r3]
+ 645 01cc 6433     		adds	r3, r3, #100
+ 646              		.loc 1 227 156 discriminator 4
+ 647 01ce 424A     		ldr	r2, .L19+8
+ 648 01d0 B2F90620 		ldrsh	r2, [r2, #6]
+ 649              		.loc 1 227 130 discriminator 4
+ 650 01d4 9342     		cmp	r3, r2
+ 651 01d6 07DB     		blt	.L16
+ 652              		.loc 1 227 162 discriminator 5
+ 653 01d8 464B     		ldr	r3, .L19+36
+ 654 01da 1B68     		ldr	r3, [r3]
+ 655 01dc 643B     		subs	r3, r3, #100
+ 656              		.loc 1 227 185 discriminator 5
+ 657 01de 3E4A     		ldr	r2, .L19+8
+ 658 01e0 B2F90620 		ldrsh	r2, [r2, #6]
+ 659              		.loc 1 227 159 discriminator 5
+ 660 01e4 9342     		cmp	r3, r2
+ 661 01e6 0CDD     		ble	.L17
+ 662              	.L16:
+ 228:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             {
+ 229:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);
+ 663              		.loc 1 229 17
+ 664 01e8 0122     		movs	r2, #1
+ 665 01ea 4FF48071 		mov	r1, #256
+ 666 01ee 4248     		ldr	r0, .L19+40
+ 667 01f0 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 230:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_9,GPIO_PIN_RESET);
+ 668              		.loc 1 230 17
+ 669 01f4 0022     		movs	r2, #0
+ 670 01f6 4FF40071 		mov	r1, #512
+ 671 01fa 3F48     		ldr	r0, .L19+40
+ 672 01fc FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 673 0200 0BE0     		b	.L15
+ 674              	.L17:
+ 231:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 /*
+ 232:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[0] = ' ';
+ 233:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[1] = 'T';
+ 234:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[2] = 'i';
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 17
+
+
+ 235:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[3] = 'l';
+ 236:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[4] = 't';
+ 237:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 */
+ 238:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             }
+ 239:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             else
+ 240:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             {
+ 241:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_RESET);
+ 675              		.loc 1 241 17
+ 676 0202 0022     		movs	r2, #0
+ 677 0204 4FF48071 		mov	r1, #256
+ 678 0208 3B48     		ldr	r0, .L19+40
+ 679 020a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 242:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_9,GPIO_PIN_SET);
+ 680              		.loc 1 242 17
+ 681 020e 0122     		movs	r2, #1
+ 682 0210 4FF40071 		mov	r1, #512
+ 683 0214 3848     		ldr	r0, .L19+40
+ 684 0216 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 685              	.L15:
+ 243:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 /*
+ 244:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[0] = 'L';
+ 245:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[1] = 'e';
+ 246:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[2] = 'v';
+ 247:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[3] = 'e';
+ 248:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 Manhole_Cover.Status[4] = 'l';
+ 249:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****                 */
+ 250:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****             }
+ 251:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         }
+ 252:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         /*
+ 253:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowString(10, 10, 200, 16, 16, "Acce_X:");
+ 254:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowNum(140, 10, (int)E53_SC2_Data.Accel[0], 5, 16);
+ 255:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowString(10, 35, 200, 16, 16, "Acce_Y:");
+ 256:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowNum(140, 35, (int)E53_SC2_Data.Accel[1], 5, 16);
+ 257:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowString(10, 60, 200, 16, 16, "Acce_Z:");
+ 258:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowNum(140, 60, (int)E53_SC2_Data.Accel[2], 5, 16);
+ 259:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowString(10, 85, 200, 16, 16, "Gyro_x:");
+ 260:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowNum(140, 85, (int)E53_SC2_Data.Gyro[0], 5, 16);
+ 261:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowString(10, 110, 200, 16, 16, "Gyro_y");
+ 262:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowNum(140, 110, (int)E53_SC2_Data.Gyro[1], 5, 16);
+ 263:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowString(10, 135, 200, 16, 16, "Gyro_z");
+ 264:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowNum(140, 135, (int)E53_SC2_Data.Gyro[2], 5, 16);
+ 265:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         */
+ 266:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****        
+ 267:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowString(10, 110, 200, 16, 16, "roll:");
+ 686              		.loc 1 267 9
+ 687 021a 384B     		ldr	r3, .L19+44
+ 688 021c 0193     		str	r3, [sp, #4]
+ 689 021e 1023     		movs	r3, #16
+ 690 0220 0093     		str	r3, [sp]
+ 691 0222 1023     		movs	r3, #16
+ 692 0224 C822     		movs	r2, #200
+ 693 0226 6E21     		movs	r1, #110
+ 694 0228 0A20     		movs	r0, #10
+ 695 022a FFF7FEFF 		bl	LCD_ShowString
+ 268:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowNum(140, 110, (int)E53_SC2_Data.roll, 5, 16);                                         
+ 696              		.loc 1 268 42
+ 697 022e 2A4B     		ldr	r3, .L19+8
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 18
+
+
+ 698 0230 B3F91030 		ldrsh	r3, [r3, #16]
+ 699              		.loc 1 268 3
+ 700 0234 1A46     		mov	r2, r3
+ 701 0236 1023     		movs	r3, #16
+ 702 0238 0093     		str	r3, [sp]
+ 703 023a 0523     		movs	r3, #5
+ 704 023c 6E21     		movs	r1, #110
+ 705 023e 8C20     		movs	r0, #140
+ 706 0240 FFF7FEFF 		bl	LCD_ShowNum
+ 269:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowString(10, 135, 200, 16, 16, "pitch:");
+ 707              		.loc 1 269 9
+ 708 0244 2E4B     		ldr	r3, .L19+48
+ 709 0246 0193     		str	r3, [sp, #4]
+ 710 0248 1023     		movs	r3, #16
+ 711 024a 0093     		str	r3, [sp]
+ 712 024c 1023     		movs	r3, #16
+ 713 024e C822     		movs	r2, #200
+ 714 0250 8721     		movs	r1, #135
+ 715 0252 0A20     		movs	r0, #10
+ 716 0254 FFF7FEFF 		bl	LCD_ShowString
+ 270:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowNum(140, 135, (int)E53_SC2_Data.pitch, 5, 16);
+ 717              		.loc 1 270 42
+ 718 0258 1F4B     		ldr	r3, .L19+8
+ 719 025a B3F90E30 		ldrsh	r3, [r3, #14]
+ 720              		.loc 1 270 3
+ 721 025e 1A46     		mov	r2, r3
+ 722 0260 1023     		movs	r3, #16
+ 723 0262 0093     		str	r3, [sp]
+ 724 0264 0523     		movs	r3, #5
+ 725 0266 8721     		movs	r1, #135
+ 726 0268 8C20     		movs	r0, #140
+ 727 026a FFF7FEFF 		bl	LCD_ShowNum
+ 271:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowString(10, 160, 200, 16, 16, "roll3:");
+ 728              		.loc 1 271 9
+ 729 026e 254B     		ldr	r3, .L19+52
+ 730 0270 0193     		str	r3, [sp, #4]
+ 731 0272 1023     		movs	r3, #16
+ 732 0274 0093     		str	r3, [sp]
+ 733 0276 1023     		movs	r3, #16
+ 734 0278 C822     		movs	r2, #200
+ 735 027a A021     		movs	r1, #160
+ 736 027c 0A20     		movs	r0, #10
+ 737 027e FFF7FEFF 		bl	LCD_ShowString
+ 272:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowNum(140, 160, (int)E53_SC2_Data3.roll, 5, 16);
+ 738              		.loc 1 272 43
+ 739 0282 184B     		ldr	r3, .L19+20
+ 740 0284 B3F91030 		ldrsh	r3, [r3, #16]
+ 741              		.loc 1 272 3
+ 742 0288 1A46     		mov	r2, r3
+ 743 028a 1023     		movs	r3, #16
+ 744 028c 0093     		str	r3, [sp]
+ 745 028e 0523     		movs	r3, #5
+ 746 0290 A021     		movs	r1, #160
+ 747 0292 8C20     		movs	r0, #140
+ 748 0294 FFF7FEFF 		bl	LCD_ShowNum
+ 273:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         LCD_ShowString(10, 185, 200, 16, 16, "pitch3:");
+ 749              		.loc 1 273 9
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 19
+
+
+ 750 0298 1B4B     		ldr	r3, .L19+56
+ 751 029a 0193     		str	r3, [sp, #4]
+ 752 029c 1023     		movs	r3, #16
+ 753 029e 0093     		str	r3, [sp]
+ 754 02a0 1023     		movs	r3, #16
+ 755 02a2 C822     		movs	r2, #200
+ 756 02a4 B921     		movs	r1, #185
+ 757 02a6 0A20     		movs	r0, #10
+ 758 02a8 FFF7FEFF 		bl	LCD_ShowString
+ 274:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 		LCD_ShowNum(140, 185, (int)E53_SC2_Data3.pitch, 5, 16);
+ 759              		.loc 1 274 43
+ 760 02ac 0D4B     		ldr	r3, .L19+20
+ 761 02ae B3F90E30 		ldrsh	r3, [r3, #14]
+ 762              		.loc 1 274 3
+ 763 02b2 1A46     		mov	r2, r3
+ 764 02b4 1023     		movs	r3, #16
+ 765 02b6 0093     		str	r3, [sp]
+ 766 02b8 0523     		movs	r3, #5
+ 767 02ba B921     		movs	r1, #185
+ 768 02bc 8C20     		movs	r0, #140
+ 769 02be FFF7FEFF 		bl	LCD_ShowNum
+ 275:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         
+ 276:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         osal_task_sleep(50);
+ 770              		.loc 1 276 9
+ 771 02c2 3220     		movs	r0, #50
+ 772 02c4 FFF7FEFF 		bl	osal_task_sleep
+ 194:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****         //printf("%d ",i);
+ 773              		.loc 1 194 9
+ 774 02c8 A1E6     		b	.L18
+ 775              	.L20:
+ 776 02ca 00BFAFF3 		.align	3
+ 776      0080
+ 777              	.L19:
+ 778 02d0 9A999999 		.word	-1717986918
+ 779 02d4 99993340 		.word	1077123481
+ 780 02d8 00000000 		.word	E53_SC2_Data
+ 781 02dc 0000E040 		.word	1088421888
+ 782 02e0 50000000 		.word	.LC4
+ 783 02e4 00000000 		.word	E53_SC2_Data3
+ 784 02e8 54000000 		.word	.LC5
+ 785 02ec 00000000 		.word	X
+ 786 02f0 00000000 		.word	Y
+ 787 02f4 00000000 		.word	Z
+ 788 02f8 00040048 		.word	1207960576
+ 789 02fc 58000000 		.word	.LC6
+ 790 0300 60000000 		.word	.LC7
+ 791 0304 68000000 		.word	.LC8
+ 792 0308 70000000 		.word	.LC9
+ 793              		.cfi_endproc
+ 794              	.LFE289:
+ 796              		.section	.rodata
+ 797              		.align	2
+ 798              	.LC10:
+ 799 0078 4E434450 		.ascii	"NCDP_IP:\000"
+ 799      5F49503A 
+ 799      00
+ 800 0081 000000   		.align	2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 20
+
+
+ 801              	.LC11:
+ 802 0084 4E434450 		.ascii	"NCDP_PORT:\000"
+ 802      5F504F52 
+ 802      543A00
+ 803 008f 00       		.align	2
+ 804              	.LC12:
+ 805 0090 6170705F 		.ascii	"app_collect\000"
+ 805      636F6C6C 
+ 805      65637400 
+ 806              		.align	2
+ 807              	.LC13:
+ 808 009c 6170705F 		.ascii	"app_report\000"
+ 808      7265706F 
+ 808      727400
+ 809              		.section	.text.standard_app_demo_main,"ax",%progbits
+ 810              		.align	1
+ 811              		.global	standard_app_demo_main
+ 812              		.syntax unified
+ 813              		.thumb
+ 814              		.thumb_func
+ 815              		.fpu fpv4-sp-d16
+ 817              	standard_app_demo_main:
+ 818              	.LFB290:
+ 277:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     }
+ 278:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     return 0;
+ 279:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** }
+ 280:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 281:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 282:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** //#include <stimer.h>
+ 283:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 284:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** int standard_app_demo_main()
+ 285:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** {
+ 819              		.loc 1 285 1
+ 820              		.cfi_startproc
+ 821              		@ args = 0, pretend = 0, frame = 0
+ 822              		@ frame_needed = 1, uses_anonymous_args = 0
+ 823 0000 80B5     		push	{r7, lr}
+ 824              	.LCFI13:
+ 825              		.cfi_def_cfa_offset 8
+ 826              		.cfi_offset 7, -8
+ 827              		.cfi_offset 14, -4
+ 828 0002 82B0     		sub	sp, sp, #8
+ 829              	.LCFI14:
+ 830              		.cfi_def_cfa_offset 16
+ 831 0004 02AF     		add	r7, sp, #8
+ 832              	.LCFI15:
+ 833              		.cfi_def_cfa 7, 8
+ 286:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	LCD_Clear(BLACK);
+ 834              		.loc 1 286 2
+ 835 0006 0020     		movs	r0, #0
+ 836 0008 FFF7FEFF 		bl	LCD_Clear
+ 287:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	POINT_COLOR = GREEN;
+ 837              		.loc 1 287 14
+ 838 000c 254B     		ldr	r3, .L23
+ 839 000e 4FF4FC62 		mov	r2, #2016
+ 840 0012 1A80     		strh	r2, [r3]	@ movhi
+ 288:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 21
+
+
+ 289:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	
+ 290:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	LCD_ShowString(10, 10, 200, 16, 16, "NCDP_IP:");
+ 841              		.loc 1 290 2
+ 842 0014 244B     		ldr	r3, .L23+4
+ 843 0016 0193     		str	r3, [sp, #4]
+ 844 0018 1023     		movs	r3, #16
+ 845 001a 0093     		str	r3, [sp]
+ 846 001c 1023     		movs	r3, #16
+ 847 001e C822     		movs	r2, #200
+ 848 0020 0A21     		movs	r1, #10
+ 849 0022 0A20     		movs	r0, #10
+ 850 0024 FFF7FEFF 		bl	LCD_ShowString
+ 291:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	LCD_ShowString(80, 10, 200, 16, 16, cn_app_server);
+ 851              		.loc 1 291 2
+ 852 0028 204B     		ldr	r3, .L23+8
+ 853 002a 0193     		str	r3, [sp, #4]
+ 854 002c 1023     		movs	r3, #16
+ 855 002e 0093     		str	r3, [sp]
+ 856 0030 1023     		movs	r3, #16
+ 857 0032 C822     		movs	r2, #200
+ 858 0034 0A21     		movs	r1, #10
+ 859 0036 5020     		movs	r0, #80
+ 860 0038 FFF7FEFF 		bl	LCD_ShowString
+ 292:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	LCD_ShowString(10, 35, 200, 16, 16, "NCDP_PORT:");
+ 861              		.loc 1 292 2
+ 862 003c 1C4B     		ldr	r3, .L23+12
+ 863 003e 0193     		str	r3, [sp, #4]
+ 864 0040 1023     		movs	r3, #16
+ 865 0042 0093     		str	r3, [sp]
+ 866 0044 1023     		movs	r3, #16
+ 867 0046 C822     		movs	r2, #200
+ 868 0048 2321     		movs	r1, #35
+ 869 004a 0A20     		movs	r0, #10
+ 870 004c FFF7FEFF 		bl	LCD_ShowString
+ 293:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	LCD_ShowString(100, 35, 200, 16, 16, cn_app_port);
+ 871              		.loc 1 293 2
+ 872 0050 184B     		ldr	r3, .L23+16
+ 873 0052 0193     		str	r3, [sp, #4]
+ 874 0054 1023     		movs	r3, #16
+ 875 0056 0093     		str	r3, [sp]
+ 876 0058 1023     		movs	r3, #16
+ 877 005a C822     		movs	r2, #200
+ 878 005c 2321     		movs	r1, #35
+ 879 005e 6420     		movs	r0, #100
+ 880 0060 FFF7FEFF 		bl	LCD_ShowString
+ 294:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     
+ 295:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	osal_semp_create(&s_rcv_sync,1,0);
+ 881              		.loc 1 295 2
+ 882 0064 0022     		movs	r2, #0
+ 883 0066 0121     		movs	r1, #1
+ 884 0068 1348     		ldr	r0, .L23+20
+ 885 006a FFF7FEFF 		bl	osal_semp_create
+ 296:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 297:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     osal_task_create("app_collect",app_collect_task_entry,NULL,0x400,NULL,3);
+ 886              		.loc 1 297 5
+ 887 006e 0323     		movs	r3, #3
+ 888 0070 0193     		str	r3, [sp, #4]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 22
+
+
+ 889 0072 0023     		movs	r3, #0
+ 890 0074 0093     		str	r3, [sp]
+ 891 0076 4FF48063 		mov	r3, #1024
+ 892 007a 0022     		movs	r2, #0
+ 893 007c 0F49     		ldr	r1, .L23+24
+ 894 007e 1048     		ldr	r0, .L23+28
+ 895 0080 FFF7FEFF 		bl	osal_task_create
+ 298:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     osal_task_create("app_report",app_report_task_entry,NULL,0x1000,NULL,2);
+ 896              		.loc 1 298 5
+ 897 0084 0223     		movs	r3, #2
+ 898 0086 0193     		str	r3, [sp, #4]
+ 899 0088 0023     		movs	r3, #0
+ 900 008a 0093     		str	r3, [sp]
+ 901 008c 4FF48053 		mov	r3, #4096
+ 902 0090 0022     		movs	r2, #0
+ 903 0092 0C49     		ldr	r1, .L23+32
+ 904 0094 0C48     		ldr	r0, .L23+36
+ 905 0096 FFF7FEFF 		bl	osal_task_create
+ 299:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 300:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c ****     return 0;
+ 906              		.loc 1 300 12
+ 907 009a 0023     		movs	r3, #0
+ 301:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** }
+ 908              		.loc 1 301 1
+ 909 009c 1846     		mov	r0, r3
+ 910 009e BD46     		mov	sp, r7
+ 911              	.LCFI16:
+ 912              		.cfi_def_cfa_register 13
+ 913              		@ sp needed
+ 914 00a0 80BD     		pop	{r7, pc}
+ 915              	.L24:
+ 916 00a2 00BF     		.align	2
+ 917              	.L23:
+ 918 00a4 00000000 		.word	POINT_COLOR
+ 919 00a8 78000000 		.word	.LC10
+ 920 00ac 20000000 		.word	.LC1
+ 921 00b0 84000000 		.word	.LC11
+ 922 00b4 30000000 		.word	.LC2
+ 923 00b8 00000000 		.word	s_rcv_sync
+ 924 00bc 00000000 		.word	app_collect_task_entry
+ 925 00c0 90000000 		.word	.LC12
+ 926 00c4 00000000 		.word	app_report_task_entry
+ 927 00c8 9C000000 		.word	.LC13
+ 928              		.cfi_endproc
+ 929              	.LFE290:
+ 931              		.section	.text.usart1_niming_report,"ax",%progbits
+ 932              		.align	1
+ 933              		.global	usart1_niming_report
+ 934              		.syntax unified
+ 935              		.thumb
+ 936              		.thumb_func
+ 937              		.fpu fpv4-sp-d16
+ 939              	usart1_niming_report:
+ 940              	.LFB291:
+ 302:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 303:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** void usart1_niming_report(uint8_t fun,uint8_t*data,uint8_t len)
+ 304:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** {
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 23
+
+
+ 941              		.loc 1 304 1
+ 942              		.cfi_startproc
+ 943              		@ args = 0, pretend = 0, frame = 48
+ 944              		@ frame_needed = 1, uses_anonymous_args = 0
+ 945 0000 80B5     		push	{r7, lr}
+ 946              	.LCFI17:
+ 947              		.cfi_def_cfa_offset 8
+ 948              		.cfi_offset 7, -8
+ 949              		.cfi_offset 14, -4
+ 950 0002 8CB0     		sub	sp, sp, #48
+ 951              	.LCFI18:
+ 952              		.cfi_def_cfa_offset 56
+ 953 0004 00AF     		add	r7, sp, #0
+ 954              	.LCFI19:
+ 955              		.cfi_def_cfa_register 7
+ 956 0006 0346     		mov	r3, r0
+ 957 0008 3960     		str	r1, [r7]
+ 958 000a FB71     		strb	r3, [r7, #7]
+ 959 000c 1346     		mov	r3, r2
+ 960 000e BB71     		strb	r3, [r7, #6]
+ 305:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	uint8_t send_buf[32];
+ 306:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	uint8_t i;
+ 307:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	if(len>28)return;	//���28�ֽ����� 
+ 961              		.loc 1 307 4
+ 962 0010 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 963 0012 1C2B     		cmp	r3, #28
+ 964 0014 68D8     		bhi	.L34
+ 308:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	send_buf[len+3]=0;	//У��������
+ 965              		.loc 1 308 14
+ 966 0016 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 967 0018 0333     		adds	r3, r3, #3
+ 968              		.loc 1 308 17
+ 969 001a 07F13002 		add	r2, r7, #48
+ 970 001e 1344     		add	r3, r3, r2
+ 971 0020 0022     		movs	r2, #0
+ 972 0022 03F8242C 		strb	r2, [r3, #-36]
+ 309:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	send_buf[0]=0X88;	//֡ͷ
+ 973              		.loc 1 309 13
+ 974 0026 8823     		movs	r3, #136
+ 975 0028 3B73     		strb	r3, [r7, #12]
+ 310:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	send_buf[1]=fun;	//������
+ 976              		.loc 1 310 13
+ 977 002a FB79     		ldrb	r3, [r7, #7]
+ 978 002c 7B73     		strb	r3, [r7, #13]
+ 311:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	send_buf[2]=len;	//���ݳ���
+ 979              		.loc 1 311 13
+ 980 002e BB79     		ldrb	r3, [r7, #6]
+ 981 0030 BB73     		strb	r3, [r7, #14]
+ 312:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	for(i=0;i<len;i++)send_buf[3+i]=data[i];			//��������
+ 982              		.loc 1 312 7
+ 983 0032 0023     		movs	r3, #0
+ 984 0034 87F82F30 		strb	r3, [r7, #47]
+ 985              		.loc 1 312 2
+ 986 0038 11E0     		b	.L28
+ 987              	.L29:
+ 988              		.loc 1 312 38 discriminator 3
+ 989 003a 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 24
+
+
+ 990 003e 3A68     		ldr	r2, [r7]
+ 991 0040 1A44     		add	r2, r2, r3
+ 992              		.loc 1 312 30 discriminator 3
+ 993 0042 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 994 0046 0333     		adds	r3, r3, #3
+ 995              		.loc 1 312 38 discriminator 3
+ 996 0048 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 997              		.loc 1 312 33 discriminator 3
+ 998 004a 07F13001 		add	r1, r7, #48
+ 999 004e 0B44     		add	r3, r3, r1
+ 1000 0050 03F8242C 		strb	r2, [r3, #-36]
+ 1001              		.loc 1 312 17 discriminator 3
+ 1002 0054 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 1003 0058 0133     		adds	r3, r3, #1
+ 1004 005a 87F82F30 		strb	r3, [r7, #47]
+ 1005              	.L28:
+ 1006              		.loc 1 312 2 discriminator 1
+ 1007 005e 97F82F20 		ldrb	r2, [r7, #47]	@ zero_extendqisi2
+ 1008 0062 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1009 0064 9A42     		cmp	r2, r3
+ 1010 0066 E8D3     		bcc	.L29
+ 313:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	for(i=0;i<len+3;i++)send_buf[len+3]+=send_buf[i];	//����У���	
+ 1011              		.loc 1 313 7
+ 1012 0068 0023     		movs	r3, #0
+ 1013 006a 87F82F30 		strb	r3, [r7, #47]
+ 1014              		.loc 1 313 2
+ 1015 006e 1BE0     		b	.L30
+ 1016              	.L31:
+ 1017              		.loc 1 313 37 discriminator 3
+ 1018 0070 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1019 0072 0333     		adds	r3, r3, #3
+ 1020 0074 07F13002 		add	r2, r7, #48
+ 1021 0078 1344     		add	r3, r3, r2
+ 1022 007a 13F8241C 		ldrb	r1, [r3, #-36]	@ zero_extendqisi2
+ 1023              		.loc 1 313 47 discriminator 3
+ 1024 007e 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 1025 0082 07F13002 		add	r2, r7, #48
+ 1026 0086 1344     		add	r3, r3, r2
+ 1027 0088 13F8242C 		ldrb	r2, [r3, #-36]	@ zero_extendqisi2
+ 1028              		.loc 1 313 37 discriminator 3
+ 1029 008c BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1030 008e 0333     		adds	r3, r3, #3
+ 1031 0090 0A44     		add	r2, r2, r1
+ 1032 0092 D2B2     		uxtb	r2, r2
+ 1033 0094 07F13001 		add	r1, r7, #48
+ 1034 0098 0B44     		add	r3, r3, r1
+ 1035 009a 03F8242C 		strb	r2, [r3, #-36]
+ 1036              		.loc 1 313 19 discriminator 3
+ 1037 009e 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 1038 00a2 0133     		adds	r3, r3, #1
+ 1039 00a4 87F82F30 		strb	r3, [r7, #47]
+ 1040              	.L30:
+ 1041              		.loc 1 313 11 discriminator 1
+ 1042 00a8 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1043 00aa 9A1C     		adds	r2, r3, #2
+ 1044 00ac 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 1045              		.loc 1 313 2 discriminator 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 25
+
+
+ 1046 00b0 9A42     		cmp	r2, r3
+ 1047 00b2 DDDA     		bge	.L31
+ 314:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	for(i=0;i<len+4;i++)usart1_send_char(send_buf[i]);	//�������ݵ�����1 
+ 1048              		.loc 1 314 7
+ 1049 00b4 0023     		movs	r3, #0
+ 1050 00b6 87F82F30 		strb	r3, [r7, #47]
+ 1051              		.loc 1 314 2
+ 1052 00ba 0EE0     		b	.L32
+ 1053              	.L33:
+ 1054              	.LBB2:
+ 1055              		.loc 1 314 47 discriminator 3
+ 1056 00bc 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 1057 00c0 07F13002 		add	r2, r7, #48
+ 1058 00c4 1344     		add	r3, r3, r2
+ 1059 00c6 13F8243C 		ldrb	r3, [r3, #-36]	@ zero_extendqisi2
+ 1060              		.loc 1 314 22 discriminator 3
+ 1061 00ca 1846     		mov	r0, r3
+ 1062 00cc FFF7FEFF 		bl	usart1_send_char
+ 1063              	.LBE2:
+ 1064              		.loc 1 314 19 discriminator 3
+ 1065 00d0 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 1066 00d4 0133     		adds	r3, r3, #1
+ 1067 00d6 87F82F30 		strb	r3, [r7, #47]
+ 1068              	.L32:
+ 1069              		.loc 1 314 11 discriminator 1
+ 1070 00da BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1071 00dc DA1C     		adds	r2, r3, #3
+ 1072 00de 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 1073              		.loc 1 314 2 discriminator 1
+ 1074 00e2 9A42     		cmp	r2, r3
+ 1075 00e4 EADA     		bge	.L33
+ 1076 00e6 00E0     		b	.L25
+ 1077              	.L34:
+ 307:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	send_buf[len+3]=0;	//У��������
+ 1078              		.loc 1 307 12
+ 1079 00e8 00BF     		nop
+ 1080              	.L25:
+ 315:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** }
+ 1081              		.loc 1 315 1
+ 1082 00ea 3037     		adds	r7, r7, #48
+ 1083              	.LCFI20:
+ 1084              		.cfi_def_cfa_offset 8
+ 1085 00ec BD46     		mov	sp, r7
+ 1086              	.LCFI21:
+ 1087              		.cfi_def_cfa_register 13
+ 1088              		@ sp needed
+ 1089 00ee 80BD     		pop	{r7, pc}
+ 1090              		.cfi_endproc
+ 1091              	.LFE291:
+ 1093              		.section	.text.mpu6050_send_data,"ax",%progbits
+ 1094              		.align	1
+ 1095              		.global	mpu6050_send_data
+ 1096              		.syntax unified
+ 1097              		.thumb
+ 1098              		.thumb_func
+ 1099              		.fpu fpv4-sp-d16
+ 1101              	mpu6050_send_data:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 26
+
+
+ 1102              	.LFB292:
+ 316:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 
+ 317:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** void mpu6050_send_data(short aacx,short aacy,short aacz,short gyrox,short gyroy,short gyroz)
+ 318:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** {
+ 1103              		.loc 1 318 1
+ 1104              		.cfi_startproc
+ 1105              		@ args = 8, pretend = 0, frame = 24
+ 1106              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1107 0000 90B5     		push	{r4, r7, lr}
+ 1108              	.LCFI22:
+ 1109              		.cfi_def_cfa_offset 12
+ 1110              		.cfi_offset 4, -12
+ 1111              		.cfi_offset 7, -8
+ 1112              		.cfi_offset 14, -4
+ 1113 0002 87B0     		sub	sp, sp, #28
+ 1114              	.LCFI23:
+ 1115              		.cfi_def_cfa_offset 40
+ 1116 0004 00AF     		add	r7, sp, #0
+ 1117              	.LCFI24:
+ 1118              		.cfi_def_cfa_register 7
+ 1119 0006 0446     		mov	r4, r0
+ 1120 0008 0846     		mov	r0, r1
+ 1121 000a 1146     		mov	r1, r2
+ 1122 000c 1A46     		mov	r2, r3
+ 1123 000e 2346     		mov	r3, r4	@ movhi
+ 1124 0010 FB80     		strh	r3, [r7, #6]	@ movhi
+ 1125 0012 0346     		mov	r3, r0	@ movhi
+ 1126 0014 BB80     		strh	r3, [r7, #4]	@ movhi
+ 1127 0016 0B46     		mov	r3, r1	@ movhi
+ 1128 0018 7B80     		strh	r3, [r7, #2]	@ movhi
+ 1129 001a 1346     		mov	r3, r2	@ movhi
+ 1130 001c 3B80     		strh	r3, [r7]	@ movhi
+ 319:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	uint8_t tbuf[12]; 
+ 320:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[0]=(aacx>>8)&0XFF;
+ 1131              		.loc 1 320 9
+ 1132 001e B7F90630 		ldrsh	r3, [r7, #6]
+ 1133 0022 1B12     		asrs	r3, r3, #8
+ 1134 0024 1BB2     		sxth	r3, r3
+ 1135 0026 DBB2     		uxtb	r3, r3
+ 1136 0028 3B73     		strb	r3, [r7, #12]
+ 321:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[1]=aacx&0XFF;
+ 1137              		.loc 1 321 9
+ 1138 002a FB88     		ldrh	r3, [r7, #6]	@ movhi
+ 1139 002c DBB2     		uxtb	r3, r3
+ 1140 002e 7B73     		strb	r3, [r7, #13]
+ 322:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[2]=(aacy>>8)&0XFF;
+ 1141              		.loc 1 322 9
+ 1142 0030 B7F90430 		ldrsh	r3, [r7, #4]
+ 1143 0034 1B12     		asrs	r3, r3, #8
+ 1144 0036 1BB2     		sxth	r3, r3
+ 1145 0038 DBB2     		uxtb	r3, r3
+ 1146 003a BB73     		strb	r3, [r7, #14]
+ 323:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[3]=aacy&0XFF;
+ 1147              		.loc 1 323 9
+ 1148 003c BB88     		ldrh	r3, [r7, #4]	@ movhi
+ 1149 003e DBB2     		uxtb	r3, r3
+ 1150 0040 FB73     		strb	r3, [r7, #15]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 27
+
+
+ 324:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[4]=(aacz>>8)&0XFF;
+ 1151              		.loc 1 324 9
+ 1152 0042 B7F90230 		ldrsh	r3, [r7, #2]
+ 1153 0046 1B12     		asrs	r3, r3, #8
+ 1154 0048 1BB2     		sxth	r3, r3
+ 1155 004a DBB2     		uxtb	r3, r3
+ 1156 004c 3B74     		strb	r3, [r7, #16]
+ 325:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[5]=aacz&0XFF; 
+ 1157              		.loc 1 325 9
+ 1158 004e 7B88     		ldrh	r3, [r7, #2]	@ movhi
+ 1159 0050 DBB2     		uxtb	r3, r3
+ 1160 0052 7B74     		strb	r3, [r7, #17]
+ 326:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[6]=(gyrox>>8)&0XFF;
+ 1161              		.loc 1 326 9
+ 1162 0054 B7F90030 		ldrsh	r3, [r7]
+ 1163 0058 1B12     		asrs	r3, r3, #8
+ 1164 005a 1BB2     		sxth	r3, r3
+ 1165 005c DBB2     		uxtb	r3, r3
+ 1166 005e BB74     		strb	r3, [r7, #18]
+ 327:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[7]=gyrox&0XFF;
+ 1167              		.loc 1 327 9
+ 1168 0060 3B88     		ldrh	r3, [r7]	@ movhi
+ 1169 0062 DBB2     		uxtb	r3, r3
+ 1170 0064 FB74     		strb	r3, [r7, #19]
+ 328:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[8]=(gyroy>>8)&0XFF;
+ 1171              		.loc 1 328 9
+ 1172 0066 B7F92830 		ldrsh	r3, [r7, #40]
+ 1173 006a 1B12     		asrs	r3, r3, #8
+ 1174 006c 1BB2     		sxth	r3, r3
+ 1175 006e DBB2     		uxtb	r3, r3
+ 1176 0070 3B75     		strb	r3, [r7, #20]
+ 329:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[9]=gyroy&0XFF;
+ 1177              		.loc 1 329 9
+ 1178 0072 3B8D     		ldrh	r3, [r7, #40]	@ movhi
+ 1179 0074 DBB2     		uxtb	r3, r3
+ 1180 0076 7B75     		strb	r3, [r7, #21]
+ 330:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[10]=(gyroz>>8)&0XFF;
+ 1181              		.loc 1 330 10
+ 1182 0078 B7F92C30 		ldrsh	r3, [r7, #44]
+ 1183 007c 1B12     		asrs	r3, r3, #8
+ 1184 007e 1BB2     		sxth	r3, r3
+ 1185 0080 DBB2     		uxtb	r3, r3
+ 1186 0082 BB75     		strb	r3, [r7, #22]
+ 331:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	tbuf[11]=gyroz&0XFF;
+ 1187              		.loc 1 331 10
+ 1188 0084 BB8D     		ldrh	r3, [r7, #44]	@ movhi
+ 1189 0086 DBB2     		uxtb	r3, r3
+ 1190 0088 FB75     		strb	r3, [r7, #23]
+ 332:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** 	usart1_niming_report(0XA1,tbuf,12);//�Զ���֡,0XA1
+ 1191              		.loc 1 332 2
+ 1192 008a 07F10C03 		add	r3, r7, #12
+ 1193 008e 0C22     		movs	r2, #12
+ 1194 0090 1946     		mov	r1, r3
+ 1195 0092 A120     		movs	r0, #161
+ 1196 0094 FFF7FEFF 		bl	usart1_niming_report
+ 333:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Demos/oc_manhole_cover_template\oc_manhole_cover_template.c **** }	
+ 1197              		.loc 1 333 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 28
+
+
+ 1198 0098 00BF     		nop
+ 1199 009a 1C37     		adds	r7, r7, #28
+ 1200              	.LCFI25:
+ 1201              		.cfi_def_cfa_offset 12
+ 1202 009c BD46     		mov	sp, r7
+ 1203              	.LCFI26:
+ 1204              		.cfi_def_cfa_register 13
+ 1205              		@ sp needed
+ 1206 009e 90BD     		pop	{r4, r7, pc}
+ 1207              		.cfi_endproc
+ 1208              	.LFE292:
+ 1210              		.text
+ 1211              	.Letext0:
+ 1212              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 1213              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 1214              		.file 4 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 1215              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 1216              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 1217              		.file 7 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 1218              		.file 8 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\math.h"
+ 1219              		.file 9 "g:/iot/IoT_Device_Demo/iot_link/os/osal/osal_types.h"
+ 1220              		.file 10 "g:/iot/IoT_Device_Demo/iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.h"
+ 1221              		.file 11 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_typedef.h"
+ 1222              		.file 12 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 1223              		.file 13 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/system_stm32l4xx.h"
+ 1224              		.file 14 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/stm32l431xx.h"
+ 1225              		.file 15 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_config.h"
+ 1226              		.file 16 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_err.h"
+ 1227              		.file 17 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 1228              		.file 18 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def
+ 1229              		.file 19 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpi
+ 1230              		.file 20 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma
+ 1231              		.file 21 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c
+ 1232              		.file 22 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/i2c.h"
+ 1233              		.file 23 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2/E53_SC2.h"
+ 1234              		.file 24 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/LCD/lcd.h"
+ 1235              		.file 25 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\stdlib.h"
+ 1236              		.file 26 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/SEGGER_RTT.h"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oc_manhole_cover_template.c
+                            *COM*:00000014 E53_SC2_Data
+                            *COM*:00000014 E53_SC2_Data3
+                            *COM*:0000000d Manhole_Cover
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:21     .bss.s_rcv_buffer:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:24     .bss.s_rcv_buffer:00000000 s_rcv_buffer
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:27     .bss.s_rcv_datalen:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:30     .bss.s_rcv_datalen:00000000 s_rcv_datalen
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:33     .bss.s_rcv_sync:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:36     .bss.s_rcv_sync:00000000 s_rcv_sync
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:39     .rodata:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:43     .text.app_msg_deal:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:50     .text.app_msg_deal:00000000 app_msg_deal
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:138    .text.app_msg_deal:00000068 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:156    .text.app_report_task_entry:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:162    .text.app_report_task_entry:00000000 app_report_task_entry
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:322    .text.app_report_task_entry:00000108 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:337    .bss.X:00000000 X
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:334    .bss.X:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:344    .bss.Y:00000000 Y
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:341    .bss.Y:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:351    .bss.Z:00000000 Z
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:348    .bss.Z:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:376    .text.app_collect_task_entry:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:382    .text.app_collect_task_entry:00000000 app_collect_task_entry
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:778    .text.app_collect_task_entry:000002d0 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:810    .text.standard_app_demo_main:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:817    .text.standard_app_demo_main:00000000 standard_app_demo_main
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:918    .text.standard_app_demo_main:000000a4 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:932    .text.usart1_niming_report:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:939    .text.usart1_niming_report:00000000 usart1_niming_report
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:1094   .text.mpu6050_send_data:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s:1101   .text.mpu6050_send_data:00000000 mpu6050_send_data
+
+UNDEFINED SYMBOLS
+printf
+memcpy
+osal_semp_post
+memset
+oc_lwm2m_config
+oc_lwm2m_report
+osal_task_sleep
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_ddiv
+Init_E53_SC2
+E53_SC2_Read_Data
+puts
+HAL_GPIO_WritePin
+LCD_ShowString
+LCD_ShowNum
+LCD_Clear
+osal_semp_create
+osal_task_create
+POINT_COLOR
+usart1_send_char
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccAO6rEd.s 			page 30
+
+
