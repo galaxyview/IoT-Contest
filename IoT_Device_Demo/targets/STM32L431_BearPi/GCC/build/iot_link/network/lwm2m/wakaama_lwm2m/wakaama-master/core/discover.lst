@@ -1,0 +1,3021 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"discover.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.prv_findAttributes,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	prv_findAttributes:
+  26              	.LFB4:
+  27              		.file 1 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/discover.
+   1:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** /*******************************************************************************
+   2:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *
+   3:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** * Copyright (c) 2015 Intel Corporation and others.
+   4:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** * All rights reserved. This program and the accompanying materials
+   5:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** * are made available under the terms of the Eclipse Public License v1.0
+   6:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** * and Eclipse Distribution License v1.0 which accompany this distribution.
+   7:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *
+   8:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** * The Eclipse Public License is available at
+   9:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *    http://www.eclipse.org/legal/epl-v10.html
+  10:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** * The Eclipse Distribution License is available at
+  11:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *    http://www.eclipse.org/org/documents/edl-v10.php.
+  12:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *
+  13:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** * Contributors:
+  14:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *    David Navarro, Intel Corporation - initial API and implementation
+  15:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *
+  16:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** *******************************************************************************/
+  17:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  18:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  19:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** #include "internals.h"
+  20:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  21:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** #define PRV_LINK_BUFFER_SIZE  1024
+  22:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  23:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  24:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** #define PRV_CONCAT_STR(buf, len, index, str, str_len)    \
+  25:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {                                                    \
+  26:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if ((len)-(index) < (str_len)) return -1;        \
+  27:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         memcpy((buf)+(index), (str), (str_len));         \
+  28:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         (index) += (str_len);                            \
+  29:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+  30:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  31:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 2
+
+
+  32:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** #ifdef LWM2M_CLIENT_MODE
+  33:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  34:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** static lwm2m_attributes_t *prv_findAttributes(lwm2m_context_t *contextP,
+  35:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         lwm2m_uri_t *uriP,
+  36:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         lwm2m_server_t *serverP)
+  37:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** {
+  28              		.loc 1 37 1
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 32
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 88B0     		sub	sp, sp, #32
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 40
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 F860     		str	r0, [r7, #12]
+  44 0008 B960     		str	r1, [r7, #8]
+  45 000a 7A60     		str	r2, [r7, #4]
+  38:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_observed_t *observedP;
+  39:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_watcher_t *watcherP;
+  40:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_attributes_t *paramP;
+  41:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  42:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     paramP = NULL;
+  46              		.loc 1 42 12
+  47 000c 0023     		movs	r3, #0
+  48 000e BB61     		str	r3, [r7, #24]
+  43:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  44:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (contextP == NULL) return NULL;
+  49              		.loc 1 44 8
+  50 0010 FB68     		ldr	r3, [r7, #12]
+  51 0012 002B     		cmp	r3, #0
+  52 0014 01D1     		bne	.L2
+  53              		.loc 1 44 34 discriminator 1
+  54 0016 0023     		movs	r3, #0
+  55 0018 25E0     		b	.L3
+  56              	.L2:
+  45:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (serverP == NULL) return NULL;
+  57              		.loc 1 45 8
+  58 001a 7B68     		ldr	r3, [r7, #4]
+  59 001c 002B     		cmp	r3, #0
+  60 001e 01D1     		bne	.L4
+  61              		.loc 1 45 33 discriminator 1
+  62 0020 0023     		movs	r3, #0
+  63 0022 20E0     		b	.L3
+  64              	.L4:
+  46:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  47:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     observedP = observe_findByUri(contextP, uriP);
+  65              		.loc 1 47 17
+  66 0024 B968     		ldr	r1, [r7, #8]
+  67 0026 F868     		ldr	r0, [r7, #12]
+  68 0028 FFF7FEFF 		bl	observe_findByUri
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 3
+
+
+  69 002c 7861     		str	r0, [r7, #20]
+  48:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (observedP == NULL || observedP->watcherList == NULL) return NULL;
+  70              		.loc 1 48 8
+  71 002e 7B69     		ldr	r3, [r7, #20]
+  72 0030 002B     		cmp	r3, #0
+  73 0032 03D0     		beq	.L5
+  74              		.loc 1 48 39 discriminator 2
+  75 0034 7B69     		ldr	r3, [r7, #20]
+  76 0036 DB68     		ldr	r3, [r3, #12]
+  77              		.loc 1 48 27 discriminator 2
+  78 0038 002B     		cmp	r3, #0
+  79 003a 01D1     		bne	.L6
+  80              	.L5:
+  81              		.loc 1 48 69 discriminator 3
+  82 003c 0023     		movs	r3, #0
+  83 003e 12E0     		b	.L3
+  84              	.L6:
+  49:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  50:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     for (watcherP = observedP->watcherList; watcherP != NULL; watcherP = watcherP->next)
+  85              		.loc 1 50 19
+  86 0040 7B69     		ldr	r3, [r7, #20]
+  87 0042 DB68     		ldr	r3, [r3, #12]
+  88 0044 FB61     		str	r3, [r7, #28]
+  89              		.loc 1 50 5
+  90 0046 0AE0     		b	.L7
+  91              	.L9:
+  51:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+  52:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (watcherP->server == serverP)
+  92              		.loc 1 52 21
+  93 0048 FB69     		ldr	r3, [r7, #28]
+  94 004a 9B68     		ldr	r3, [r3, #8]
+  95              		.loc 1 52 12
+  96 004c 7A68     		ldr	r2, [r7, #4]
+  97 004e 9A42     		cmp	r2, r3
+  98 0050 02D1     		bne	.L8
+  53:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+  54:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             paramP = watcherP->parameters;
+  99              		.loc 1 54 20
+ 100 0052 FB69     		ldr	r3, [r7, #28]
+ 101 0054 DB68     		ldr	r3, [r3, #12]
+ 102 0056 BB61     		str	r3, [r7, #24]
+ 103              	.L8:
+  50:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 104              		.loc 1 50 72 discriminator 2
+ 105 0058 FB69     		ldr	r3, [r7, #28]
+ 106 005a 1B68     		ldr	r3, [r3]
+ 107 005c FB61     		str	r3, [r7, #28]
+ 108              	.L7:
+  50:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 109              		.loc 1 50 5 discriminator 1
+ 110 005e FB69     		ldr	r3, [r7, #28]
+ 111 0060 002B     		cmp	r3, #0
+ 112 0062 F1D1     		bne	.L9
+  55:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+  56:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+  57:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  58:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     return paramP;
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 4
+
+
+ 113              		.loc 1 58 12
+ 114 0064 BB69     		ldr	r3, [r7, #24]
+ 115              	.L3:
+  59:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** }
+ 116              		.loc 1 59 1
+ 117 0066 1846     		mov	r0, r3
+ 118 0068 2037     		adds	r7, r7, #32
+ 119              	.LCFI3:
+ 120              		.cfi_def_cfa_offset 8
+ 121 006a BD46     		mov	sp, r7
+ 122              	.LCFI4:
+ 123              		.cfi_def_cfa_register 13
+ 124              		@ sp needed
+ 125 006c 80BD     		pop	{r7, pc}
+ 126              		.cfi_endproc
+ 127              	.LFE4:
+ 129              		.section	.rodata
+ 130              		.align	2
+ 131              	.LC0:
+ 132 0000 3B00     		.ascii	";\000"
+ 133 0002 0000     		.align	2
+ 134              	.LC1:
+ 135 0004 706D696E 		.ascii	"pmin=\000"
+ 135      3D00
+ 136 000a 0000     		.align	2
+ 137              	.LC2:
+ 138 000c 706D6178 		.ascii	"pmax=\000"
+ 138      3D00
+ 139 0012 0000     		.align	2
+ 140              	.LC3:
+ 141 0014 67743D00 		.ascii	"gt=\000"
+ 142              		.align	2
+ 143              	.LC4:
+ 144 0018 6C743D00 		.ascii	"lt=\000"
+ 145              		.align	2
+ 146              	.LC5:
+ 147 001c 73743D00 		.ascii	"st=\000"
+ 148              		.align	2
+ 149              	.LC6:
+ 150 0020 2C00     		.ascii	",\000"
+ 151              		.section	.text.prv_serializeAttributes,"ax",%progbits
+ 152              		.align	1
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 156              		.fpu fpv4-sp-d16
+ 158              	prv_serializeAttributes:
+ 159              	.LFB5:
+  60:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  61:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** static int prv_serializeAttributes(lwm2m_context_t *contextP,
+  62:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                    lwm2m_uri_t *uriP,
+  63:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                    lwm2m_server_t *serverP,
+  64:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                    lwm2m_attributes_t *objectParamP,
+  65:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                    uint8_t *buffer,
+  66:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                    size_t uriLen,
+  67:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                    size_t bufferLen)
+  68:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** {
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 5
+
+
+ 160              		.loc 1 68 1
+ 161              		.cfi_startproc
+ 162              		@ args = 12, pretend = 0, frame = 32
+ 163              		@ frame_needed = 1, uses_anonymous_args = 0
+ 164 0000 90B5     		push	{r4, r7, lr}
+ 165              	.LCFI5:
+ 166              		.cfi_def_cfa_offset 12
+ 167              		.cfi_offset 4, -12
+ 168              		.cfi_offset 7, -8
+ 169              		.cfi_offset 14, -4
+ 170 0002 89B0     		sub	sp, sp, #36
+ 171              	.LCFI6:
+ 172              		.cfi_def_cfa_offset 48
+ 173 0004 00AF     		add	r7, sp, #0
+ 174              	.LCFI7:
+ 175              		.cfi_def_cfa_register 7
+ 176 0006 F860     		str	r0, [r7, #12]
+ 177 0008 B960     		str	r1, [r7, #8]
+ 178 000a 7A60     		str	r2, [r7, #4]
+ 179 000c 3B60     		str	r3, [r7]
+  69:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     int head;
+  70:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     int res;
+  71:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_attributes_t *paramP;
+  72:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  73:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     head = 0;
+ 180              		.loc 1 73 10
+ 181 000e 0023     		movs	r3, #0
+ 182 0010 FB61     		str	r3, [r7, #28]
+  74:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  75:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     paramP = prv_findAttributes(contextP, uriP, serverP);
+ 183              		.loc 1 75 14
+ 184 0012 7A68     		ldr	r2, [r7, #4]
+ 185 0014 B968     		ldr	r1, [r7, #8]
+ 186 0016 F868     		ldr	r0, [r7, #12]
+ 187 0018 FFF7FEFF 		bl	prv_findAttributes
+ 188 001c B861     		str	r0, [r7, #24]
+  76:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (paramP == NULL) paramP = objectParamP;
+ 189              		.loc 1 76 8
+ 190 001e BB69     		ldr	r3, [r7, #24]
+ 191 0020 002B     		cmp	r3, #0
+ 192 0022 01D1     		bne	.L11
+ 193              		.loc 1 76 32 discriminator 1
+ 194 0024 3B68     		ldr	r3, [r7]
+ 195 0026 BB61     		str	r3, [r7, #24]
+ 196              	.L11:
+  77:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  78:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (paramP != NULL)
+ 197              		.loc 1 78 8
+ 198 0028 BB69     		ldr	r3, [r7, #24]
+ 199 002a 002B     		cmp	r3, #0
+ 200 002c 00F00882 		beq	.L12
+  79:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+  80:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         head = uriLen;
+ 201              		.loc 1 80 14
+ 202 0030 7B6B     		ldr	r3, [r7, #52]
+ 203 0032 FB61     		str	r3, [r7, #28]
+  81:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 6
+
+
+  82:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (paramP->toSet & LWM2M_ATTR_FLAG_MIN_PERIOD)
+ 204              		.loc 1 82 19
+ 205 0034 BB69     		ldr	r3, [r7, #24]
+ 206 0036 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 207              		.loc 1 82 27
+ 208 0038 03F00103 		and	r3, r3, #1
+ 209              		.loc 1 82 12
+ 210 003c 002B     		cmp	r3, #0
+ 211 003e 3FD0     		beq	.L13
+  83:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+  84:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ATTR_SEPARATOR, LINK_ATTR_SEPARATOR_SIZE);
+ 212              		.loc 1 84 13
+ 213 0040 FB69     		ldr	r3, [r7, #28]
+ 214 0042 BA6B     		ldr	r2, [r7, #56]
+ 215 0044 9A42     		cmp	r2, r3
+ 216 0046 02D1     		bne	.L14
+ 217              		.loc 1 84 13 is_stmt 0 discriminator 1
+ 218 0048 4FF0FF33 		mov	r3, #-1
+ 219 004c 01E2     		b	.L15
+ 220              	.L14:
+ 221              		.loc 1 84 13 discriminator 2
+ 222 004e FB69     		ldr	r3, [r7, #28]
+ 223 0050 3A6B     		ldr	r2, [r7, #48]
+ 224 0052 1344     		add	r3, r3, r2
+ 225 0054 0122     		movs	r2, #1
+ 226 0056 A449     		ldr	r1, .L44
+ 227 0058 1846     		mov	r0, r3
+ 228 005a FFF7FEFF 		bl	memcpy
+ 229 005e FB69     		ldr	r3, [r7, #28]
+ 230 0060 0133     		adds	r3, r3, #1
+ 231 0062 FB61     		str	r3, [r7, #28]
+  85:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, ATTR_MIN_PERIOD_STR, ATTR_MIN_PERIOD_LEN);
+ 232              		.loc 1 85 13 is_stmt 1 discriminator 2
+ 233 0064 FB69     		ldr	r3, [r7, #28]
+ 234 0066 BA6B     		ldr	r2, [r7, #56]
+ 235 0068 D31A     		subs	r3, r2, r3
+ 236 006a 042B     		cmp	r3, #4
+ 237 006c 02D8     		bhi	.L16
+ 238              		.loc 1 85 13 is_stmt 0 discriminator 1
+ 239 006e 4FF0FF33 		mov	r3, #-1
+ 240 0072 EEE1     		b	.L15
+ 241              	.L16:
+ 242              		.loc 1 85 13 discriminator 2
+ 243 0074 FB69     		ldr	r3, [r7, #28]
+ 244 0076 3A6B     		ldr	r2, [r7, #48]
+ 245 0078 1344     		add	r3, r3, r2
+ 246 007a 0522     		movs	r2, #5
+ 247 007c 9B49     		ldr	r1, .L44+4
+ 248 007e 1846     		mov	r0, r3
+ 249 0080 FFF7FEFF 		bl	memcpy
+ 250 0084 FB69     		ldr	r3, [r7, #28]
+ 251 0086 0533     		adds	r3, r3, #5
+ 252 0088 FB61     		str	r3, [r7, #28]
+  86:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  87:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(paramP->minPeriod, buffer + head, bufferLen - head);
+ 253              		.loc 1 87 41 is_stmt 1 discriminator 2
+ 254 008a BB69     		ldr	r3, [r7, #24]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 7
+
+
+ 255 008c 5B68     		ldr	r3, [r3, #4]
+ 256              		.loc 1 87 19 discriminator 2
+ 257 008e 1846     		mov	r0, r3
+ 258 0090 4FF00001 		mov	r1, #0
+ 259 0094 FB69     		ldr	r3, [r7, #28]
+ 260 0096 3A6B     		ldr	r2, [r7, #48]
+ 261 0098 D418     		adds	r4, r2, r3
+ 262 009a FB69     		ldr	r3, [r7, #28]
+ 263 009c BA6B     		ldr	r2, [r7, #56]
+ 264 009e D31A     		subs	r3, r2, r3
+ 265 00a0 2246     		mov	r2, r4
+ 266 00a2 FFF7FEFF 		bl	utils_intToText
+ 267 00a6 0346     		mov	r3, r0
+ 268              		.loc 1 87 17 discriminator 2
+ 269 00a8 7B61     		str	r3, [r7, #20]
+  88:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 270              		.loc 1 88 16 discriminator 2
+ 271 00aa 7B69     		ldr	r3, [r7, #20]
+ 272 00ac 002B     		cmp	r3, #0
+ 273 00ae 02DC     		bgt	.L17
+ 274              		.loc 1 88 34 discriminator 1
+ 275 00b0 4FF0FF33 		mov	r3, #-1
+ 276 00b4 CDE1     		b	.L15
+ 277              	.L17:
+  89:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 278              		.loc 1 89 18
+ 279 00b6 FA69     		ldr	r2, [r7, #28]
+ 280 00b8 7B69     		ldr	r3, [r7, #20]
+ 281 00ba 1344     		add	r3, r3, r2
+ 282 00bc FB61     		str	r3, [r7, #28]
+ 283 00be 44E0     		b	.L18
+ 284              	.L13:
+  90:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+  91:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         else if (objectParamP->toSet & LWM2M_ATTR_FLAG_MIN_PERIOD)
+ 285              		.loc 1 91 30
+ 286 00c0 3B68     		ldr	r3, [r7]
+ 287 00c2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 288              		.loc 1 91 38
+ 289 00c4 03F00103 		and	r3, r3, #1
+ 290              		.loc 1 91 17
+ 291 00c8 002B     		cmp	r3, #0
+ 292 00ca 3ED0     		beq	.L18
+  92:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+  93:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ATTR_SEPARATOR, LINK_ATTR_SEPARATOR_SIZE);
+ 293              		.loc 1 93 13
+ 294 00cc FB69     		ldr	r3, [r7, #28]
+ 295 00ce BA6B     		ldr	r2, [r7, #56]
+ 296 00d0 9A42     		cmp	r2, r3
+ 297 00d2 02D1     		bne	.L19
+ 298              		.loc 1 93 13 is_stmt 0 discriminator 1
+ 299 00d4 4FF0FF33 		mov	r3, #-1
+ 300 00d8 BBE1     		b	.L15
+ 301              	.L19:
+ 302              		.loc 1 93 13 discriminator 2
+ 303 00da FB69     		ldr	r3, [r7, #28]
+ 304 00dc 3A6B     		ldr	r2, [r7, #48]
+ 305 00de 1344     		add	r3, r3, r2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 8
+
+
+ 306 00e0 0122     		movs	r2, #1
+ 307 00e2 8149     		ldr	r1, .L44
+ 308 00e4 1846     		mov	r0, r3
+ 309 00e6 FFF7FEFF 		bl	memcpy
+ 310 00ea FB69     		ldr	r3, [r7, #28]
+ 311 00ec 0133     		adds	r3, r3, #1
+ 312 00ee FB61     		str	r3, [r7, #28]
+  94:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, ATTR_MIN_PERIOD_STR, ATTR_MIN_PERIOD_LEN);
+ 313              		.loc 1 94 13 is_stmt 1 discriminator 2
+ 314 00f0 FB69     		ldr	r3, [r7, #28]
+ 315 00f2 BA6B     		ldr	r2, [r7, #56]
+ 316 00f4 D31A     		subs	r3, r2, r3
+ 317 00f6 042B     		cmp	r3, #4
+ 318 00f8 02D8     		bhi	.L20
+ 319              		.loc 1 94 13 is_stmt 0 discriminator 1
+ 320 00fa 4FF0FF33 		mov	r3, #-1
+ 321 00fe A8E1     		b	.L15
+ 322              	.L20:
+ 323              		.loc 1 94 13 discriminator 2
+ 324 0100 FB69     		ldr	r3, [r7, #28]
+ 325 0102 3A6B     		ldr	r2, [r7, #48]
+ 326 0104 1344     		add	r3, r3, r2
+ 327 0106 0522     		movs	r2, #5
+ 328 0108 7849     		ldr	r1, .L44+4
+ 329 010a 1846     		mov	r0, r3
+ 330 010c FFF7FEFF 		bl	memcpy
+ 331 0110 FB69     		ldr	r3, [r7, #28]
+ 332 0112 0533     		adds	r3, r3, #5
+ 333 0114 FB61     		str	r3, [r7, #28]
+  95:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+  96:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(objectParamP->minPeriod, buffer + head, bufferLen - head);
+ 334              		.loc 1 96 47 is_stmt 1 discriminator 2
+ 335 0116 3B68     		ldr	r3, [r7]
+ 336 0118 5B68     		ldr	r3, [r3, #4]
+ 337              		.loc 1 96 19 discriminator 2
+ 338 011a 1846     		mov	r0, r3
+ 339 011c 4FF00001 		mov	r1, #0
+ 340 0120 FB69     		ldr	r3, [r7, #28]
+ 341 0122 3A6B     		ldr	r2, [r7, #48]
+ 342 0124 D418     		adds	r4, r2, r3
+ 343 0126 FB69     		ldr	r3, [r7, #28]
+ 344 0128 BA6B     		ldr	r2, [r7, #56]
+ 345 012a D31A     		subs	r3, r2, r3
+ 346 012c 2246     		mov	r2, r4
+ 347 012e FFF7FEFF 		bl	utils_intToText
+ 348 0132 0346     		mov	r3, r0
+ 349              		.loc 1 96 17 discriminator 2
+ 350 0134 7B61     		str	r3, [r7, #20]
+  97:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 351              		.loc 1 97 16 discriminator 2
+ 352 0136 7B69     		ldr	r3, [r7, #20]
+ 353 0138 002B     		cmp	r3, #0
+ 354 013a 02DC     		bgt	.L21
+ 355              		.loc 1 97 34 discriminator 1
+ 356 013c 4FF0FF33 		mov	r3, #-1
+ 357 0140 87E1     		b	.L15
+ 358              	.L21:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 9
+
+
+  98:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 359              		.loc 1 98 18
+ 360 0142 FA69     		ldr	r2, [r7, #28]
+ 361 0144 7B69     		ldr	r3, [r7, #20]
+ 362 0146 1344     		add	r3, r3, r2
+ 363 0148 FB61     		str	r3, [r7, #28]
+ 364              	.L18:
+  99:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 100:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 101:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (paramP->toSet & LWM2M_ATTR_FLAG_MAX_PERIOD)
+ 365              		.loc 1 101 19
+ 366 014a BB69     		ldr	r3, [r7, #24]
+ 367 014c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 368              		.loc 1 101 27
+ 369 014e 03F00203 		and	r3, r3, #2
+ 370              		.loc 1 101 12
+ 371 0152 002B     		cmp	r3, #0
+ 372 0154 3FD0     		beq	.L22
+ 102:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 103:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ATTR_SEPARATOR, LINK_ATTR_SEPARATOR_SIZE);
+ 373              		.loc 1 103 13
+ 374 0156 FB69     		ldr	r3, [r7, #28]
+ 375 0158 BA6B     		ldr	r2, [r7, #56]
+ 376 015a 9A42     		cmp	r2, r3
+ 377 015c 02D1     		bne	.L23
+ 378              		.loc 1 103 13 is_stmt 0 discriminator 1
+ 379 015e 4FF0FF33 		mov	r3, #-1
+ 380 0162 76E1     		b	.L15
+ 381              	.L23:
+ 382              		.loc 1 103 13 discriminator 2
+ 383 0164 FB69     		ldr	r3, [r7, #28]
+ 384 0166 3A6B     		ldr	r2, [r7, #48]
+ 385 0168 1344     		add	r3, r3, r2
+ 386 016a 0122     		movs	r2, #1
+ 387 016c 5E49     		ldr	r1, .L44
+ 388 016e 1846     		mov	r0, r3
+ 389 0170 FFF7FEFF 		bl	memcpy
+ 390 0174 FB69     		ldr	r3, [r7, #28]
+ 391 0176 0133     		adds	r3, r3, #1
+ 392 0178 FB61     		str	r3, [r7, #28]
+ 104:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, ATTR_MAX_PERIOD_STR, ATTR_MAX_PERIOD_LEN);
+ 393              		.loc 1 104 13 is_stmt 1 discriminator 2
+ 394 017a FB69     		ldr	r3, [r7, #28]
+ 395 017c BA6B     		ldr	r2, [r7, #56]
+ 396 017e D31A     		subs	r3, r2, r3
+ 397 0180 042B     		cmp	r3, #4
+ 398 0182 02D8     		bhi	.L24
+ 399              		.loc 1 104 13 is_stmt 0 discriminator 1
+ 400 0184 4FF0FF33 		mov	r3, #-1
+ 401 0188 63E1     		b	.L15
+ 402              	.L24:
+ 403              		.loc 1 104 13 discriminator 2
+ 404 018a FB69     		ldr	r3, [r7, #28]
+ 405 018c 3A6B     		ldr	r2, [r7, #48]
+ 406 018e 1344     		add	r3, r3, r2
+ 407 0190 0522     		movs	r2, #5
+ 408 0192 5749     		ldr	r1, .L44+8
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 10
+
+
+ 409 0194 1846     		mov	r0, r3
+ 410 0196 FFF7FEFF 		bl	memcpy
+ 411 019a FB69     		ldr	r3, [r7, #28]
+ 412 019c 0533     		adds	r3, r3, #5
+ 413 019e FB61     		str	r3, [r7, #28]
+ 105:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 106:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(paramP->maxPeriod, buffer + head, bufferLen - head);
+ 414              		.loc 1 106 41 is_stmt 1 discriminator 2
+ 415 01a0 BB69     		ldr	r3, [r7, #24]
+ 416 01a2 9B68     		ldr	r3, [r3, #8]
+ 417              		.loc 1 106 19 discriminator 2
+ 418 01a4 1846     		mov	r0, r3
+ 419 01a6 4FF00001 		mov	r1, #0
+ 420 01aa FB69     		ldr	r3, [r7, #28]
+ 421 01ac 3A6B     		ldr	r2, [r7, #48]
+ 422 01ae D418     		adds	r4, r2, r3
+ 423 01b0 FB69     		ldr	r3, [r7, #28]
+ 424 01b2 BA6B     		ldr	r2, [r7, #56]
+ 425 01b4 D31A     		subs	r3, r2, r3
+ 426 01b6 2246     		mov	r2, r4
+ 427 01b8 FFF7FEFF 		bl	utils_intToText
+ 428 01bc 0346     		mov	r3, r0
+ 429              		.loc 1 106 17 discriminator 2
+ 430 01be 7B61     		str	r3, [r7, #20]
+ 107:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 431              		.loc 1 107 16 discriminator 2
+ 432 01c0 7B69     		ldr	r3, [r7, #20]
+ 433 01c2 002B     		cmp	r3, #0
+ 434 01c4 02DC     		bgt	.L25
+ 435              		.loc 1 107 34 discriminator 1
+ 436 01c6 4FF0FF33 		mov	r3, #-1
+ 437 01ca 42E1     		b	.L15
+ 438              	.L25:
+ 108:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 439              		.loc 1 108 18
+ 440 01cc FA69     		ldr	r2, [r7, #28]
+ 441 01ce 7B69     		ldr	r3, [r7, #20]
+ 442 01d0 1344     		add	r3, r3, r2
+ 443 01d2 FB61     		str	r3, [r7, #28]
+ 444 01d4 44E0     		b	.L26
+ 445              	.L22:
+ 109:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 110:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         else if (objectParamP->toSet & LWM2M_ATTR_FLAG_MAX_PERIOD)
+ 446              		.loc 1 110 30
+ 447 01d6 3B68     		ldr	r3, [r7]
+ 448 01d8 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 449              		.loc 1 110 38
+ 450 01da 03F00203 		and	r3, r3, #2
+ 451              		.loc 1 110 17
+ 452 01de 002B     		cmp	r3, #0
+ 453 01e0 3ED0     		beq	.L26
+ 111:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 112:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ATTR_SEPARATOR, LINK_ATTR_SEPARATOR_SIZE);
+ 454              		.loc 1 112 13
+ 455 01e2 FB69     		ldr	r3, [r7, #28]
+ 456 01e4 BA6B     		ldr	r2, [r7, #56]
+ 457 01e6 9A42     		cmp	r2, r3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 11
+
+
+ 458 01e8 02D1     		bne	.L27
+ 459              		.loc 1 112 13 is_stmt 0 discriminator 1
+ 460 01ea 4FF0FF33 		mov	r3, #-1
+ 461 01ee 30E1     		b	.L15
+ 462              	.L27:
+ 463              		.loc 1 112 13 discriminator 2
+ 464 01f0 FB69     		ldr	r3, [r7, #28]
+ 465 01f2 3A6B     		ldr	r2, [r7, #48]
+ 466 01f4 1344     		add	r3, r3, r2
+ 467 01f6 0122     		movs	r2, #1
+ 468 01f8 3B49     		ldr	r1, .L44
+ 469 01fa 1846     		mov	r0, r3
+ 470 01fc FFF7FEFF 		bl	memcpy
+ 471 0200 FB69     		ldr	r3, [r7, #28]
+ 472 0202 0133     		adds	r3, r3, #1
+ 473 0204 FB61     		str	r3, [r7, #28]
+ 113:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, ATTR_MAX_PERIOD_STR, ATTR_MAX_PERIOD_LEN);
+ 474              		.loc 1 113 13 is_stmt 1 discriminator 2
+ 475 0206 FB69     		ldr	r3, [r7, #28]
+ 476 0208 BA6B     		ldr	r2, [r7, #56]
+ 477 020a D31A     		subs	r3, r2, r3
+ 478 020c 042B     		cmp	r3, #4
+ 479 020e 02D8     		bhi	.L28
+ 480              		.loc 1 113 13 is_stmt 0 discriminator 1
+ 481 0210 4FF0FF33 		mov	r3, #-1
+ 482 0214 1DE1     		b	.L15
+ 483              	.L28:
+ 484              		.loc 1 113 13 discriminator 2
+ 485 0216 FB69     		ldr	r3, [r7, #28]
+ 486 0218 3A6B     		ldr	r2, [r7, #48]
+ 487 021a 1344     		add	r3, r3, r2
+ 488 021c 0522     		movs	r2, #5
+ 489 021e 3449     		ldr	r1, .L44+8
+ 490 0220 1846     		mov	r0, r3
+ 491 0222 FFF7FEFF 		bl	memcpy
+ 492 0226 FB69     		ldr	r3, [r7, #28]
+ 493 0228 0533     		adds	r3, r3, #5
+ 494 022a FB61     		str	r3, [r7, #28]
+ 114:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 115:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(objectParamP->maxPeriod, buffer + head, bufferLen - head);
+ 495              		.loc 1 115 47 is_stmt 1 discriminator 2
+ 496 022c 3B68     		ldr	r3, [r7]
+ 497 022e 9B68     		ldr	r3, [r3, #8]
+ 498              		.loc 1 115 19 discriminator 2
+ 499 0230 1846     		mov	r0, r3
+ 500 0232 4FF00001 		mov	r1, #0
+ 501 0236 FB69     		ldr	r3, [r7, #28]
+ 502 0238 3A6B     		ldr	r2, [r7, #48]
+ 503 023a D418     		adds	r4, r2, r3
+ 504 023c FB69     		ldr	r3, [r7, #28]
+ 505 023e BA6B     		ldr	r2, [r7, #56]
+ 506 0240 D31A     		subs	r3, r2, r3
+ 507 0242 2246     		mov	r2, r4
+ 508 0244 FFF7FEFF 		bl	utils_intToText
+ 509 0248 0346     		mov	r3, r0
+ 510              		.loc 1 115 17 discriminator 2
+ 511 024a 7B61     		str	r3, [r7, #20]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 12
+
+
+ 116:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 512              		.loc 1 116 16 discriminator 2
+ 513 024c 7B69     		ldr	r3, [r7, #20]
+ 514 024e 002B     		cmp	r3, #0
+ 515 0250 02DC     		bgt	.L29
+ 516              		.loc 1 116 34 discriminator 1
+ 517 0252 4FF0FF33 		mov	r3, #-1
+ 518 0256 FCE0     		b	.L15
+ 519              	.L29:
+ 117:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 520              		.loc 1 117 18
+ 521 0258 FA69     		ldr	r2, [r7, #28]
+ 522 025a 7B69     		ldr	r3, [r7, #20]
+ 523 025c 1344     		add	r3, r3, r2
+ 524 025e FB61     		str	r3, [r7, #28]
+ 525              	.L26:
+ 118:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 119:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 120:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (paramP->toSet & LWM2M_ATTR_FLAG_GREATER_THAN)
+ 526              		.loc 1 120 19
+ 527 0260 BB69     		ldr	r3, [r7, #24]
+ 528 0262 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 529              		.loc 1 120 27
+ 530 0264 03F00403 		and	r3, r3, #4
+ 531              		.loc 1 120 12
+ 532 0268 002B     		cmp	r3, #0
+ 533 026a 49D0     		beq	.L30
+ 121:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 122:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ATTR_SEPARATOR, LINK_ATTR_SEPARATOR_SIZE);
+ 534              		.loc 1 122 13
+ 535 026c FB69     		ldr	r3, [r7, #28]
+ 536 026e BA6B     		ldr	r2, [r7, #56]
+ 537 0270 9A42     		cmp	r2, r3
+ 538 0272 02D1     		bne	.L31
+ 539              		.loc 1 122 13 is_stmt 0 discriminator 1
+ 540 0274 4FF0FF33 		mov	r3, #-1
+ 541 0278 EBE0     		b	.L15
+ 542              	.L31:
+ 543              		.loc 1 122 13 discriminator 2
+ 544 027a FB69     		ldr	r3, [r7, #28]
+ 545 027c 3A6B     		ldr	r2, [r7, #48]
+ 546 027e 1344     		add	r3, r3, r2
+ 547 0280 0122     		movs	r2, #1
+ 548 0282 1949     		ldr	r1, .L44
+ 549 0284 1846     		mov	r0, r3
+ 550 0286 FFF7FEFF 		bl	memcpy
+ 551 028a FB69     		ldr	r3, [r7, #28]
+ 552 028c 0133     		adds	r3, r3, #1
+ 553 028e FB61     		str	r3, [r7, #28]
+ 123:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, ATTR_GREATER_THAN_STR, ATTR_GREATER_THAN_LEN);
+ 554              		.loc 1 123 13 is_stmt 1 discriminator 2
+ 555 0290 FB69     		ldr	r3, [r7, #28]
+ 556 0292 BA6B     		ldr	r2, [r7, #56]
+ 557 0294 D31A     		subs	r3, r2, r3
+ 558 0296 022B     		cmp	r3, #2
+ 559 0298 02D8     		bhi	.L32
+ 560              		.loc 1 123 13 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 13
+
+
+ 561 029a 4FF0FF33 		mov	r3, #-1
+ 562 029e D8E0     		b	.L15
+ 563              	.L32:
+ 564              		.loc 1 123 13 discriminator 2
+ 565 02a0 FB69     		ldr	r3, [r7, #28]
+ 566 02a2 3A6B     		ldr	r2, [r7, #48]
+ 567 02a4 1344     		add	r3, r3, r2
+ 568 02a6 0322     		movs	r2, #3
+ 569 02a8 1249     		ldr	r1, .L44+12
+ 570 02aa 1846     		mov	r0, r3
+ 571 02ac FFF7FEFF 		bl	memcpy
+ 572 02b0 FB69     		ldr	r3, [r7, #28]
+ 573 02b2 0333     		adds	r3, r3, #3
+ 574 02b4 FB61     		str	r3, [r7, #28]
+ 124:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 125:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_floatToText(paramP->greaterThan, buffer + head, bufferLen - head);
+ 575              		.loc 1 125 19 is_stmt 1 discriminator 2
+ 576 02b6 BB69     		ldr	r3, [r7, #24]
+ 577 02b8 93ED047B 		vldr.64	d7, [r3, #16]
+ 578 02bc FB69     		ldr	r3, [r7, #28]
+ 579 02be 3A6B     		ldr	r2, [r7, #48]
+ 580 02c0 D018     		adds	r0, r2, r3
+ 581 02c2 FB69     		ldr	r3, [r7, #28]
+ 582 02c4 BA6B     		ldr	r2, [r7, #56]
+ 583 02c6 D31A     		subs	r3, r2, r3
+ 584 02c8 1946     		mov	r1, r3
+ 585 02ca B0EE470A 		vmov.f32	s0, s14
+ 586 02ce F0EE670A 		vmov.f32	s1, s15
+ 587 02d2 FFF7FEFF 		bl	utils_floatToText
+ 588 02d6 0346     		mov	r3, r0
+ 589              		.loc 1 125 17 discriminator 2
+ 590 02d8 7B61     		str	r3, [r7, #20]
+ 126:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 591              		.loc 1 126 16 discriminator 2
+ 592 02da 7B69     		ldr	r3, [r7, #20]
+ 593 02dc 002B     		cmp	r3, #0
+ 594 02de 0BDC     		bgt	.L33
+ 595              		.loc 1 126 34 discriminator 1
+ 596 02e0 4FF0FF33 		mov	r3, #-1
+ 597 02e4 B5E0     		b	.L15
+ 598              	.L45:
+ 599 02e6 00BF     		.align	2
+ 600              	.L44:
+ 601 02e8 00000000 		.word	.LC0
+ 602 02ec 04000000 		.word	.LC1
+ 603 02f0 0C000000 		.word	.LC2
+ 604 02f4 14000000 		.word	.LC3
+ 605              	.L33:
+ 127:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 606              		.loc 1 127 18
+ 607 02f8 FA69     		ldr	r2, [r7, #28]
+ 608 02fa 7B69     		ldr	r3, [r7, #20]
+ 609 02fc 1344     		add	r3, r3, r2
+ 610 02fe FB61     		str	r3, [r7, #28]
+ 611              	.L30:
+ 128:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 129:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (paramP->toSet & LWM2M_ATTR_FLAG_LESS_THAN)
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 14
+
+
+ 612              		.loc 1 129 19
+ 613 0300 BB69     		ldr	r3, [r7, #24]
+ 614 0302 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 615              		.loc 1 129 27
+ 616 0304 03F00803 		and	r3, r3, #8
+ 617              		.loc 1 129 12
+ 618 0308 002B     		cmp	r3, #0
+ 619 030a 40D0     		beq	.L34
+ 130:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 131:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ATTR_SEPARATOR, LINK_ATTR_SEPARATOR_SIZE);
+ 620              		.loc 1 131 13
+ 621 030c FB69     		ldr	r3, [r7, #28]
+ 622 030e BA6B     		ldr	r2, [r7, #56]
+ 623 0310 9A42     		cmp	r2, r3
+ 624 0312 02D1     		bne	.L35
+ 625              		.loc 1 131 13 is_stmt 0 discriminator 1
+ 626 0314 4FF0FF33 		mov	r3, #-1
+ 627 0318 9BE0     		b	.L15
+ 628              	.L35:
+ 629              		.loc 1 131 13 discriminator 2
+ 630 031a FB69     		ldr	r3, [r7, #28]
+ 631 031c 3A6B     		ldr	r2, [r7, #48]
+ 632 031e 1344     		add	r3, r3, r2
+ 633 0320 0122     		movs	r2, #1
+ 634 0322 4E49     		ldr	r1, .L46
+ 635 0324 1846     		mov	r0, r3
+ 636 0326 FFF7FEFF 		bl	memcpy
+ 637 032a FB69     		ldr	r3, [r7, #28]
+ 638 032c 0133     		adds	r3, r3, #1
+ 639 032e FB61     		str	r3, [r7, #28]
+ 132:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, ATTR_LESS_THAN_STR, ATTR_LESS_THAN_LEN);
+ 640              		.loc 1 132 13 is_stmt 1 discriminator 2
+ 641 0330 FB69     		ldr	r3, [r7, #28]
+ 642 0332 BA6B     		ldr	r2, [r7, #56]
+ 643 0334 D31A     		subs	r3, r2, r3
+ 644 0336 022B     		cmp	r3, #2
+ 645 0338 02D8     		bhi	.L36
+ 646              		.loc 1 132 13 is_stmt 0 discriminator 1
+ 647 033a 4FF0FF33 		mov	r3, #-1
+ 648 033e 88E0     		b	.L15
+ 649              	.L36:
+ 650              		.loc 1 132 13 discriminator 2
+ 651 0340 FB69     		ldr	r3, [r7, #28]
+ 652 0342 3A6B     		ldr	r2, [r7, #48]
+ 653 0344 1344     		add	r3, r3, r2
+ 654 0346 0322     		movs	r2, #3
+ 655 0348 4549     		ldr	r1, .L46+4
+ 656 034a 1846     		mov	r0, r3
+ 657 034c FFF7FEFF 		bl	memcpy
+ 658 0350 FB69     		ldr	r3, [r7, #28]
+ 659 0352 0333     		adds	r3, r3, #3
+ 660 0354 FB61     		str	r3, [r7, #28]
+ 133:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 134:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_floatToText(paramP->lessThan, buffer + head, bufferLen - head);
+ 661              		.loc 1 134 19 is_stmt 1 discriminator 2
+ 662 0356 BB69     		ldr	r3, [r7, #24]
+ 663 0358 93ED067B 		vldr.64	d7, [r3, #24]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 15
+
+
+ 664 035c FB69     		ldr	r3, [r7, #28]
+ 665 035e 3A6B     		ldr	r2, [r7, #48]
+ 666 0360 D018     		adds	r0, r2, r3
+ 667 0362 FB69     		ldr	r3, [r7, #28]
+ 668 0364 BA6B     		ldr	r2, [r7, #56]
+ 669 0366 D31A     		subs	r3, r2, r3
+ 670 0368 1946     		mov	r1, r3
+ 671 036a B0EE470A 		vmov.f32	s0, s14
+ 672 036e F0EE670A 		vmov.f32	s1, s15
+ 673 0372 FFF7FEFF 		bl	utils_floatToText
+ 674 0376 0346     		mov	r3, r0
+ 675              		.loc 1 134 17 discriminator 2
+ 676 0378 7B61     		str	r3, [r7, #20]
+ 135:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 677              		.loc 1 135 16 discriminator 2
+ 678 037a 7B69     		ldr	r3, [r7, #20]
+ 679 037c 002B     		cmp	r3, #0
+ 680 037e 02DC     		bgt	.L37
+ 681              		.loc 1 135 34 discriminator 1
+ 682 0380 4FF0FF33 		mov	r3, #-1
+ 683 0384 65E0     		b	.L15
+ 684              	.L37:
+ 136:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 685              		.loc 1 136 18
+ 686 0386 FA69     		ldr	r2, [r7, #28]
+ 687 0388 7B69     		ldr	r3, [r7, #20]
+ 688 038a 1344     		add	r3, r3, r2
+ 689 038c FB61     		str	r3, [r7, #28]
+ 690              	.L34:
+ 137:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 138:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (paramP->toSet & LWM2M_ATTR_FLAG_STEP)
+ 691              		.loc 1 138 19
+ 692 038e BB69     		ldr	r3, [r7, #24]
+ 693 0390 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 694              		.loc 1 138 27
+ 695 0392 03F01003 		and	r3, r3, #16
+ 696              		.loc 1 138 12
+ 697 0396 002B     		cmp	r3, #0
+ 698 0398 40D0     		beq	.L38
+ 139:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 140:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ATTR_SEPARATOR, LINK_ATTR_SEPARATOR_SIZE);
+ 699              		.loc 1 140 13
+ 700 039a FB69     		ldr	r3, [r7, #28]
+ 701 039c BA6B     		ldr	r2, [r7, #56]
+ 702 039e 9A42     		cmp	r2, r3
+ 703 03a0 02D1     		bne	.L39
+ 704              		.loc 1 140 13 is_stmt 0 discriminator 1
+ 705 03a2 4FF0FF33 		mov	r3, #-1
+ 706 03a6 54E0     		b	.L15
+ 707              	.L39:
+ 708              		.loc 1 140 13 discriminator 2
+ 709 03a8 FB69     		ldr	r3, [r7, #28]
+ 710 03aa 3A6B     		ldr	r2, [r7, #48]
+ 711 03ac 1344     		add	r3, r3, r2
+ 712 03ae 0122     		movs	r2, #1
+ 713 03b0 2A49     		ldr	r1, .L46
+ 714 03b2 1846     		mov	r0, r3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 16
+
+
+ 715 03b4 FFF7FEFF 		bl	memcpy
+ 716 03b8 FB69     		ldr	r3, [r7, #28]
+ 717 03ba 0133     		adds	r3, r3, #1
+ 718 03bc FB61     		str	r3, [r7, #28]
+ 141:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(buffer, bufferLen, head, ATTR_STEP_STR, ATTR_STEP_LEN);
+ 719              		.loc 1 141 13 is_stmt 1 discriminator 2
+ 720 03be FB69     		ldr	r3, [r7, #28]
+ 721 03c0 BA6B     		ldr	r2, [r7, #56]
+ 722 03c2 D31A     		subs	r3, r2, r3
+ 723 03c4 022B     		cmp	r3, #2
+ 724 03c6 02D8     		bhi	.L40
+ 725              		.loc 1 141 13 is_stmt 0 discriminator 1
+ 726 03c8 4FF0FF33 		mov	r3, #-1
+ 727 03cc 41E0     		b	.L15
+ 728              	.L40:
+ 729              		.loc 1 141 13 discriminator 2
+ 730 03ce FB69     		ldr	r3, [r7, #28]
+ 731 03d0 3A6B     		ldr	r2, [r7, #48]
+ 732 03d2 1344     		add	r3, r3, r2
+ 733 03d4 0322     		movs	r2, #3
+ 734 03d6 2349     		ldr	r1, .L46+8
+ 735 03d8 1846     		mov	r0, r3
+ 736 03da FFF7FEFF 		bl	memcpy
+ 737 03de FB69     		ldr	r3, [r7, #28]
+ 738 03e0 0333     		adds	r3, r3, #3
+ 739 03e2 FB61     		str	r3, [r7, #28]
+ 142:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 143:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_floatToText(paramP->step, buffer + head, bufferLen - head);
+ 740              		.loc 1 143 19 is_stmt 1 discriminator 2
+ 741 03e4 BB69     		ldr	r3, [r7, #24]
+ 742 03e6 93ED087B 		vldr.64	d7, [r3, #32]
+ 743 03ea FB69     		ldr	r3, [r7, #28]
+ 744 03ec 3A6B     		ldr	r2, [r7, #48]
+ 745 03ee D018     		adds	r0, r2, r3
+ 746 03f0 FB69     		ldr	r3, [r7, #28]
+ 747 03f2 BA6B     		ldr	r2, [r7, #56]
+ 748 03f4 D31A     		subs	r3, r2, r3
+ 749 03f6 1946     		mov	r1, r3
+ 750 03f8 B0EE470A 		vmov.f32	s0, s14
+ 751 03fc F0EE670A 		vmov.f32	s1, s15
+ 752 0400 FFF7FEFF 		bl	utils_floatToText
+ 753 0404 0346     		mov	r3, r0
+ 754              		.loc 1 143 17 discriminator 2
+ 755 0406 7B61     		str	r3, [r7, #20]
+ 144:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 756              		.loc 1 144 16 discriminator 2
+ 757 0408 7B69     		ldr	r3, [r7, #20]
+ 758 040a 002B     		cmp	r3, #0
+ 759 040c 02DC     		bgt	.L41
+ 760              		.loc 1 144 34 discriminator 1
+ 761 040e 4FF0FF33 		mov	r3, #-1
+ 762 0412 1EE0     		b	.L15
+ 763              	.L41:
+ 145:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 764              		.loc 1 145 18
+ 765 0414 FA69     		ldr	r2, [r7, #28]
+ 766 0416 7B69     		ldr	r3, [r7, #20]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 17
+
+
+ 767 0418 1344     		add	r3, r3, r2
+ 768 041a FB61     		str	r3, [r7, #28]
+ 769              	.L38:
+ 146:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 147:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ITEM_ATTR_END, LINK_ITEM_ATTR_END_SIZE);
+ 770              		.loc 1 147 9
+ 771 041c FB69     		ldr	r3, [r7, #28]
+ 772 041e BA6B     		ldr	r2, [r7, #56]
+ 773 0420 9A42     		cmp	r2, r3
+ 774 0422 02D1     		bne	.L42
+ 775              		.loc 1 147 9 is_stmt 0 discriminator 1
+ 776 0424 4FF0FF33 		mov	r3, #-1
+ 777 0428 13E0     		b	.L15
+ 778              	.L42:
+ 779              		.loc 1 147 9 discriminator 2
+ 780 042a FB69     		ldr	r3, [r7, #28]
+ 781 042c 3A6B     		ldr	r2, [r7, #48]
+ 782 042e 1344     		add	r3, r3, r2
+ 783 0430 0122     		movs	r2, #1
+ 784 0432 0D49     		ldr	r1, .L46+12
+ 785 0434 1846     		mov	r0, r3
+ 786 0436 FFF7FEFF 		bl	memcpy
+ 787 043a FB69     		ldr	r3, [r7, #28]
+ 788 043c 0133     		adds	r3, r3, #1
+ 789 043e FB61     		str	r3, [r7, #28]
+ 790              	.L12:
+ 148:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+ 149:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 150:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (head > 0) head -= uriLen + 1;
+ 791              		.loc 1 150 8 is_stmt 1
+ 792 0440 FB69     		ldr	r3, [r7, #28]
+ 793 0442 002B     		cmp	r3, #0
+ 794 0444 04DD     		ble	.L43
+ 795              		.loc 1 150 24 discriminator 1
+ 796 0446 FA69     		ldr	r2, [r7, #28]
+ 797 0448 7B6B     		ldr	r3, [r7, #52]
+ 798 044a D31A     		subs	r3, r2, r3
+ 799 044c 013B     		subs	r3, r3, #1
+ 800 044e FB61     		str	r3, [r7, #28]
+ 801              	.L43:
+ 151:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 152:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     return head;
+ 802              		.loc 1 152 12
+ 803 0450 FB69     		ldr	r3, [r7, #28]
+ 804              	.L15:
+ 153:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** }
+ 805              		.loc 1 153 1
+ 806 0452 1846     		mov	r0, r3
+ 807 0454 2437     		adds	r7, r7, #36
+ 808              	.LCFI8:
+ 809              		.cfi_def_cfa_offset 12
+ 810 0456 BD46     		mov	sp, r7
+ 811              	.LCFI9:
+ 812              		.cfi_def_cfa_register 13
+ 813              		@ sp needed
+ 814 0458 90BD     		pop	{r4, r7, pc}
+ 815              	.L47:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 18
+
+
+ 816 045a 00BF     		.align	2
+ 817              	.L46:
+ 818 045c 00000000 		.word	.LC0
+ 819 0460 18000000 		.word	.LC4
+ 820 0464 1C000000 		.word	.LC5
+ 821 0468 20000000 		.word	.LC6
+ 822              		.cfi_endproc
+ 823              	.LFE5:
+ 825              		.section	.rodata
+ 826 0022 0000     		.align	2
+ 827              	.LC7:
+ 828 0024 3C00     		.ascii	"<\000"
+ 829 0026 0000     		.align	2
+ 830              	.LC8:
+ 831 0028 2F00     		.ascii	"/\000"
+ 832 002a 0000     		.align	2
+ 833              	.LC9:
+ 834 002c 3E3B6469 		.ascii	">;dim=\000"
+ 834      6D3D00
+ 835 0033 00       		.align	2
+ 836              	.LC10:
+ 837 0034 3E2C00   		.ascii	">,\000"
+ 838              		.section	.text.prv_serializeLinkData,"ax",%progbits
+ 839              		.align	1
+ 840              		.syntax unified
+ 841              		.thumb
+ 842              		.thumb_func
+ 843              		.fpu fpv4-sp-d16
+ 845              	prv_serializeLinkData:
+ 846              	.LFB6:
+ 154:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 155:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** static int prv_serializeLinkData(lwm2m_context_t *contextP,
+ 156:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  lwm2m_data_t *tlvP,
+ 157:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  lwm2m_server_t *serverP,
+ 158:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  lwm2m_attributes_t *objectParamP,
+ 159:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  lwm2m_uri_t *parentUriP,
+ 160:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  uint8_t *parentUriStr,
+ 161:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  size_t parentUriLen,
+ 162:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  uint8_t *buffer,
+ 163:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                                  size_t bufferLen)
+ 164:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** {
+ 847              		.loc 1 164 1
+ 848              		.cfi_startproc
+ 849              		@ args = 20, pretend = 0, frame = 64
+ 850              		@ frame_needed = 1, uses_anonymous_args = 0
+ 851 0000 90B5     		push	{r4, r7, lr}
+ 852              	.LCFI10:
+ 853              		.cfi_def_cfa_offset 12
+ 854              		.cfi_offset 4, -12
+ 855              		.cfi_offset 7, -8
+ 856              		.cfi_offset 14, -4
+ 857 0002 97B0     		sub	sp, sp, #92
+ 858              	.LCFI11:
+ 859              		.cfi_def_cfa_offset 104
+ 860 0004 06AF     		add	r7, sp, #24
+ 861              	.LCFI12:
+ 862              		.cfi_def_cfa 7, 80
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 19
+
+
+ 863 0006 F860     		str	r0, [r7, #12]
+ 864 0008 B960     		str	r1, [r7, #8]
+ 865 000a 7A60     		str	r2, [r7, #4]
+ 866 000c 3B60     		str	r3, [r7]
+ 165:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     int head;
+ 166:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     int res;
+ 167:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_uri_t uri;
+ 168:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 169:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     head = 0;
+ 867              		.loc 1 169 10
+ 868 000e 0023     		movs	r3, #0
+ 869 0010 FB63     		str	r3, [r7, #60]
+ 170:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 171:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     switch (tlvP->type)
+ 870              		.loc 1 171 17
+ 871 0012 BB68     		ldr	r3, [r7, #8]
+ 872 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 873              		.loc 1 171 5
+ 874 0016 092B     		cmp	r3, #9
+ 875 0018 00F3D581 		bgt	.L49
+ 876 001c 032B     		cmp	r3, #3
+ 877 001e 05DA     		bge	.L50
+ 878 0020 002B     		cmp	r3, #0
+ 879 0022 03D0     		beq	.L50
+ 880 0024 022B     		cmp	r3, #2
+ 881 0026 00F0E080 		beq	.L51
+ 882 002a CCE1     		b	.L49
+ 883              	.L50:
+ 172:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 173:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_UNDEFINED:
+ 174:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_STRING:
+ 175:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_OPAQUE:
+ 176:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_INTEGER:
+ 177:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_FLOAT:
+ 178:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_BOOLEAN:
+ 179:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_OBJECT_LINK:
+ 180:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_MULTIPLE_RESOURCE:
+ 181:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (bufferLen < LINK_ITEM_START_SIZE) return -1;
+ 884              		.loc 1 181 12
+ 885 002c 3B6E     		ldr	r3, [r7, #96]
+ 886 002e 002B     		cmp	r3, #0
+ 887 0030 02D1     		bne	.L52
+ 888              		.loc 1 181 54 discriminator 1
+ 889 0032 4FF0FF33 		mov	r3, #-1
+ 890 0036 CBE1     		b	.L82
+ 891              	.L52:
+ 182:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         memcpy(buffer + head, LINK_ITEM_START, LINK_ITEM_START_SIZE);
+ 892              		.loc 1 182 9
+ 893 0038 FB6B     		ldr	r3, [r7, #60]
+ 894              		.loc 1 182 23
+ 895 003a FA6D     		ldr	r2, [r7, #92]
+ 896 003c 1344     		add	r3, r3, r2
+ 897              		.loc 1 182 9
+ 898 003e 0122     		movs	r2, #1
+ 899 0040 A149     		ldr	r1, .L84
+ 900 0042 1846     		mov	r0, r3
+ 901 0044 FFF7FEFF 		bl	memcpy
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 20
+
+
+ 183:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         head = LINK_ITEM_START_SIZE;
+ 902              		.loc 1 183 14
+ 903 0048 0123     		movs	r3, #1
+ 904 004a FB63     		str	r3, [r7, #60]
+ 184:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 185:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (parentUriLen > 0)
+ 905              		.loc 1 185 12
+ 906 004c BB6D     		ldr	r3, [r7, #88]
+ 907 004e 002B     		cmp	r3, #0
+ 908 0050 14D0     		beq	.L54
+ 186:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 187:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (bufferLen - head < parentUriLen) return -1;
+ 909              		.loc 1 187 27
+ 910 0052 FB6B     		ldr	r3, [r7, #60]
+ 911 0054 3A6E     		ldr	r2, [r7, #96]
+ 912 0056 D31A     		subs	r3, r2, r3
+ 913              		.loc 1 187 16
+ 914 0058 BA6D     		ldr	r2, [r7, #88]
+ 915 005a 9A42     		cmp	r2, r3
+ 916 005c 02D9     		bls	.L55
+ 917              		.loc 1 187 57 discriminator 1
+ 918 005e 4FF0FF33 		mov	r3, #-1
+ 919 0062 B5E1     		b	.L82
+ 920              	.L55:
+ 188:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             memcpy(buffer + head, parentUriStr, parentUriLen);
+ 921              		.loc 1 188 13
+ 922 0064 FB6B     		ldr	r3, [r7, #60]
+ 923              		.loc 1 188 27
+ 924 0066 FA6D     		ldr	r2, [r7, #92]
+ 925 0068 1344     		add	r3, r3, r2
+ 926              		.loc 1 188 13
+ 927 006a BA6D     		ldr	r2, [r7, #88]
+ 928 006c 796D     		ldr	r1, [r7, #84]
+ 929 006e 1846     		mov	r0, r3
+ 930 0070 FFF7FEFF 		bl	memcpy
+ 189:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += parentUriLen;
+ 931              		.loc 1 189 18
+ 932 0074 FA6B     		ldr	r2, [r7, #60]
+ 933 0076 BB6D     		ldr	r3, [r7, #88]
+ 934 0078 1344     		add	r3, r3, r2
+ 935 007a FB63     		str	r3, [r7, #60]
+ 936              	.L54:
+ 190:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 191:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 192:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (bufferLen - head < LINK_URI_SEPARATOR_SIZE) return -1;
+ 937              		.loc 1 192 30
+ 938 007c FB6B     		ldr	r3, [r7, #60]
+ 939              		.loc 1 192 12
+ 940 007e 3A6E     		ldr	r2, [r7, #96]
+ 941 0080 9A42     		cmp	r2, r3
+ 942 0082 02D1     		bne	.L56
+ 943              		.loc 1 192 64 discriminator 1
+ 944 0084 4FF0FF33 		mov	r3, #-1
+ 945 0088 A2E1     		b	.L82
+ 946              	.L56:
+ 193:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         memcpy(buffer + head, LINK_URI_SEPARATOR, LINK_URI_SEPARATOR_SIZE);
+ 947              		.loc 1 193 9
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 21
+
+
+ 948 008a FB6B     		ldr	r3, [r7, #60]
+ 949              		.loc 1 193 23
+ 950 008c FA6D     		ldr	r2, [r7, #92]
+ 951 008e 1344     		add	r3, r3, r2
+ 952              		.loc 1 193 9
+ 953 0090 0122     		movs	r2, #1
+ 954 0092 8E49     		ldr	r1, .L84+4
+ 955 0094 1846     		mov	r0, r3
+ 956 0096 FFF7FEFF 		bl	memcpy
+ 194:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         head += LINK_URI_SEPARATOR_SIZE;
+ 957              		.loc 1 194 14
+ 958 009a FB6B     		ldr	r3, [r7, #60]
+ 959 009c 0133     		adds	r3, r3, #1
+ 960 009e FB63     		str	r3, [r7, #60]
+ 195:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 196:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         res = utils_intToText(tlvP->id, buffer + head, bufferLen - head);
+ 961              		.loc 1 196 35
+ 962 00a0 BB68     		ldr	r3, [r7, #8]
+ 963 00a2 5B88     		ldrh	r3, [r3, #2]
+ 964              		.loc 1 196 15
+ 965 00a4 98B2     		uxth	r0, r3
+ 966 00a6 4FF00001 		mov	r1, #0
+ 967 00aa FB6B     		ldr	r3, [r7, #60]
+ 968 00ac FA6D     		ldr	r2, [r7, #92]
+ 969 00ae D418     		adds	r4, r2, r3
+ 970 00b0 FB6B     		ldr	r3, [r7, #60]
+ 971 00b2 3A6E     		ldr	r2, [r7, #96]
+ 972 00b4 D31A     		subs	r3, r2, r3
+ 973 00b6 2246     		mov	r2, r4
+ 974 00b8 FFF7FEFF 		bl	utils_intToText
+ 975 00bc 0346     		mov	r3, r0
+ 976              		.loc 1 196 13
+ 977 00be 3B63     		str	r3, [r7, #48]
+ 197:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (res <= 0) return -1;
+ 978              		.loc 1 197 12
+ 979 00c0 3B6B     		ldr	r3, [r7, #48]
+ 980 00c2 002B     		cmp	r3, #0
+ 981 00c4 02DC     		bgt	.L57
+ 982              		.loc 1 197 30 discriminator 1
+ 983 00c6 4FF0FF33 		mov	r3, #-1
+ 984 00ca 81E1     		b	.L82
+ 985              	.L57:
+ 198:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         head += res;
+ 986              		.loc 1 198 14
+ 987 00cc FA6B     		ldr	r2, [r7, #60]
+ 988 00ce 3B6B     		ldr	r3, [r7, #48]
+ 989 00d0 1344     		add	r3, r3, r2
+ 990 00d2 FB63     		str	r3, [r7, #60]
+ 199:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 200:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (tlvP->type == LWM2M_TYPE_MULTIPLE_RESOURCE)
+ 991              		.loc 1 200 17
+ 992 00d4 BB68     		ldr	r3, [r7, #8]
+ 993 00d6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 994              		.loc 1 200 12
+ 995 00d8 032B     		cmp	r3, #3
+ 996 00da 3FD1     		bne	.L58
+ 201:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 22
+
+
+ 202:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (bufferLen - head < LINK_ITEM_DIM_START_SIZE) return -1;
+ 997              		.loc 1 202 27
+ 998 00dc FB6B     		ldr	r3, [r7, #60]
+ 999 00de 3A6E     		ldr	r2, [r7, #96]
+ 1000 00e0 D31A     		subs	r3, r2, r3
+ 1001              		.loc 1 202 16
+ 1002 00e2 052B     		cmp	r3, #5
+ 1003 00e4 02D8     		bhi	.L59
+ 1004              		.loc 1 202 69 discriminator 1
+ 1005 00e6 4FF0FF33 		mov	r3, #-1
+ 1006 00ea 71E1     		b	.L82
+ 1007              	.L59:
+ 203:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             memcpy(buffer + head, LINK_ITEM_DIM_START, LINK_ITEM_DIM_START_SIZE);
+ 1008              		.loc 1 203 13
+ 1009 00ec FB6B     		ldr	r3, [r7, #60]
+ 1010              		.loc 1 203 27
+ 1011 00ee FA6D     		ldr	r2, [r7, #92]
+ 1012 00f0 1344     		add	r3, r3, r2
+ 1013              		.loc 1 203 13
+ 1014 00f2 0622     		movs	r2, #6
+ 1015 00f4 7649     		ldr	r1, .L84+8
+ 1016 00f6 1846     		mov	r0, r3
+ 1017 00f8 FFF7FEFF 		bl	memcpy
+ 204:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += LINK_ITEM_DIM_START_SIZE;
+ 1018              		.loc 1 204 18
+ 1019 00fc FB6B     		ldr	r3, [r7, #60]
+ 1020 00fe 0633     		adds	r3, r3, #6
+ 1021 0100 FB63     		str	r3, [r7, #60]
+ 205:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 206:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(tlvP->value.asChildren.count, buffer + head, bufferLen - head);
+ 1022              		.loc 1 206 57
+ 1023 0102 BB68     		ldr	r3, [r7, #8]
+ 1024 0104 9B68     		ldr	r3, [r3, #8]
+ 1025              		.loc 1 206 19
+ 1026 0106 1846     		mov	r0, r3
+ 1027 0108 4FF00001 		mov	r1, #0
+ 1028 010c FB6B     		ldr	r3, [r7, #60]
+ 1029 010e FA6D     		ldr	r2, [r7, #92]
+ 1030 0110 D418     		adds	r4, r2, r3
+ 1031 0112 FB6B     		ldr	r3, [r7, #60]
+ 1032 0114 3A6E     		ldr	r2, [r7, #96]
+ 1033 0116 D31A     		subs	r3, r2, r3
+ 1034 0118 2246     		mov	r2, r4
+ 1035 011a FFF7FEFF 		bl	utils_intToText
+ 1036 011e 0346     		mov	r3, r0
+ 1037              		.loc 1 206 17
+ 1038 0120 3B63     		str	r3, [r7, #48]
+ 207:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 1039              		.loc 1 207 16
+ 1040 0122 3B6B     		ldr	r3, [r7, #48]
+ 1041 0124 002B     		cmp	r3, #0
+ 1042 0126 02DC     		bgt	.L60
+ 1043              		.loc 1 207 34 discriminator 1
+ 1044 0128 4FF0FF33 		mov	r3, #-1
+ 1045 012c 50E1     		b	.L82
+ 1046              	.L60:
+ 208:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 23
+
+
+ 1047              		.loc 1 208 18
+ 1048 012e FA6B     		ldr	r2, [r7, #60]
+ 1049 0130 3B6B     		ldr	r3, [r7, #48]
+ 1050 0132 1344     		add	r3, r3, r2
+ 1051 0134 FB63     		str	r3, [r7, #60]
+ 209:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 210:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (bufferLen - head < LINK_ITEM_ATTR_END_SIZE) return -1;
+ 1052              		.loc 1 210 34
+ 1053 0136 FB6B     		ldr	r3, [r7, #60]
+ 1054              		.loc 1 210 16
+ 1055 0138 3A6E     		ldr	r2, [r7, #96]
+ 1056 013a 9A42     		cmp	r2, r3
+ 1057 013c 02D1     		bne	.L61
+ 1058              		.loc 1 210 68 discriminator 1
+ 1059 013e 4FF0FF33 		mov	r3, #-1
+ 1060 0142 45E1     		b	.L82
+ 1061              	.L61:
+ 211:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             memcpy(buffer + head, LINK_ITEM_ATTR_END, LINK_ITEM_ATTR_END_SIZE);
+ 1062              		.loc 1 211 13
+ 1063 0144 FB6B     		ldr	r3, [r7, #60]
+ 1064              		.loc 1 211 27
+ 1065 0146 FA6D     		ldr	r2, [r7, #92]
+ 1066 0148 1344     		add	r3, r3, r2
+ 1067              		.loc 1 211 13
+ 1068 014a 0122     		movs	r2, #1
+ 1069 014c 6149     		ldr	r1, .L84+12
+ 1070 014e 1846     		mov	r0, r3
+ 1071 0150 FFF7FEFF 		bl	memcpy
+ 212:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += LINK_ITEM_ATTR_END_SIZE;
+ 1072              		.loc 1 212 18
+ 1073 0154 FB6B     		ldr	r3, [r7, #60]
+ 1074 0156 0133     		adds	r3, r3, #1
+ 1075 0158 FB63     		str	r3, [r7, #60]
+ 1076 015a 12E0     		b	.L62
+ 1077              	.L58:
+ 213:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 214:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         else
+ 215:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 216:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (bufferLen - head < LINK_ITEM_END_SIZE) return -1;
+ 1078              		.loc 1 216 27
+ 1079 015c FB6B     		ldr	r3, [r7, #60]
+ 1080 015e 3A6E     		ldr	r2, [r7, #96]
+ 1081 0160 D31A     		subs	r3, r2, r3
+ 1082              		.loc 1 216 16
+ 1083 0162 012B     		cmp	r3, #1
+ 1084 0164 02D8     		bhi	.L63
+ 1085              		.loc 1 216 63 discriminator 1
+ 1086 0166 4FF0FF33 		mov	r3, #-1
+ 1087 016a 31E1     		b	.L82
+ 1088              	.L63:
+ 217:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             memcpy(buffer + head, LINK_ITEM_END, LINK_ITEM_END_SIZE);
+ 1089              		.loc 1 217 13
+ 1090 016c FB6B     		ldr	r3, [r7, #60]
+ 1091              		.loc 1 217 27
+ 1092 016e FA6D     		ldr	r2, [r7, #92]
+ 1093 0170 1344     		add	r3, r3, r2
+ 1094              		.loc 1 217 13
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 24
+
+
+ 1095 0172 0222     		movs	r2, #2
+ 1096 0174 5849     		ldr	r1, .L84+16
+ 1097 0176 1846     		mov	r0, r3
+ 1098 0178 FFF7FEFF 		bl	memcpy
+ 218:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += LINK_ITEM_END_SIZE;
+ 1099              		.loc 1 218 18
+ 1100 017c FB6B     		ldr	r3, [r7, #60]
+ 1101 017e 0233     		adds	r3, r3, #2
+ 1102 0180 FB63     		str	r3, [r7, #60]
+ 1103              	.L62:
+ 219:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 220:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 221:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (serverP != NULL)
+ 1104              		.loc 1 221 12
+ 1105 0182 7B68     		ldr	r3, [r7, #4]
+ 1106 0184 002B     		cmp	r3, #0
+ 1107 0186 00F02181 		beq	.L83
+ 222:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 223:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             memcpy(&uri, parentUriP, sizeof(lwm2m_uri_t));
+ 1108              		.loc 1 223 13
+ 1109 018a 07F12803 		add	r3, r7, #40
+ 1110 018e 0822     		movs	r2, #8
+ 1111 0190 396D     		ldr	r1, [r7, #80]
+ 1112 0192 1846     		mov	r0, r3
+ 1113 0194 FFF7FEFF 		bl	memcpy
+ 224:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             uri.resourceId = tlvP->id;
+ 1114              		.loc 1 224 34
+ 1115 0198 BB68     		ldr	r3, [r7, #8]
+ 1116 019a 5B88     		ldrh	r3, [r3, #2]
+ 1117              		.loc 1 224 28
+ 1118 019c FB85     		strh	r3, [r7, #46]	@ movhi
+ 225:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             uri.flag |= LWM2M_URI_FLAG_RESOURCE_ID;
+ 1119              		.loc 1 225 22
+ 1120 019e 97F82830 		ldrb	r3, [r7, #40]	@ zero_extendqisi2
+ 1121 01a2 43F00103 		orr	r3, r3, #1
+ 1122 01a6 DBB2     		uxtb	r3, r3
+ 1123 01a8 87F82830 		strb	r3, [r7, #40]
+ 226:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = prv_serializeAttributes(contextP, &uri, serverP, objectParamP, buffer, head - 1, 
+ 1124              		.loc 1 226 95
+ 1125 01ac FB6B     		ldr	r3, [r7, #60]
+ 1126 01ae 013B     		subs	r3, r3, #1
+ 1127              		.loc 1 226 19
+ 1128 01b0 1A46     		mov	r2, r3
+ 1129 01b2 07F12801 		add	r1, r7, #40
+ 1130 01b6 3B6E     		ldr	r3, [r7, #96]
+ 1131 01b8 0293     		str	r3, [sp, #8]
+ 1132 01ba 0192     		str	r2, [sp, #4]
+ 1133 01bc FB6D     		ldr	r3, [r7, #92]
+ 1134 01be 0093     		str	r3, [sp]
+ 1135 01c0 3B68     		ldr	r3, [r7]
+ 1136 01c2 7A68     		ldr	r2, [r7, #4]
+ 1137 01c4 F868     		ldr	r0, [r7, #12]
+ 1138 01c6 FFF7FEFF 		bl	prv_serializeAttributes
+ 1139 01ca 3863     		str	r0, [r7, #48]
+ 227:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res < 0) return -1;    // careful, 0 is valid
+ 1140              		.loc 1 227 16
+ 1141 01cc 3B6B     		ldr	r3, [r7, #48]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 25
+
+
+ 1142 01ce 002B     		cmp	r3, #0
+ 1143 01d0 02DA     		bge	.L65
+ 1144              		.loc 1 227 33 discriminator 1
+ 1145 01d2 4FF0FF33 		mov	r3, #-1
+ 1146 01d6 FBE0     		b	.L82
+ 1147              	.L65:
+ 228:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res > 0) head += res;
+ 1148              		.loc 1 228 16
+ 1149 01d8 3B6B     		ldr	r3, [r7, #48]
+ 1150 01da 002B     		cmp	r3, #0
+ 1151 01dc 40F3F680 		ble	.L83
+ 1152              		.loc 1 228 31 discriminator 1
+ 1153 01e0 FA6B     		ldr	r2, [r7, #60]
+ 1154 01e2 3B6B     		ldr	r3, [r7, #48]
+ 1155 01e4 1344     		add	r3, r3, r2
+ 1156 01e6 FB63     		str	r3, [r7, #60]
+ 229:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 230:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         break;
+ 1157              		.loc 1 230 9 discriminator 1
+ 1158 01e8 F0E0     		b	.L83
+ 1159              	.L51:
+ 1160              	.LBB2:
+ 231:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 232:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_OBJECT_INSTANCE:
+ 233:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 234:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         uint8_t uriStr[URI_MAX_STRING_LEN];
+ 235:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         size_t uriLen;
+ 236:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         size_t index;
+ 237:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 238:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (parentUriLen > 0)
+ 1161              		.loc 1 238 12
+ 1162 01ea BB6D     		ldr	r3, [r7, #88]
+ 1163 01ec 002B     		cmp	r3, #0
+ 1164 01ee 0FD0     		beq	.L67
+ 239:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 240:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (URI_MAX_STRING_LEN < parentUriLen) return -1;
+ 1165              		.loc 1 240 16
+ 1166 01f0 BB6D     		ldr	r3, [r7, #88]
+ 1167 01f2 122B     		cmp	r3, #18
+ 1168 01f4 02D9     		bls	.L68
+ 1169              		.loc 1 240 59 discriminator 1
+ 1170 01f6 4FF0FF33 		mov	r3, #-1
+ 1171 01fa E9E0     		b	.L82
+ 1172              	.L68:
+ 241:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             memcpy(uriStr, parentUriStr, parentUriLen);
+ 1173              		.loc 1 241 13
+ 1174 01fc 07F11403 		add	r3, r7, #20
+ 1175 0200 BA6D     		ldr	r2, [r7, #88]
+ 1176 0202 796D     		ldr	r1, [r7, #84]
+ 1177 0204 1846     		mov	r0, r3
+ 1178 0206 FFF7FEFF 		bl	memcpy
+ 242:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             uriLen = parentUriLen;
+ 1179              		.loc 1 242 20
+ 1180 020a BB6D     		ldr	r3, [r7, #88]
+ 1181 020c BB63     		str	r3, [r7, #56]
+ 1182 020e 01E0     		b	.L70
+ 1183              	.L67:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 26
+
+
+ 243:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 244:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         else
+ 245:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 246:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             uriLen = 0;
+ 1184              		.loc 1 246 20
+ 1185 0210 0023     		movs	r3, #0
+ 1186 0212 BB63     		str	r3, [r7, #56]
+ 1187              	.L70:
+ 247:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 248:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 249:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (URI_MAX_STRING_LEN - uriLen < LINK_URI_SEPARATOR_SIZE) return -1;
+ 1188              		.loc 1 249 12
+ 1189 0214 BB6B     		ldr	r3, [r7, #56]
+ 1190 0216 122B     		cmp	r3, #18
+ 1191 0218 02D1     		bne	.L71
+ 1192              		.loc 1 249 75 discriminator 1
+ 1193 021a 4FF0FF33 		mov	r3, #-1
+ 1194 021e D7E0     		b	.L82
+ 1195              	.L71:
+ 250:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         memcpy(uriStr + uriLen, LINK_URI_SEPARATOR, LINK_URI_SEPARATOR_SIZE);
+ 1196              		.loc 1 250 9
+ 1197 0220 07F11402 		add	r2, r7, #20
+ 1198 0224 BB6B     		ldr	r3, [r7, #56]
+ 1199 0226 1344     		add	r3, r3, r2
+ 1200 0228 0122     		movs	r2, #1
+ 1201 022a 2849     		ldr	r1, .L84+4
+ 1202 022c 1846     		mov	r0, r3
+ 1203 022e FFF7FEFF 		bl	memcpy
+ 251:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         uriLen += LINK_URI_SEPARATOR_SIZE;
+ 1204              		.loc 1 251 16
+ 1205 0232 BB6B     		ldr	r3, [r7, #56]
+ 1206 0234 0133     		adds	r3, r3, #1
+ 1207 0236 BB63     		str	r3, [r7, #56]
+ 252:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 253:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         res = utils_intToText(tlvP->id, uriStr + uriLen, URI_MAX_STRING_LEN - uriLen);
+ 1208              		.loc 1 253 35
+ 1209 0238 BB68     		ldr	r3, [r7, #8]
+ 1210 023a 5B88     		ldrh	r3, [r3, #2]
+ 1211              		.loc 1 253 15
+ 1212 023c 98B2     		uxth	r0, r3
+ 1213 023e 4FF00001 		mov	r1, #0
+ 1214 0242 07F11402 		add	r2, r7, #20
+ 1215 0246 BB6B     		ldr	r3, [r7, #56]
+ 1216 0248 1A44     		add	r2, r2, r3
+ 1217 024a BB6B     		ldr	r3, [r7, #56]
+ 1218 024c C3F11203 		rsb	r3, r3, #18
+ 1219 0250 FFF7FEFF 		bl	utils_intToText
+ 1220 0254 0346     		mov	r3, r0
+ 1221              		.loc 1 253 13
+ 1222 0256 3B63     		str	r3, [r7, #48]
+ 254:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (res <= 0) return -1;
+ 1223              		.loc 1 254 12
+ 1224 0258 3B6B     		ldr	r3, [r7, #48]
+ 1225 025a 002B     		cmp	r3, #0
+ 1226 025c 02DC     		bgt	.L72
+ 1227              		.loc 1 254 30 discriminator 1
+ 1228 025e 4FF0FF33 		mov	r3, #-1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 27
+
+
+ 1229 0262 B5E0     		b	.L82
+ 1230              	.L72:
+ 255:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         uriLen += res;
+ 1231              		.loc 1 255 16
+ 1232 0264 3B6B     		ldr	r3, [r7, #48]
+ 1233 0266 BA6B     		ldr	r2, [r7, #56]
+ 1234 0268 1344     		add	r3, r3, r2
+ 1235 026a BB63     		str	r3, [r7, #56]
+ 256:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 257:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         memcpy(&uri, parentUriP, sizeof(lwm2m_uri_t));
+ 1236              		.loc 1 257 9
+ 1237 026c 07F12803 		add	r3, r7, #40
+ 1238 0270 0822     		movs	r2, #8
+ 1239 0272 396D     		ldr	r1, [r7, #80]
+ 1240 0274 1846     		mov	r0, r3
+ 1241 0276 FFF7FEFF 		bl	memcpy
+ 258:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         uri.instanceId = tlvP->id;
+ 1242              		.loc 1 258 30
+ 1243 027a BB68     		ldr	r3, [r7, #8]
+ 1244 027c 5B88     		ldrh	r3, [r3, #2]
+ 1245              		.loc 1 258 24
+ 1246 027e BB85     		strh	r3, [r7, #44]	@ movhi
+ 259:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         uri.flag |= LWM2M_URI_FLAG_INSTANCE_ID;
+ 1247              		.loc 1 259 18
+ 1248 0280 97F82830 		ldrb	r3, [r7, #40]	@ zero_extendqisi2
+ 1249 0284 43F00203 		orr	r3, r3, #2
+ 1250 0288 DBB2     		uxtb	r3, r3
+ 1251 028a 87F82830 		strb	r3, [r7, #40]
+ 260:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 261:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         head = 0;
+ 1252              		.loc 1 261 14
+ 1253 028e 0023     		movs	r3, #0
+ 1254 0290 FB63     		str	r3, [r7, #60]
+ 262:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ITEM_START, LINK_ITEM_START_SIZE);
+ 1255              		.loc 1 262 9
+ 1256 0292 FB6B     		ldr	r3, [r7, #60]
+ 1257 0294 3A6E     		ldr	r2, [r7, #96]
+ 1258 0296 9A42     		cmp	r2, r3
+ 1259 0298 02D1     		bne	.L73
+ 1260              		.loc 1 262 9 is_stmt 0 discriminator 1
+ 1261 029a 4FF0FF33 		mov	r3, #-1
+ 1262 029e 97E0     		b	.L82
+ 1263              	.L73:
+ 1264              		.loc 1 262 9 discriminator 2
+ 1265 02a0 FB6B     		ldr	r3, [r7, #60]
+ 1266 02a2 FA6D     		ldr	r2, [r7, #92]
+ 1267 02a4 1344     		add	r3, r3, r2
+ 1268 02a6 0122     		movs	r2, #1
+ 1269 02a8 0749     		ldr	r1, .L84
+ 1270 02aa 1846     		mov	r0, r3
+ 1271 02ac FFF7FEFF 		bl	memcpy
+ 1272 02b0 FB6B     		ldr	r3, [r7, #60]
+ 1273 02b2 0133     		adds	r3, r3, #1
+ 1274 02b4 FB63     		str	r3, [r7, #60]
+ 263:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         PRV_CONCAT_STR(buffer, bufferLen, head, uriStr, uriLen);
+ 1275              		.loc 1 263 9 is_stmt 1 discriminator 2
+ 1276 02b6 FB6B     		ldr	r3, [r7, #60]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 28
+
+
+ 1277 02b8 3A6E     		ldr	r2, [r7, #96]
+ 1278 02ba D31A     		subs	r3, r2, r3
+ 1279 02bc BA6B     		ldr	r2, [r7, #56]
+ 1280 02be 9A42     		cmp	r2, r3
+ 1281 02c0 0CD9     		bls	.L74
+ 1282              		.loc 1 263 9 is_stmt 0 discriminator 1
+ 1283 02c2 4FF0FF33 		mov	r3, #-1
+ 1284 02c6 83E0     		b	.L82
+ 1285              	.L85:
+ 1286              		.align	2
+ 1287              	.L84:
+ 1288 02c8 24000000 		.word	.LC7
+ 1289 02cc 28000000 		.word	.LC8
+ 1290 02d0 2C000000 		.word	.LC9
+ 1291 02d4 20000000 		.word	.LC6
+ 1292 02d8 34000000 		.word	.LC10
+ 1293              	.L74:
+ 1294              		.loc 1 263 9 discriminator 2
+ 1295 02dc FB6B     		ldr	r3, [r7, #60]
+ 1296 02de FA6D     		ldr	r2, [r7, #92]
+ 1297 02e0 1344     		add	r3, r3, r2
+ 1298 02e2 07F11401 		add	r1, r7, #20
+ 1299 02e6 BA6B     		ldr	r2, [r7, #56]
+ 1300 02e8 1846     		mov	r0, r3
+ 1301 02ea FFF7FEFF 		bl	memcpy
+ 1302 02ee FA6B     		ldr	r2, [r7, #60]
+ 1303 02f0 BB6B     		ldr	r3, [r7, #56]
+ 1304 02f2 1344     		add	r3, r3, r2
+ 1305 02f4 FB63     		str	r3, [r7, #60]
+ 264:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         PRV_CONCAT_STR(buffer, bufferLen, head, LINK_ITEM_END, LINK_ITEM_END_SIZE);
+ 1306              		.loc 1 264 9 is_stmt 1 discriminator 2
+ 1307 02f6 FB6B     		ldr	r3, [r7, #60]
+ 1308 02f8 3A6E     		ldr	r2, [r7, #96]
+ 1309 02fa D31A     		subs	r3, r2, r3
+ 1310 02fc 012B     		cmp	r3, #1
+ 1311 02fe 02D8     		bhi	.L75
+ 1312              		.loc 1 264 9 is_stmt 0 discriminator 1
+ 1313 0300 4FF0FF33 		mov	r3, #-1
+ 1314 0304 64E0     		b	.L82
+ 1315              	.L75:
+ 1316              		.loc 1 264 9 discriminator 2
+ 1317 0306 FB6B     		ldr	r3, [r7, #60]
+ 1318 0308 FA6D     		ldr	r2, [r7, #92]
+ 1319 030a 1344     		add	r3, r3, r2
+ 1320 030c 0222     		movs	r2, #2
+ 1321 030e 3249     		ldr	r1, .L86
+ 1322 0310 1846     		mov	r0, r3
+ 1323 0312 FFF7FEFF 		bl	memcpy
+ 1324 0316 FB6B     		ldr	r3, [r7, #60]
+ 1325 0318 0233     		adds	r3, r3, #2
+ 1326 031a FB63     		str	r3, [r7, #60]
+ 265:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (serverP != NULL)
+ 1327              		.loc 1 265 12 is_stmt 1 discriminator 2
+ 1328 031c 7B68     		ldr	r3, [r7, #4]
+ 1329 031e 002B     		cmp	r3, #0
+ 1330 0320 1FD0     		beq	.L76
+ 266:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 29
+
+
+ 267:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = prv_serializeAttributes(contextP, &uri, serverP, NULL, buffer, head - 1, bufferLe
+ 1331              		.loc 1 267 87
+ 1332 0322 FB6B     		ldr	r3, [r7, #60]
+ 1333 0324 013B     		subs	r3, r3, #1
+ 1334              		.loc 1 267 19
+ 1335 0326 1A46     		mov	r2, r3
+ 1336 0328 07F12801 		add	r1, r7, #40
+ 1337 032c 3B6E     		ldr	r3, [r7, #96]
+ 1338 032e 0293     		str	r3, [sp, #8]
+ 1339 0330 0192     		str	r2, [sp, #4]
+ 1340 0332 FB6D     		ldr	r3, [r7, #92]
+ 1341 0334 0093     		str	r3, [sp]
+ 1342 0336 0023     		movs	r3, #0
+ 1343 0338 7A68     		ldr	r2, [r7, #4]
+ 1344 033a F868     		ldr	r0, [r7, #12]
+ 1345 033c FFF7FEFF 		bl	prv_serializeAttributes
+ 1346 0340 3863     		str	r0, [r7, #48]
+ 268:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res < 0) return -1;    // careful, 0 is valid
+ 1347              		.loc 1 268 16
+ 1348 0342 3B6B     		ldr	r3, [r7, #48]
+ 1349 0344 002B     		cmp	r3, #0
+ 1350 0346 02DA     		bge	.L77
+ 1351              		.loc 1 268 33 discriminator 1
+ 1352 0348 4FF0FF33 		mov	r3, #-1
+ 1353 034c 40E0     		b	.L82
+ 1354              	.L77:
+ 269:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res == 0) head = 0;    // rewind
+ 1355              		.loc 1 269 16
+ 1356 034e 3B6B     		ldr	r3, [r7, #48]
+ 1357 0350 002B     		cmp	r3, #0
+ 1358 0352 02D1     		bne	.L78
+ 1359              		.loc 1 269 32 discriminator 1
+ 1360 0354 0023     		movs	r3, #0
+ 1361 0356 FB63     		str	r3, [r7, #60]
+ 1362 0358 03E0     		b	.L76
+ 1363              	.L78:
+ 270:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             else head += res;
+ 1364              		.loc 1 270 23
+ 1365 035a FA6B     		ldr	r2, [r7, #60]
+ 1366 035c 3B6B     		ldr	r3, [r7, #48]
+ 1367 035e 1344     		add	r3, r3, r2
+ 1368 0360 FB63     		str	r3, [r7, #60]
+ 1369              	.L76:
+ 271:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 272:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         for (index = 0; index < tlvP->value.asChildren.count; index++)
+ 1370              		.loc 1 272 20
+ 1371 0362 0023     		movs	r3, #0
+ 1372 0364 7B63     		str	r3, [r7, #52]
+ 1373              		.loc 1 272 9
+ 1374 0366 28E0     		b	.L79
+ 1375              	.L81:
+ 273:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 274:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = prv_serializeLinkData(contextP, tlvP->value.asChildren.array + index, serverP, ob
+ 1376              		.loc 1 274 73
+ 1377 0368 BB68     		ldr	r3, [r7, #8]
+ 1378 036a DA68     		ldr	r2, [r3, #12]
+ 1379              		.loc 1 274 80
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 30
+
+
+ 1380 036c 7B6B     		ldr	r3, [r7, #52]
+ 1381 036e 1B01     		lsls	r3, r3, #4
+ 1382              		.loc 1 274 19
+ 1383 0370 D018     		adds	r0, r2, r3
+ 1384 0372 FB6B     		ldr	r3, [r7, #60]
+ 1385 0374 FA6D     		ldr	r2, [r7, #92]
+ 1386 0376 1344     		add	r3, r3, r2
+ 1387 0378 FA6B     		ldr	r2, [r7, #60]
+ 1388 037a 396E     		ldr	r1, [r7, #96]
+ 1389 037c 8A1A     		subs	r2, r1, r2
+ 1390 037e 0492     		str	r2, [sp, #16]
+ 1391 0380 0393     		str	r3, [sp, #12]
+ 1392 0382 BB6B     		ldr	r3, [r7, #56]
+ 1393 0384 0293     		str	r3, [sp, #8]
+ 1394 0386 07F11403 		add	r3, r7, #20
+ 1395 038a 0193     		str	r3, [sp, #4]
+ 1396 038c 07F12803 		add	r3, r7, #40
+ 1397 0390 0093     		str	r3, [sp]
+ 1398 0392 3B68     		ldr	r3, [r7]
+ 1399 0394 7A68     		ldr	r2, [r7, #4]
+ 1400 0396 0146     		mov	r1, r0
+ 1401 0398 F868     		ldr	r0, [r7, #12]
+ 1402 039a FFF731FE 		bl	prv_serializeLinkData
+ 1403 039e 3863     		str	r0, [r7, #48]
+ 275:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res < 0) return -1;
+ 1404              		.loc 1 275 16
+ 1405 03a0 3B6B     		ldr	r3, [r7, #48]
+ 1406 03a2 002B     		cmp	r3, #0
+ 1407 03a4 02DA     		bge	.L80
+ 1408              		.loc 1 275 33 discriminator 1
+ 1409 03a6 4FF0FF33 		mov	r3, #-1
+ 1410 03aa 11E0     		b	.L82
+ 1411              	.L80:
+ 276:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 1412              		.loc 1 276 18 discriminator 2
+ 1413 03ac FA6B     		ldr	r2, [r7, #60]
+ 1414 03ae 3B6B     		ldr	r3, [r7, #48]
+ 1415 03b0 1344     		add	r3, r3, r2
+ 1416 03b2 FB63     		str	r3, [r7, #60]
+ 272:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 1417              		.loc 1 272 68 discriminator 2
+ 1418 03b4 7B6B     		ldr	r3, [r7, #52]
+ 1419 03b6 0133     		adds	r3, r3, #1
+ 1420 03b8 7B63     		str	r3, [r7, #52]
+ 1421              	.L79:
+ 272:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 1422              		.loc 1 272 55 discriminator 1
+ 1423 03ba BB68     		ldr	r3, [r7, #8]
+ 1424 03bc 9B68     		ldr	r3, [r3, #8]
+ 272:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 1425              		.loc 1 272 9 discriminator 1
+ 1426 03be 7A6B     		ldr	r2, [r7, #52]
+ 1427 03c0 9A42     		cmp	r2, r3
+ 1428 03c2 D1D3     		bcc	.L81
+ 1429              	.LBE2:
+ 277:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 278:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 31
+
+
+ 279:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     break;
+ 1430              		.loc 1 279 5
+ 1431 03c4 03E0     		b	.L66
+ 1432              	.L49:
+ 280:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 281:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     case LWM2M_TYPE_OBJECT:
+ 282:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     default:
+ 283:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         return -1;
+ 1433              		.loc 1 283 16
+ 1434 03c6 4FF0FF33 		mov	r3, #-1
+ 1435 03ca 01E0     		b	.L82
+ 1436              	.L83:
+ 230:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 1437              		.loc 1 230 9
+ 1438 03cc 00BF     		nop
+ 1439              	.L66:
+ 284:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+ 285:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 286:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     return head;
+ 1440              		.loc 1 286 12
+ 1441 03ce FB6B     		ldr	r3, [r7, #60]
+ 1442              	.L82:
+ 287:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** }
+ 1443              		.loc 1 287 1 discriminator 2
+ 1444 03d0 1846     		mov	r0, r3
+ 1445 03d2 4437     		adds	r7, r7, #68
+ 1446              	.LCFI13:
+ 1447              		.cfi_def_cfa_offset 12
+ 1448 03d4 BD46     		mov	sp, r7
+ 1449              	.LCFI14:
+ 1450              		.cfi_def_cfa_register 13
+ 1451              		@ sp needed
+ 1452 03d6 90BD     		pop	{r4, r7, pc}
+ 1453              	.L87:
+ 1454              		.align	2
+ 1455              	.L86:
+ 1456 03d8 34000000 		.word	.LC10
+ 1457              		.cfi_endproc
+ 1458              	.LFE6:
+ 1460              		.section	.rodata
+ 1461 0037 00       		.align	2
+ 1462              	.LC11:
+ 1463 0038 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] size: %d\015\012\015\012"
+ 1463      5B25755D 
+ 1463      5B25733A 
+ 1463      25645D20 
+ 1463      5B25645D 
+ 1464 0060 00       		.ascii	"\000"
+ 1465 0061 000000   		.align	2
+ 1466              	.LC12:
+ 1467 0064 5B25735D 		.ascii	"[%s][%u][%s:%d] [%s:%d] NULL\015\012\015\012\000"
+ 1467      5B25755D 
+ 1467      5B25733A 
+ 1467      25645D20 
+ 1467      5B25733A 
+ 1468 0085 000000   		.align	2
+ 1469              	.LC13:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 32
+
+
+ 1470 0088 5B25735D 		.ascii	"[%s][%u][%s:%d] [%s:%d] /%d\015\012\000"
+ 1470      5B25755D 
+ 1470      5B25733A 
+ 1470      25645D20 
+ 1470      5B25733A 
+ 1471 00a6 0000     		.align	2
+ 1472              	.LC14:
+ 1473 00a8 5B25735D 		.ascii	"[%s][%u][%s:%d] /%d\015\012\000"
+ 1473      5B25755D 
+ 1473      5B25733A 
+ 1473      25645D20 
+ 1473      2F25640D 
+ 1474 00be 0000     		.align	2
+ 1475              	.LC15:
+ 1476 00c0 5B25735D 		.ascii	"[%s][%u][%s:%d] \015\012\015\012\000"
+ 1476      5B25755D 
+ 1476      5B25733A 
+ 1476      25645D20 
+ 1476      0D0A0D0A 
+ 1477              		.section	.text.discover_serialize,"ax",%progbits
+ 1478              		.align	1
+ 1479              		.global	discover_serialize
+ 1480              		.syntax unified
+ 1481              		.thumb
+ 1482              		.thumb_func
+ 1483              		.fpu fpv4-sp-d16
+ 1485              	discover_serialize:
+ 1486              	.LFB7:
+ 288:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 289:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** int discover_serialize(lwm2m_context_t *contextP,
+ 290:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                        lwm2m_uri_t *uriP,
+ 291:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                        lwm2m_server_t *serverP,
+ 292:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                        int size,
+ 293:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                        lwm2m_data_t *dataP,
+ 294:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                        uint8_t **bufferP)
+ 295:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** {
+ 1487              		.loc 1 295 1
+ 1488              		.cfi_startproc
+ 1489              		@ args = 8, pretend = 0, frame = 1144
+ 1490              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1491 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1492              	.LCFI15:
+ 1493              		.cfi_def_cfa_offset 16
+ 1494              		.cfi_offset 4, -16
+ 1495              		.cfi_offset 5, -12
+ 1496              		.cfi_offset 7, -8
+ 1497              		.cfi_offset 14, -4
+ 1498 0002 ADF5926D 		sub	sp, sp, #1168
+ 1499              	.LCFI16:
+ 1500              		.cfi_def_cfa_offset 1184
+ 1501 0006 06AF     		add	r7, sp, #24
+ 1502              	.LCFI17:
+ 1503              		.cfi_def_cfa 7, 1160
+ 1504 0008 07F10C04 		add	r4, r7, #12
+ 1505 000c 2060     		str	r0, [r4]
+ 1506 000e 07F10800 		add	r0, r7, #8
+ 1507 0012 0160     		str	r1, [r0]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 33
+
+
+ 1508 0014 391D     		adds	r1, r7, #4
+ 1509 0016 0A60     		str	r2, [r1]
+ 1510 0018 3A46     		mov	r2, r7
+ 1511 001a 1360     		str	r3, [r2]
+ 296:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     uint8_t bufferLink[PRV_LINK_BUFFER_SIZE];
+ 297:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     uint8_t baseUriStr[URI_MAX_STRING_LEN];
+ 298:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     int baseUriLen;
+ 299:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     int index;
+ 300:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     size_t head;
+ 301:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     int res;
+ 302:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_uri_t parentUri;
+ 303:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_attributes_t *paramP;
+ 304:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     lwm2m_attributes_t mergedParam;
+ 305:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 306:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     LOG_ARG("size: %d", size);
+ 1512              		.loc 1 306 5
+ 1513 001c FFF7FEFF 		bl	link_log_level_get
+ 1514 0020 0346     		mov	r3, r0
+ 1515 0022 012B     		cmp	r3, #1
+ 1516 0024 1ED8     		bhi	.L89
+ 1517              		.loc 1 306 5 is_stmt 0 discriminator 1
+ 1518 0026 0120     		movs	r0, #1
+ 1519 0028 FFF7FEFF 		bl	link_log_level_name
+ 1520 002c 0446     		mov	r4, r0
+ 1521 002e FFF7FEFF 		bl	osal_sys_time
+ 1522 0032 0246     		mov	r2, r0
+ 1523 0034 0B46     		mov	r3, r1
+ 1524 0036 1546     		mov	r5, r2
+ 1525 0038 FFF7FEFF 		bl	lwm2m_gettime
+ 1526 003c 0246     		mov	r2, r0
+ 1527 003e 0B46     		mov	r3, r1
+ 1528 0040 3B46     		mov	r3, r7
+ 1529 0042 1B68     		ldr	r3, [r3]
+ 1530 0044 0493     		str	r3, [sp, #16]
+ 1531 0046 4FF49973 		mov	r3, #306
+ 1532 004a 0393     		str	r3, [sp, #12]
+ 1533 004c C54B     		ldr	r3, .L127
+ 1534 004e 0293     		str	r3, [sp, #8]
+ 1535 0050 0192     		str	r2, [sp, #4]
+ 1536 0052 4FF49973 		mov	r3, #306
+ 1537 0056 0093     		str	r3, [sp]
+ 1538 0058 C34B     		ldr	r3, .L127+4
+ 1539 005a 2A46     		mov	r2, r5
+ 1540 005c 2146     		mov	r1, r4
+ 1541 005e C348     		ldr	r0, .L127+8
+ 1542 0060 FFF7FEFF 		bl	printf
+ 1543              	.L89:
+ 307:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     LOG_URI(uriP);
+ 1544              		.loc 1 307 5 is_stmt 1
+ 1545 0064 07F10803 		add	r3, r7, #8
+ 1546 0068 1B68     		ldr	r3, [r3]
+ 1547 006a 002B     		cmp	r3, #0
+ 1548 006c 1BD1     		bne	.L90
+ 1549              		.loc 1 307 5 is_stmt 0 discriminator 1
+ 1550 006e FFF7FEFF 		bl	link_log_level_get
+ 1551 0072 0346     		mov	r3, r0
+ 1552 0074 012B     		cmp	r3, #1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 34
+
+
+ 1553 0076 00F28E80 		bhi	.L91
+ 1554              		.loc 1 307 5 discriminator 3
+ 1555 007a 0120     		movs	r0, #1
+ 1556 007c FFF7FEFF 		bl	link_log_level_name
+ 1557 0080 0446     		mov	r4, r0
+ 1558 0082 FFF7FEFF 		bl	osal_sys_time
+ 1559 0086 0246     		mov	r2, r0
+ 1560 0088 0B46     		mov	r3, r1
+ 1561 008a 40F23313 		movw	r3, #307
+ 1562 008e 0293     		str	r3, [sp, #8]
+ 1563 0090 B44B     		ldr	r3, .L127
+ 1564 0092 0193     		str	r3, [sp, #4]
+ 1565 0094 40F23313 		movw	r3, #307
+ 1566 0098 0093     		str	r3, [sp]
+ 1567 009a B34B     		ldr	r3, .L127+4
+ 1568 009c 2146     		mov	r1, r4
+ 1569 009e B448     		ldr	r0, .L127+12
+ 1570 00a0 FFF7FEFF 		bl	printf
+ 1571 00a4 77E0     		b	.L91
+ 1572              	.L90:
+ 1573              		.loc 1 307 5 discriminator 2
+ 1574 00a6 FFF7FEFF 		bl	link_log_level_get
+ 1575 00aa 0346     		mov	r3, r0
+ 1576 00ac 012B     		cmp	r3, #1
+ 1577 00ae 19D8     		bhi	.L92
+ 1578              		.loc 1 307 5 discriminator 4
+ 1579 00b0 0120     		movs	r0, #1
+ 1580 00b2 FFF7FEFF 		bl	link_log_level_name
+ 1581 00b6 0446     		mov	r4, r0
+ 1582 00b8 FFF7FEFF 		bl	osal_sys_time
+ 1583 00bc 0246     		mov	r2, r0
+ 1584 00be 0B46     		mov	r3, r1
+ 1585 00c0 07F10803 		add	r3, r7, #8
+ 1586 00c4 1B68     		ldr	r3, [r3]
+ 1587 00c6 5B88     		ldrh	r3, [r3, #2]
+ 1588 00c8 0393     		str	r3, [sp, #12]
+ 1589 00ca 40F23313 		movw	r3, #307
+ 1590 00ce 0293     		str	r3, [sp, #8]
+ 1591 00d0 A44B     		ldr	r3, .L127
+ 1592 00d2 0193     		str	r3, [sp, #4]
+ 1593 00d4 40F23313 		movw	r3, #307
+ 1594 00d8 0093     		str	r3, [sp]
+ 1595 00da A34B     		ldr	r3, .L127+4
+ 1596 00dc 2146     		mov	r1, r4
+ 1597 00de A548     		ldr	r0, .L127+16
+ 1598 00e0 FFF7FEFF 		bl	printf
+ 1599              	.L92:
+ 1600              		.loc 1 307 5 discriminator 6
+ 1601 00e4 07F10803 		add	r3, r7, #8
+ 1602 00e8 1B68     		ldr	r3, [r3]
+ 1603 00ea 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1604 00ec 03F00203 		and	r3, r3, #2
+ 1605 00f0 002B     		cmp	r3, #0
+ 1606 00f2 19D0     		beq	.L93
+ 1607              		.loc 1 307 5 discriminator 7
+ 1608 00f4 FFF7FEFF 		bl	link_log_level_get
+ 1609 00f8 0346     		mov	r3, r0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 35
+
+
+ 1610 00fa 012B     		cmp	r3, #1
+ 1611 00fc 14D8     		bhi	.L93
+ 1612              		.loc 1 307 5 discriminator 9
+ 1613 00fe 0120     		movs	r0, #1
+ 1614 0100 FFF7FEFF 		bl	link_log_level_name
+ 1615 0104 0446     		mov	r4, r0
+ 1616 0106 FFF7FEFF 		bl	osal_sys_time
+ 1617 010a 0246     		mov	r2, r0
+ 1618 010c 0B46     		mov	r3, r1
+ 1619 010e 07F10803 		add	r3, r7, #8
+ 1620 0112 1B68     		ldr	r3, [r3]
+ 1621 0114 9B88     		ldrh	r3, [r3, #4]
+ 1622 0116 0193     		str	r3, [sp, #4]
+ 1623 0118 40F23313 		movw	r3, #307
+ 1624 011c 0093     		str	r3, [sp]
+ 1625 011e 924B     		ldr	r3, .L127+4
+ 1626 0120 2146     		mov	r1, r4
+ 1627 0122 9548     		ldr	r0, .L127+20
+ 1628 0124 FFF7FEFF 		bl	printf
+ 1629              	.L93:
+ 1630              		.loc 1 307 5 discriminator 11
+ 1631 0128 07F10803 		add	r3, r7, #8
+ 1632 012c 1B68     		ldr	r3, [r3]
+ 1633 012e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1634 0130 03F00103 		and	r3, r3, #1
+ 1635 0134 002B     		cmp	r3, #0
+ 1636 0136 19D0     		beq	.L94
+ 1637              		.loc 1 307 5 discriminator 12
+ 1638 0138 FFF7FEFF 		bl	link_log_level_get
+ 1639 013c 0346     		mov	r3, r0
+ 1640 013e 012B     		cmp	r3, #1
+ 1641 0140 14D8     		bhi	.L94
+ 1642              		.loc 1 307 5 discriminator 14
+ 1643 0142 0120     		movs	r0, #1
+ 1644 0144 FFF7FEFF 		bl	link_log_level_name
+ 1645 0148 0446     		mov	r4, r0
+ 1646 014a FFF7FEFF 		bl	osal_sys_time
+ 1647 014e 0246     		mov	r2, r0
+ 1648 0150 0B46     		mov	r3, r1
+ 1649 0152 07F10803 		add	r3, r7, #8
+ 1650 0156 1B68     		ldr	r3, [r3]
+ 1651 0158 DB88     		ldrh	r3, [r3, #6]
+ 1652 015a 0193     		str	r3, [sp, #4]
+ 1653 015c 40F23313 		movw	r3, #307
+ 1654 0160 0093     		str	r3, [sp]
+ 1655 0162 814B     		ldr	r3, .L127+4
+ 1656 0164 2146     		mov	r1, r4
+ 1657 0166 8448     		ldr	r0, .L127+20
+ 1658 0168 FFF7FEFF 		bl	printf
+ 1659              	.L94:
+ 1660              		.loc 1 307 5 discriminator 16
+ 1661 016c FFF7FEFF 		bl	link_log_level_get
+ 1662 0170 0346     		mov	r3, r0
+ 1663 0172 012B     		cmp	r3, #1
+ 1664 0174 0FD8     		bhi	.L91
+ 1665              		.loc 1 307 5 discriminator 17
+ 1666 0176 0120     		movs	r0, #1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 36
+
+
+ 1667 0178 FFF7FEFF 		bl	link_log_level_name
+ 1668 017c 0446     		mov	r4, r0
+ 1669 017e FFF7FEFF 		bl	osal_sys_time
+ 1670 0182 0246     		mov	r2, r0
+ 1671 0184 0B46     		mov	r3, r1
+ 1672 0186 40F23313 		movw	r3, #307
+ 1673 018a 0093     		str	r3, [sp]
+ 1674 018c 764B     		ldr	r3, .L127+4
+ 1675 018e 2146     		mov	r1, r4
+ 1676 0190 7A48     		ldr	r0, .L127+24
+ 1677 0192 FFF7FEFF 		bl	printf
+ 1678              	.L91:
+ 308:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 309:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     head = 0;
+ 1679              		.loc 1 309 10 is_stmt 1
+ 1680 0196 0023     		movs	r3, #0
+ 1681 0198 C7F87034 		str	r3, [r7, #1136]
+ 310:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     memset(&parentUri, 0, sizeof(lwm2m_uri_t));
+ 1682              		.loc 1 310 5
+ 1683 019c 07F14003 		add	r3, r7, #64
+ 1684 01a0 0822     		movs	r2, #8
+ 1685 01a2 0021     		movs	r1, #0
+ 1686 01a4 1846     		mov	r0, r3
+ 1687 01a6 FFF7FEFF 		bl	memset
+ 311:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     parentUri.objectId = uriP->objectId;
+ 1688              		.loc 1 311 30
+ 1689 01aa 07F10803 		add	r3, r7, #8
+ 1690 01ae 1B68     		ldr	r3, [r3]
+ 1691 01b0 5A88     		ldrh	r2, [r3, #2]
+ 1692              		.loc 1 311 24
+ 1693 01b2 07F14003 		add	r3, r7, #64
+ 1694 01b6 5A80     		strh	r2, [r3, #2]	@ movhi
+ 312:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     parentUri.flag = LWM2M_URI_FLAG_OBJECT_ID;
+ 1695              		.loc 1 312 20
+ 1696 01b8 07F14003 		add	r3, r7, #64
+ 1697 01bc 0422     		movs	r2, #4
+ 1698 01be 1A70     		strb	r2, [r3]
+ 313:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 314:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (LWM2M_URI_IS_SET_RESOURCE(uriP))
+ 1699              		.loc 1 314 9
+ 1700 01c0 07F10803 		add	r3, r7, #8
+ 1701 01c4 1B68     		ldr	r3, [r3]
+ 1702 01c6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1703 01c8 03F00103 		and	r3, r3, #1
+ 1704              		.loc 1 314 8
+ 1705 01cc 002B     		cmp	r3, #0
+ 1706 01ce 00F09D80 		beq	.L95
+ 1707              	.LBB3:
+ 315:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 316:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         lwm2m_uri_t tempUri;
+ 317:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         lwm2m_attributes_t *objParamP;
+ 318:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         lwm2m_attributes_t *instParamP;
+ 319:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 320:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         memset(&parentUri, 0, sizeof(lwm2m_uri_t));
+ 1708              		.loc 1 320 9
+ 1709 01d2 07F14003 		add	r3, r7, #64
+ 1710 01d6 0822     		movs	r2, #8
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 37
+
+
+ 1711 01d8 0021     		movs	r1, #0
+ 1712 01da 1846     		mov	r0, r3
+ 1713 01dc FFF7FEFF 		bl	memset
+ 321:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         tempUri.objectId = uriP->objectId;
+ 1714              		.loc 1 321 32
+ 1715 01e0 07F10803 		add	r3, r7, #8
+ 1716 01e4 1B68     		ldr	r3, [r3]
+ 1717 01e6 5A88     		ldrh	r2, [r3, #2]
+ 1718              		.loc 1 321 26
+ 1719 01e8 07F11003 		add	r3, r7, #16
+ 1720 01ec 5A80     		strh	r2, [r3, #2]	@ movhi
+ 322:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         tempUri.flag = LWM2M_URI_FLAG_OBJECT_ID;
+ 1721              		.loc 1 322 22
+ 1722 01ee 07F11003 		add	r3, r7, #16
+ 1723 01f2 0422     		movs	r2, #4
+ 1724 01f4 1A70     		strb	r2, [r3]
+ 323:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 324:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         // get object level attributes
+ 325:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         objParamP = prv_findAttributes(contextP, &tempUri, serverP);
+ 1725              		.loc 1 325 21
+ 1726 01f6 3A1D     		adds	r2, r7, #4
+ 1727 01f8 07F11001 		add	r1, r7, #16
+ 1728 01fc 07F10C03 		add	r3, r7, #12
+ 1729 0200 1268     		ldr	r2, [r2]
+ 1730 0202 1868     		ldr	r0, [r3]
+ 1731 0204 FFF7FEFF 		bl	prv_findAttributes
+ 1732 0208 C7F86404 		str	r0, [r7, #1124]
+ 326:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 327:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         // get object instance level attributes
+ 328:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         tempUri.instanceId = uriP->instanceId;
+ 1733              		.loc 1 328 34
+ 1734 020c 07F10803 		add	r3, r7, #8
+ 1735 0210 1B68     		ldr	r3, [r3]
+ 1736 0212 9A88     		ldrh	r2, [r3, #4]
+ 1737              		.loc 1 328 28
+ 1738 0214 07F11003 		add	r3, r7, #16
+ 1739 0218 9A80     		strh	r2, [r3, #4]	@ movhi
+ 329:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         tempUri.flag = LWM2M_URI_FLAG_INSTANCE_ID;
+ 1740              		.loc 1 329 22
+ 1741 021a 07F11003 		add	r3, r7, #16
+ 1742 021e 0222     		movs	r2, #2
+ 1743 0220 1A70     		strb	r2, [r3]
+ 330:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         instParamP = prv_findAttributes(contextP, &tempUri, serverP);
+ 1744              		.loc 1 330 22
+ 1745 0222 3A1D     		adds	r2, r7, #4
+ 1746 0224 07F11001 		add	r1, r7, #16
+ 1747 0228 07F10C03 		add	r3, r7, #12
+ 1748 022c 1268     		ldr	r2, [r2]
+ 1749 022e 1868     		ldr	r0, [r3]
+ 1750 0230 FFF7FEFF 		bl	prv_findAttributes
+ 1751 0234 C7F86004 		str	r0, [r7, #1120]
+ 331:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 332:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (objParamP != NULL)
+ 1752              		.loc 1 332 12
+ 1753 0238 D7F86434 		ldr	r3, [r7, #1124]
+ 1754 023c 002B     		cmp	r3, #0
+ 1755 023e 55D0     		beq	.L96
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 38
+
+
+ 333:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 334:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (instParamP != NULL)
+ 1756              		.loc 1 334 16
+ 1757 0240 D7F86034 		ldr	r3, [r7, #1120]
+ 1758 0244 002B     		cmp	r3, #0
+ 1759 0246 4CD0     		beq	.L97
+ 335:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             {
+ 336:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 memset(&mergedParam, 0, sizeof(lwm2m_attributes_t));
+ 1760              		.loc 1 336 17
+ 1761 0248 07F11803 		add	r3, r7, #24
+ 1762 024c 2822     		movs	r2, #40
+ 1763 024e 0021     		movs	r1, #0
+ 1764 0250 1846     		mov	r0, r3
+ 1765 0252 FFF7FEFF 		bl	memset
+ 337:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 mergedParam.toSet = objParamP->toSet | instParamP->toSet;
+ 1766              		.loc 1 337 46
+ 1767 0256 D7F86434 		ldr	r3, [r7, #1124]
+ 1768 025a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1769              		.loc 1 337 66
+ 1770 025c D7F86034 		ldr	r3, [r7, #1120]
+ 1771 0260 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1772              		.loc 1 337 35
+ 1773 0262 1343     		orrs	r3, r3, r2
+ 1774 0264 DAB2     		uxtb	r2, r3
+ 1775 0266 07F11803 		add	r3, r7, #24
+ 1776 026a 1A70     		strb	r2, [r3]
+ 338:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 if (mergedParam.toSet & LWM2M_ATTR_FLAG_MIN_PERIOD)
+ 1777              		.loc 1 338 32
+ 1778 026c 07F11803 		add	r3, r7, #24
+ 1779 0270 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1780              		.loc 1 338 39
+ 1781 0272 03F00103 		and	r3, r3, #1
+ 1782              		.loc 1 338 20
+ 1783 0276 002B     		cmp	r3, #0
+ 1784 0278 13D0     		beq	.L98
+ 339:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 {
+ 340:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     if (instParamP->toSet & LWM2M_ATTR_FLAG_MIN_PERIOD)
+ 1785              		.loc 1 340 35
+ 1786 027a D7F86034 		ldr	r3, [r7, #1120]
+ 1787 027e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1788              		.loc 1 340 43
+ 1789 0280 03F00103 		and	r3, r3, #1
+ 1790              		.loc 1 340 24
+ 1791 0284 002B     		cmp	r3, #0
+ 1792 0286 06D0     		beq	.L99
+ 341:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     {
+ 342:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                         mergedParam.minPeriod = instParamP->minPeriod;
+ 1793              		.loc 1 342 59
+ 1794 0288 D7F86034 		ldr	r3, [r7, #1120]
+ 1795 028c 5A68     		ldr	r2, [r3, #4]
+ 1796              		.loc 1 342 47
+ 1797 028e 07F11803 		add	r3, r7, #24
+ 1798 0292 5A60     		str	r2, [r3, #4]
+ 1799 0294 05E0     		b	.L98
+ 1800              	.L99:
+ 343:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     }
+ 344:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     else
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 39
+
+
+ 345:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     {
+ 346:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                         mergedParam.minPeriod = objParamP->minPeriod;
+ 1801              		.loc 1 346 58
+ 1802 0296 D7F86434 		ldr	r3, [r7, #1124]
+ 1803 029a 5A68     		ldr	r2, [r3, #4]
+ 1804              		.loc 1 346 47
+ 1805 029c 07F11803 		add	r3, r7, #24
+ 1806 02a0 5A60     		str	r2, [r3, #4]
+ 1807              	.L98:
+ 347:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     }
+ 348:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 }
+ 349:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 if (mergedParam.toSet & LWM2M_ATTR_FLAG_MAX_PERIOD)
+ 1808              		.loc 1 349 32
+ 1809 02a2 07F11803 		add	r3, r7, #24
+ 1810 02a6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1811              		.loc 1 349 39
+ 1812 02a8 03F00203 		and	r3, r3, #2
+ 1813              		.loc 1 349 20
+ 1814 02ac 002B     		cmp	r3, #0
+ 1815 02ae 13D0     		beq	.L100
+ 350:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 {
+ 351:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     if (instParamP->toSet & LWM2M_ATTR_FLAG_MAX_PERIOD)
+ 1816              		.loc 1 351 35
+ 1817 02b0 D7F86034 		ldr	r3, [r7, #1120]
+ 1818 02b4 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1819              		.loc 1 351 43
+ 1820 02b6 03F00203 		and	r3, r3, #2
+ 1821              		.loc 1 351 24
+ 1822 02ba 002B     		cmp	r3, #0
+ 1823 02bc 06D0     		beq	.L101
+ 352:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     {
+ 353:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                         mergedParam.maxPeriod = instParamP->maxPeriod;
+ 1824              		.loc 1 353 59
+ 1825 02be D7F86034 		ldr	r3, [r7, #1120]
+ 1826 02c2 9A68     		ldr	r2, [r3, #8]
+ 1827              		.loc 1 353 47
+ 1828 02c4 07F11803 		add	r3, r7, #24
+ 1829 02c8 9A60     		str	r2, [r3, #8]
+ 1830 02ca 05E0     		b	.L100
+ 1831              	.L101:
+ 354:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     }
+ 355:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     else
+ 356:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     {
+ 357:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                         mergedParam.maxPeriod = objParamP->maxPeriod;
+ 1832              		.loc 1 357 58
+ 1833 02cc D7F86434 		ldr	r3, [r7, #1124]
+ 1834 02d0 9A68     		ldr	r2, [r3, #8]
+ 1835              		.loc 1 357 47
+ 1836 02d2 07F11803 		add	r3, r7, #24
+ 1837 02d6 9A60     		str	r2, [r3, #8]
+ 1838              	.L100:
+ 358:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                     }
+ 359:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 }
+ 360:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 paramP = &mergedParam;
+ 1839              		.loc 1 360 24
+ 1840 02d8 07F11803 		add	r3, r7, #24
+ 1841 02dc C7F86834 		str	r3, [r7, #1128]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 40
+
+
+ 1842 02e0 08E0     		b	.L102
+ 1843              	.L97:
+ 361:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             }
+ 362:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             else
+ 363:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             {
+ 364:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 paramP = objParamP;
+ 1844              		.loc 1 364 24
+ 1845 02e2 D7F86434 		ldr	r3, [r7, #1124]
+ 1846 02e6 C7F86834 		str	r3, [r7, #1128]
+ 1847 02ea 03E0     		b	.L102
+ 1848              	.L96:
+ 365:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             }
+ 366:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 367:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         else
+ 368:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 369:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             paramP = instParamP;
+ 1849              		.loc 1 369 20
+ 1850 02ec D7F86034 		ldr	r3, [r7, #1120]
+ 1851 02f0 C7F86834 		str	r3, [r7, #1128]
+ 1852              	.L102:
+ 370:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 371:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         uriP->flag &= ~LWM2M_URI_FLAG_RESOURCE_ID;
+ 1853              		.loc 1 371 20 discriminator 1
+ 1854 02f4 07F10803 		add	r3, r7, #8
+ 1855 02f8 1B68     		ldr	r3, [r3]
+ 1856 02fa 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1857 02fc 23F00103 		bic	r3, r3, #1
+ 1858 0300 DAB2     		uxtb	r2, r3
+ 1859 0302 07F10803 		add	r3, r7, #8
+ 1860 0306 1B68     		ldr	r3, [r3]
+ 1861 0308 1A70     		strb	r2, [r3]
+ 1862              	.LBE3:
+ 1863 030a 87E1     		b	.L103
+ 1864              	.L95:
+ 372:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+ 373:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     else
+ 374:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 375:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         paramP = NULL;
+ 1865              		.loc 1 375 16
+ 1866 030c 0023     		movs	r3, #0
+ 1867 030e C7F86834 		str	r3, [r7, #1128]
+ 376:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 377:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (LWM2M_URI_IS_SET_INSTANCE(uriP))
+ 1868              		.loc 1 377 13
+ 1869 0312 07F10803 		add	r3, r7, #8
+ 1870 0316 1B68     		ldr	r3, [r3]
+ 1871 0318 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1872 031a 03F00203 		and	r3, r3, #2
+ 1873              		.loc 1 377 12
+ 1874 031e 002B     		cmp	r3, #0
+ 1875 0320 00F0EB80 		beq	.L104
+ 378:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 379:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(bufferLink, PRV_LINK_BUFFER_SIZE, head, LINK_ITEM_START, LINK_ITEM_START
+ 1876              		.loc 1 379 13
+ 1877 0324 D7F87034 		ldr	r3, [r7, #1136]
+ 1878 0328 B3F5806F 		cmp	r3, #1024
+ 1879 032c 02D1     		bne	.L105
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 41
+
+
+ 1880              		.loc 1 379 13 is_stmt 0 discriminator 1
+ 1881 032e 4FF0FF33 		mov	r3, #-1
+ 1882 0332 FEE1     		b	.L126
+ 1883              	.L105:
+ 1884              		.loc 1 379 13 discriminator 2
+ 1885 0334 07F15C02 		add	r2, r7, #92
+ 1886 0338 D7F87034 		ldr	r3, [r7, #1136]
+ 1887 033c 1344     		add	r3, r3, r2
+ 1888 033e 0122     		movs	r2, #1
+ 1889 0340 0F49     		ldr	r1, .L127+28
+ 1890 0342 1846     		mov	r0, r3
+ 1891 0344 FFF7FEFF 		bl	memcpy
+ 1892 0348 D7F87034 		ldr	r3, [r7, #1136]
+ 1893 034c 0133     		adds	r3, r3, #1
+ 1894 034e C7F87034 		str	r3, [r7, #1136]
+ 380:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(bufferLink, PRV_LINK_BUFFER_SIZE, head, LINK_URI_SEPARATOR, LINK_URI_SEP
+ 1895              		.loc 1 380 13 is_stmt 1 discriminator 2
+ 1896 0352 D7F87034 		ldr	r3, [r7, #1136]
+ 1897 0356 B3F5806F 		cmp	r3, #1024
+ 1898 035a 13D1     		bne	.L107
+ 1899              		.loc 1 380 13 is_stmt 0 discriminator 1
+ 1900 035c 4FF0FF33 		mov	r3, #-1
+ 1901 0360 E7E1     		b	.L126
+ 1902              	.L128:
+ 1903 0362 00BF     		.align	2
+ 1904              	.L127:
+ 1905 0364 00000000 		.word	__func__.8698
+ 1906 0368 00000000 		.word	__FUNCTION__.8697
+ 1907 036c 38000000 		.word	.LC11
+ 1908 0370 64000000 		.word	.LC12
+ 1909 0374 88000000 		.word	.LC13
+ 1910 0378 A8000000 		.word	.LC14
+ 1911 037c C0000000 		.word	.LC15
+ 1912 0380 24000000 		.word	.LC7
+ 1913              	.L107:
+ 1914              		.loc 1 380 13 discriminator 2
+ 1915 0384 07F15C02 		add	r2, r7, #92
+ 1916 0388 D7F87034 		ldr	r3, [r7, #1136]
+ 1917 038c 1344     		add	r3, r3, r2
+ 1918 038e 0122     		movs	r2, #1
+ 1919 0390 C749     		ldr	r1, .L129
+ 1920 0392 1846     		mov	r0, r3
+ 1921 0394 FFF7FEFF 		bl	memcpy
+ 1922 0398 D7F87034 		ldr	r3, [r7, #1136]
+ 1923 039c 0133     		adds	r3, r3, #1
+ 1924 039e C7F87034 		str	r3, [r7, #1136]
+ 381:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(uriP->objectId, bufferLink + head, PRV_LINK_BUFFER_SIZE - head);
+ 1925              		.loc 1 381 39 is_stmt 1 discriminator 2
+ 1926 03a2 07F10803 		add	r3, r7, #8
+ 1927 03a6 1B68     		ldr	r3, [r3]
+ 1928 03a8 5B88     		ldrh	r3, [r3, #2]
+ 1929              		.loc 1 381 19 discriminator 2
+ 1930 03aa 98B2     		uxth	r0, r3
+ 1931 03ac 4FF00001 		mov	r1, #0
+ 1932 03b0 07F15C02 		add	r2, r7, #92
+ 1933 03b4 D7F87034 		ldr	r3, [r7, #1136]
+ 1934 03b8 1A44     		add	r2, r2, r3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 42
+
+
+ 1935 03ba D7F87034 		ldr	r3, [r7, #1136]
+ 1936 03be C3F58063 		rsb	r3, r3, #1024
+ 1937 03c2 FFF7FEFF 		bl	utils_intToText
+ 1938 03c6 0346     		mov	r3, r0
+ 1939              		.loc 1 381 17 discriminator 2
+ 1940 03c8 C7F86C34 		str	r3, [r7, #1132]
+ 382:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 1941              		.loc 1 382 16 discriminator 2
+ 1942 03cc D7F86C34 		ldr	r3, [r7, #1132]
+ 1943 03d0 002B     		cmp	r3, #0
+ 1944 03d2 02DC     		bgt	.L108
+ 1945              		.loc 1 382 34 discriminator 1
+ 1946 03d4 4FF0FF33 		mov	r3, #-1
+ 1947 03d8 ABE1     		b	.L126
+ 1948              	.L108:
+ 383:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 1949              		.loc 1 383 18
+ 1950 03da D7F86C34 		ldr	r3, [r7, #1132]
+ 1951 03de D7F87024 		ldr	r2, [r7, #1136]
+ 1952 03e2 1344     		add	r3, r3, r2
+ 1953 03e4 C7F87034 		str	r3, [r7, #1136]
+ 384:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(bufferLink, PRV_LINK_BUFFER_SIZE, head, LINK_URI_SEPARATOR, LINK_URI_SEP
+ 1954              		.loc 1 384 13
+ 1955 03e8 D7F87034 		ldr	r3, [r7, #1136]
+ 1956 03ec B3F5806F 		cmp	r3, #1024
+ 1957 03f0 02D1     		bne	.L109
+ 1958              		.loc 1 384 13 is_stmt 0 discriminator 1
+ 1959 03f2 4FF0FF33 		mov	r3, #-1
+ 1960 03f6 9CE1     		b	.L126
+ 1961              	.L109:
+ 1962              		.loc 1 384 13 discriminator 2
+ 1963 03f8 07F15C02 		add	r2, r7, #92
+ 1964 03fc D7F87034 		ldr	r3, [r7, #1136]
+ 1965 0400 1344     		add	r3, r3, r2
+ 1966 0402 0122     		movs	r2, #1
+ 1967 0404 AA49     		ldr	r1, .L129
+ 1968 0406 1846     		mov	r0, r3
+ 1969 0408 FFF7FEFF 		bl	memcpy
+ 1970 040c D7F87034 		ldr	r3, [r7, #1136]
+ 1971 0410 0133     		adds	r3, r3, #1
+ 1972 0412 C7F87034 		str	r3, [r7, #1136]
+ 385:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(uriP->instanceId, bufferLink + head, PRV_LINK_BUFFER_SIZE - head)
+ 1973              		.loc 1 385 39 is_stmt 1 discriminator 2
+ 1974 0416 07F10803 		add	r3, r7, #8
+ 1975 041a 1B68     		ldr	r3, [r3]
+ 1976 041c 9B88     		ldrh	r3, [r3, #4]
+ 1977              		.loc 1 385 19 discriminator 2
+ 1978 041e 98B2     		uxth	r0, r3
+ 1979 0420 4FF00001 		mov	r1, #0
+ 1980 0424 07F15C02 		add	r2, r7, #92
+ 1981 0428 D7F87034 		ldr	r3, [r7, #1136]
+ 1982 042c 1A44     		add	r2, r2, r3
+ 1983 042e D7F87034 		ldr	r3, [r7, #1136]
+ 1984 0432 C3F58063 		rsb	r3, r3, #1024
+ 1985 0436 FFF7FEFF 		bl	utils_intToText
+ 1986 043a 0346     		mov	r3, r0
+ 1987              		.loc 1 385 17 discriminator 2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 43
+
+
+ 1988 043c C7F86C34 		str	r3, [r7, #1132]
+ 386:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 1989              		.loc 1 386 16 discriminator 2
+ 1990 0440 D7F86C34 		ldr	r3, [r7, #1132]
+ 1991 0444 002B     		cmp	r3, #0
+ 1992 0446 02DC     		bgt	.L110
+ 1993              		.loc 1 386 34 discriminator 1
+ 1994 0448 4FF0FF33 		mov	r3, #-1
+ 1995 044c 71E1     		b	.L126
+ 1996              	.L110:
+ 387:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 1997              		.loc 1 387 18
+ 1998 044e D7F86C34 		ldr	r3, [r7, #1132]
+ 1999 0452 D7F87024 		ldr	r2, [r7, #1136]
+ 2000 0456 1344     		add	r3, r3, r2
+ 2001 0458 C7F87034 		str	r3, [r7, #1136]
+ 388:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(bufferLink, PRV_LINK_BUFFER_SIZE, head, LINK_ITEM_END, LINK_ITEM_END_SIZ
+ 2002              		.loc 1 388 13
+ 2003 045c D7F87034 		ldr	r3, [r7, #1136]
+ 2004 0460 C3F58063 		rsb	r3, r3, #1024
+ 2005 0464 012B     		cmp	r3, #1
+ 2006 0466 02D8     		bhi	.L111
+ 2007              		.loc 1 388 13 is_stmt 0 discriminator 1
+ 2008 0468 4FF0FF33 		mov	r3, #-1
+ 2009 046c 61E1     		b	.L126
+ 2010              	.L111:
+ 2011              		.loc 1 388 13 discriminator 2
+ 2012 046e 07F15C02 		add	r2, r7, #92
+ 2013 0472 D7F87034 		ldr	r3, [r7, #1136]
+ 2014 0476 1344     		add	r3, r3, r2
+ 2015 0478 0222     		movs	r2, #2
+ 2016 047a 8E49     		ldr	r1, .L129+4
+ 2017 047c 1846     		mov	r0, r3
+ 2018 047e FFF7FEFF 		bl	memcpy
+ 2019 0482 D7F87034 		ldr	r3, [r7, #1136]
+ 2020 0486 0233     		adds	r3, r3, #2
+ 2021 0488 C7F87034 		str	r3, [r7, #1136]
+ 389:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             parentUri.instanceId = uriP->instanceId;
+ 2022              		.loc 1 389 40 is_stmt 1 discriminator 2
+ 2023 048c 07F10803 		add	r3, r7, #8
+ 2024 0490 1B68     		ldr	r3, [r3]
+ 2025 0492 9A88     		ldrh	r2, [r3, #4]
+ 2026              		.loc 1 389 34 discriminator 2
+ 2027 0494 07F14003 		add	r3, r7, #64
+ 2028 0498 9A80     		strh	r2, [r3, #4]	@ movhi
+ 390:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             parentUri.flag = LWM2M_URI_FLAG_INSTANCE_ID;
+ 2029              		.loc 1 390 28 discriminator 2
+ 2030 049a 07F14003 		add	r3, r7, #64
+ 2031 049e 0222     		movs	r2, #2
+ 2032 04a0 1A70     		strb	r2, [r3]
+ 391:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (serverP != NULL)
+ 2033              		.loc 1 391 16 discriminator 2
+ 2034 04a2 3B1D     		adds	r3, r7, #4
+ 2035 04a4 1B68     		ldr	r3, [r3]
+ 2036 04a6 002B     		cmp	r3, #0
+ 2037 04a8 1CD0     		beq	.L112
+ 392:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             {
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 44
+
+
+ 393:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 res = prv_serializeAttributes(contextP, &parentUri, serverP, NULL, bufferLink, head
+ 2038              		.loc 1 393 23
+ 2039 04aa D7F87034 		ldr	r3, [r7, #1136]
+ 2040 04ae 013B     		subs	r3, r3, #1
+ 2041 04b0 3A1D     		adds	r2, r7, #4
+ 2042 04b2 07F14001 		add	r1, r7, #64
+ 2043 04b6 07F10C00 		add	r0, r7, #12
+ 2044 04ba 4FF48064 		mov	r4, #1024
+ 2045 04be 0294     		str	r4, [sp, #8]
+ 2046 04c0 0193     		str	r3, [sp, #4]
+ 2047 04c2 07F15C03 		add	r3, r7, #92
+ 2048 04c6 0093     		str	r3, [sp]
+ 2049 04c8 0023     		movs	r3, #0
+ 2050 04ca 1268     		ldr	r2, [r2]
+ 2051 04cc 0068     		ldr	r0, [r0]
+ 2052 04ce FFF7FEFF 		bl	prv_serializeAttributes
+ 2053 04d2 C7F86C04 		str	r0, [r7, #1132]
+ 394:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 if (res < 0) return -1;    // careful, 0 is valid
+ 2054              		.loc 1 394 20
+ 2055 04d6 D7F86C34 		ldr	r3, [r7, #1132]
+ 2056 04da 002B     		cmp	r3, #0
+ 2057 04dc 05DA     		bge	.L113
+ 2058              		.loc 1 394 37 discriminator 1
+ 2059 04de 4FF0FF33 		mov	r3, #-1
+ 2060 04e2 26E1     		b	.L126
+ 2061              	.L112:
+ 395:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             }
+ 396:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             else
+ 397:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             {
+ 398:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 res = 0;
+ 2062              		.loc 1 398 21
+ 2063 04e4 0023     		movs	r3, #0
+ 2064 04e6 C7F86C34 		str	r3, [r7, #1132]
+ 2065              	.L113:
+ 399:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             }
+ 400:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 2066              		.loc 1 400 18
+ 2067 04ea D7F86C34 		ldr	r3, [r7, #1132]
+ 2068 04ee D7F87024 		ldr	r2, [r7, #1136]
+ 2069 04f2 1344     		add	r3, r3, r2
+ 2070 04f4 C7F87034 		str	r3, [r7, #1136]
+ 2071 04f8 90E0     		b	.L103
+ 2072              	.L104:
+ 401:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 402:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         else
+ 403:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         {
+ 404:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(bufferLink, PRV_LINK_BUFFER_SIZE, head, LINK_ITEM_START, LINK_ITEM_START
+ 2073              		.loc 1 404 13
+ 2074 04fa D7F87034 		ldr	r3, [r7, #1136]
+ 2075 04fe B3F5806F 		cmp	r3, #1024
+ 2076 0502 02D1     		bne	.L114
+ 2077              		.loc 1 404 13 is_stmt 0 discriminator 1
+ 2078 0504 4FF0FF33 		mov	r3, #-1
+ 2079 0508 13E1     		b	.L126
+ 2080              	.L114:
+ 2081              		.loc 1 404 13 discriminator 2
+ 2082 050a 07F15C02 		add	r2, r7, #92
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 45
+
+
+ 2083 050e D7F87034 		ldr	r3, [r7, #1136]
+ 2084 0512 1344     		add	r3, r3, r2
+ 2085 0514 0122     		movs	r2, #1
+ 2086 0516 6849     		ldr	r1, .L129+8
+ 2087 0518 1846     		mov	r0, r3
+ 2088 051a FFF7FEFF 		bl	memcpy
+ 2089 051e D7F87034 		ldr	r3, [r7, #1136]
+ 2090 0522 0133     		adds	r3, r3, #1
+ 2091 0524 C7F87034 		str	r3, [r7, #1136]
+ 405:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(bufferLink, PRV_LINK_BUFFER_SIZE, head, LINK_URI_SEPARATOR, LINK_URI_SEP
+ 2092              		.loc 1 405 13 is_stmt 1 discriminator 2
+ 2093 0528 D7F87034 		ldr	r3, [r7, #1136]
+ 2094 052c B3F5806F 		cmp	r3, #1024
+ 2095 0530 02D1     		bne	.L115
+ 2096              		.loc 1 405 13 is_stmt 0 discriminator 1
+ 2097 0532 4FF0FF33 		mov	r3, #-1
+ 2098 0536 FCE0     		b	.L126
+ 2099              	.L115:
+ 2100              		.loc 1 405 13 discriminator 2
+ 2101 0538 07F15C02 		add	r2, r7, #92
+ 2102 053c D7F87034 		ldr	r3, [r7, #1136]
+ 2103 0540 1344     		add	r3, r3, r2
+ 2104 0542 0122     		movs	r2, #1
+ 2105 0544 5A49     		ldr	r1, .L129
+ 2106 0546 1846     		mov	r0, r3
+ 2107 0548 FFF7FEFF 		bl	memcpy
+ 2108 054c D7F87034 		ldr	r3, [r7, #1136]
+ 2109 0550 0133     		adds	r3, r3, #1
+ 2110 0552 C7F87034 		str	r3, [r7, #1136]
+ 406:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             res = utils_intToText(uriP->objectId, bufferLink + head, PRV_LINK_BUFFER_SIZE - head);
+ 2111              		.loc 1 406 39 is_stmt 1 discriminator 2
+ 2112 0556 07F10803 		add	r3, r7, #8
+ 2113 055a 1B68     		ldr	r3, [r3]
+ 2114 055c 5B88     		ldrh	r3, [r3, #2]
+ 2115              		.loc 1 406 19 discriminator 2
+ 2116 055e 98B2     		uxth	r0, r3
+ 2117 0560 4FF00001 		mov	r1, #0
+ 2118 0564 07F15C02 		add	r2, r7, #92
+ 2119 0568 D7F87034 		ldr	r3, [r7, #1136]
+ 2120 056c 1A44     		add	r2, r2, r3
+ 2121 056e D7F87034 		ldr	r3, [r7, #1136]
+ 2122 0572 C3F58063 		rsb	r3, r3, #1024
+ 2123 0576 FFF7FEFF 		bl	utils_intToText
+ 2124 057a 0346     		mov	r3, r0
+ 2125              		.loc 1 406 17 discriminator 2
+ 2126 057c C7F86C34 		str	r3, [r7, #1132]
+ 407:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (res <= 0) return -1;
+ 2127              		.loc 1 407 16 discriminator 2
+ 2128 0580 D7F86C34 		ldr	r3, [r7, #1132]
+ 2129 0584 002B     		cmp	r3, #0
+ 2130 0586 02DC     		bgt	.L116
+ 2131              		.loc 1 407 34 discriminator 1
+ 2132 0588 4FF0FF33 		mov	r3, #-1
+ 2133 058c D1E0     		b	.L126
+ 2134              	.L116:
+ 408:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             head += res;
+ 2135              		.loc 1 408 18
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 46
+
+
+ 2136 058e D7F86C34 		ldr	r3, [r7, #1132]
+ 2137 0592 D7F87024 		ldr	r2, [r7, #1136]
+ 2138 0596 1344     		add	r3, r3, r2
+ 2139 0598 C7F87034 		str	r3, [r7, #1136]
+ 409:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             PRV_CONCAT_STR(bufferLink, PRV_LINK_BUFFER_SIZE, head, LINK_ITEM_END, LINK_ITEM_END_SIZ
+ 2140              		.loc 1 409 13
+ 2141 059c D7F87034 		ldr	r3, [r7, #1136]
+ 2142 05a0 C3F58063 		rsb	r3, r3, #1024
+ 2143 05a4 012B     		cmp	r3, #1
+ 2144 05a6 02D8     		bhi	.L117
+ 2145              		.loc 1 409 13 is_stmt 0 discriminator 1
+ 2146 05a8 4FF0FF33 		mov	r3, #-1
+ 2147 05ac C1E0     		b	.L126
+ 2148              	.L117:
+ 2149              		.loc 1 409 13 discriminator 2
+ 2150 05ae 07F15C02 		add	r2, r7, #92
+ 2151 05b2 D7F87034 		ldr	r3, [r7, #1136]
+ 2152 05b6 1344     		add	r3, r3, r2
+ 2153 05b8 0222     		movs	r2, #2
+ 2154 05ba 3E49     		ldr	r1, .L129+4
+ 2155 05bc 1846     		mov	r0, r3
+ 2156 05be FFF7FEFF 		bl	memcpy
+ 2157 05c2 D7F87034 		ldr	r3, [r7, #1136]
+ 2158 05c6 0233     		adds	r3, r3, #2
+ 2159 05c8 C7F87034 		str	r3, [r7, #1136]
+ 410:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 411:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             if (serverP != NULL)
+ 2160              		.loc 1 411 16 is_stmt 1 discriminator 2
+ 2161 05cc 3B1D     		adds	r3, r7, #4
+ 2162 05ce 1B68     		ldr	r3, [r3]
+ 2163 05d0 002B     		cmp	r3, #0
+ 2164 05d2 23D0     		beq	.L103
+ 412:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             {
+ 413:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 res = prv_serializeAttributes(contextP, &parentUri, serverP, NULL, bufferLink, head
+ 2165              		.loc 1 413 23
+ 2166 05d4 D7F87034 		ldr	r3, [r7, #1136]
+ 2167 05d8 013B     		subs	r3, r3, #1
+ 2168 05da 3A1D     		adds	r2, r7, #4
+ 2169 05dc 07F14001 		add	r1, r7, #64
+ 2170 05e0 07F10C00 		add	r0, r7, #12
+ 2171 05e4 4FF48064 		mov	r4, #1024
+ 2172 05e8 0294     		str	r4, [sp, #8]
+ 2173 05ea 0193     		str	r3, [sp, #4]
+ 2174 05ec 07F15C03 		add	r3, r7, #92
+ 2175 05f0 0093     		str	r3, [sp]
+ 2176 05f2 0023     		movs	r3, #0
+ 2177 05f4 1268     		ldr	r2, [r2]
+ 2178 05f6 0068     		ldr	r0, [r0]
+ 2179 05f8 FFF7FEFF 		bl	prv_serializeAttributes
+ 2180 05fc C7F86C04 		str	r0, [r7, #1132]
+ 414:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 if (res < 0) return -1;    // careful, 0 is valid
+ 2181              		.loc 1 414 20
+ 2182 0600 D7F86C34 		ldr	r3, [r7, #1132]
+ 2183 0604 002B     		cmp	r3, #0
+ 2184 0606 02DA     		bge	.L118
+ 2185              		.loc 1 414 37 discriminator 1
+ 2186 0608 4FF0FF33 		mov	r3, #-1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 47
+
+
+ 2187 060c 91E0     		b	.L126
+ 2188              	.L118:
+ 415:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****                 head += res;
+ 2189              		.loc 1 415 22
+ 2190 060e D7F86C34 		ldr	r3, [r7, #1132]
+ 2191 0612 D7F87024 		ldr	r2, [r7, #1136]
+ 2192 0616 1344     		add	r3, r3, r2
+ 2193 0618 C7F87034 		str	r3, [r7, #1136]
+ 2194              	.L103:
+ 416:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****             }
+ 417:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         }
+ 418:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+ 419:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 420:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     baseUriLen = uri_toString(uriP, baseUriStr, URI_MAX_STRING_LEN, NULL);
+ 2195              		.loc 1 420 18
+ 2196 061c 07F14801 		add	r1, r7, #72
+ 2197 0620 07F10800 		add	r0, r7, #8
+ 2198 0624 0023     		movs	r3, #0
+ 2199 0626 1222     		movs	r2, #18
+ 2200 0628 0068     		ldr	r0, [r0]
+ 2201 062a FFF7FEFF 		bl	uri_toString
+ 2202 062e C7F85C04 		str	r0, [r7, #1116]
+ 421:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (baseUriLen < 0) return -1;
+ 2203              		.loc 1 421 8
+ 2204 0632 D7F85C34 		ldr	r3, [r7, #1116]
+ 2205 0636 002B     		cmp	r3, #0
+ 2206 0638 02DA     		bge	.L119
+ 2207              		.loc 1 421 32 discriminator 1
+ 2208 063a 4FF0FF33 		mov	r3, #-1
+ 2209 063e 78E0     		b	.L126
+ 2210              	.L119:
+ 422:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     baseUriLen -= 1;
+ 2211              		.loc 1 422 16
+ 2212 0640 D7F85C34 		ldr	r3, [r7, #1116]
+ 2213 0644 013B     		subs	r3, r3, #1
+ 2214 0646 C7F85C34 		str	r3, [r7, #1116]
+ 423:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 424:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     for (index = 0; index < size && head < PRV_LINK_BUFFER_SIZE; index++)
+ 2215              		.loc 1 424 16
+ 2216 064a 0023     		movs	r3, #0
+ 2217 064c C7F87434 		str	r3, [r7, #1140]
+ 2218              		.loc 1 424 5
+ 2219 0650 40E0     		b	.L120
+ 2220              	.L123:
+ 425:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 426:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         res = prv_serializeLinkData(contextP, dataP + index, serverP, paramP, uriP, baseUriStr, bas
+ 2221              		.loc 1 426 53
+ 2222 0652 D7F87434 		ldr	r3, [r7, #1140]
+ 2223 0656 1B01     		lsls	r3, r3, #4
+ 2224              		.loc 1 426 15
+ 2225 0658 D7F88824 		ldr	r2, [r7, #1160]
+ 2226 065c D518     		adds	r5, r2, r3
+ 2227 065e D7F85C34 		ldr	r3, [r7, #1116]
+ 2228 0662 07F15C01 		add	r1, r7, #92
+ 2229 0666 D7F87024 		ldr	r2, [r7, #1136]
+ 2230 066a 1144     		add	r1, r1, r2
+ 2231 066c D7F87024 		ldr	r2, [r7, #1136]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 48
+
+
+ 2232 0670 C2F58064 		rsb	r4, r2, #1024
+ 2233 0674 3A1D     		adds	r2, r7, #4
+ 2234 0676 07F10C00 		add	r0, r7, #12
+ 2235 067a 0494     		str	r4, [sp, #16]
+ 2236 067c 0391     		str	r1, [sp, #12]
+ 2237 067e 0293     		str	r3, [sp, #8]
+ 2238 0680 07F14803 		add	r3, r7, #72
+ 2239 0684 0193     		str	r3, [sp, #4]
+ 2240 0686 07F10803 		add	r3, r7, #8
+ 2241 068a 1B68     		ldr	r3, [r3]
+ 2242 068c 0093     		str	r3, [sp]
+ 2243 068e D7F86834 		ldr	r3, [r7, #1128]
+ 2244 0692 1268     		ldr	r2, [r2]
+ 2245 0694 2946     		mov	r1, r5
+ 2246 0696 0068     		ldr	r0, [r0]
+ 2247 0698 FFF7FEFF 		bl	prv_serializeLinkData
+ 2248 069c C7F86C04 		str	r0, [r7, #1132]
+ 427:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (res < 0) return -1;
+ 2249              		.loc 1 427 12
+ 2250 06a0 D7F86C34 		ldr	r3, [r7, #1132]
+ 2251 06a4 002B     		cmp	r3, #0
+ 2252 06a6 09DA     		bge	.L121
+ 2253              		.loc 1 427 29 discriminator 1
+ 2254 06a8 4FF0FF33 		mov	r3, #-1
+ 2255 06ac 41E0     		b	.L126
+ 2256              	.L130:
+ 2257 06ae 00BF     		.align	2
+ 2258              	.L129:
+ 2259 06b0 28000000 		.word	.LC8
+ 2260 06b4 34000000 		.word	.LC10
+ 2261 06b8 24000000 		.word	.LC7
+ 2262              	.L121:
+ 428:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         head += res;
+ 2263              		.loc 1 428 14 discriminator 2
+ 2264 06bc D7F86C34 		ldr	r3, [r7, #1132]
+ 2265 06c0 D7F87024 		ldr	r2, [r7, #1136]
+ 2266 06c4 1344     		add	r3, r3, r2
+ 2267 06c6 C7F87034 		str	r3, [r7, #1136]
+ 424:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 2268              		.loc 1 424 71 discriminator 2
+ 2269 06ca D7F87434 		ldr	r3, [r7, #1140]
+ 2270 06ce 0133     		adds	r3, r3, #1
+ 2271 06d0 C7F87434 		str	r3, [r7, #1140]
+ 2272              	.L120:
+ 424:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 2273              		.loc 1 424 5 discriminator 1
+ 2274 06d4 3B46     		mov	r3, r7
+ 2275 06d6 D7F87424 		ldr	r2, [r7, #1140]
+ 2276 06da 1B68     		ldr	r3, [r3]
+ 2277 06dc 9A42     		cmp	r2, r3
+ 2278 06de 04DA     		bge	.L122
+ 424:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 2279              		.loc 1 424 34 discriminator 3
+ 2280 06e0 D7F87034 		ldr	r3, [r7, #1136]
+ 2281 06e4 B3F5806F 		cmp	r3, #1024
+ 2282 06e8 B3D3     		bcc	.L123
+ 2283              	.L122:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 49
+
+
+ 429:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+ 430:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 431:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     if (head > 0)
+ 2284              		.loc 1 431 8
+ 2285 06ea D7F87034 		ldr	r3, [r7, #1136]
+ 2286 06ee 002B     		cmp	r3, #0
+ 2287 06f0 1DD0     		beq	.L124
+ 432:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     {
+ 433:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         head -= 1;
+ 2288              		.loc 1 433 14
+ 2289 06f2 D7F87034 		ldr	r3, [r7, #1136]
+ 2290 06f6 013B     		subs	r3, r3, #1
+ 2291 06f8 C7F87034 		str	r3, [r7, #1136]
+ 434:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 435:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         *bufferP = (uint8_t *)lwm2m_malloc(head);
+ 2292              		.loc 1 435 31
+ 2293 06fc D7F87004 		ldr	r0, [r7, #1136]
+ 2294 0700 FFF7FEFF 		bl	lwm2m_malloc
+ 2295 0704 0246     		mov	r2, r0
+ 2296              		.loc 1 435 18
+ 2297 0706 D7F88C34 		ldr	r3, [r7, #1164]
+ 2298 070a 1A60     		str	r2, [r3]
+ 436:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         if (*bufferP == NULL) return 0;
+ 2299              		.loc 1 436 13
+ 2300 070c D7F88C34 		ldr	r3, [r7, #1164]
+ 2301 0710 1B68     		ldr	r3, [r3]
+ 2302              		.loc 1 436 12
+ 2303 0712 002B     		cmp	r3, #0
+ 2304 0714 01D1     		bne	.L125
+ 2305              		.loc 1 436 38 discriminator 1
+ 2306 0716 0023     		movs	r3, #0
+ 2307 0718 0BE0     		b	.L126
+ 2308              	.L125:
+ 437:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****         memcpy(*bufferP, bufferLink, head);
+ 2309              		.loc 1 437 9
+ 2310 071a D7F88C34 		ldr	r3, [r7, #1164]
+ 2311 071e 1B68     		ldr	r3, [r3]
+ 2312 0720 07F15C01 		add	r1, r7, #92
+ 2313 0724 D7F87024 		ldr	r2, [r7, #1136]
+ 2314 0728 1846     		mov	r0, r3
+ 2315 072a FFF7FEFF 		bl	memcpy
+ 2316              	.L124:
+ 438:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     }
+ 439:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** 
+ 440:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c ****     return (int)head;
+ 2317              		.loc 1 440 12
+ 2318 072e D7F87034 		ldr	r3, [r7, #1136]
+ 2319              	.L126:
+ 441:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\discover.c **** }
+ 2320              		.loc 1 441 1 discriminator 2
+ 2321 0732 1846     		mov	r0, r3
+ 2322 0734 07F58F67 		add	r7, r7, #1144
+ 2323              	.LCFI18:
+ 2324              		.cfi_def_cfa_offset 16
+ 2325 0738 BD46     		mov	sp, r7
+ 2326              	.LCFI19:
+ 2327              		.cfi_def_cfa_register 13
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 50
+
+
+ 2328              		@ sp needed
+ 2329 073a B0BD     		pop	{r4, r5, r7, pc}
+ 2330              		.cfi_endproc
+ 2331              	.LFE7:
+ 2333              		.section	.rodata.__FUNCTION__.8697,"a"
+ 2334              		.align	2
+ 2337              	__FUNCTION__.8697:
+ 2338 0000 64697363 		.ascii	"discover_serialize\000"
+ 2338      6F766572 
+ 2338      5F736572 
+ 2338      69616C69 
+ 2338      7A6500
+ 2339              		.section	.rodata.__func__.8698,"a"
+ 2340              		.align	2
+ 2343              	__func__.8698:
+ 2344 0000 64697363 		.ascii	"discover_serialize\000"
+ 2344      6F766572 
+ 2344      5F736572 
+ 2344      69616C69 
+ 2344      7A6500
+ 2345              		.text
+ 2346              	.Letext0:
+ 2347              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 2348              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 2349              		.file 4 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/liblwm2m_
+ 2350              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 2351              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 2352              		.file 7 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 2353              		.file 8 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 2354              		.file 9 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_timev
+ 2355              		.file 10 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\time.h"
+ 2356              		.file 11 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/er-coap-
+ 2357              		.file 12 "g:/iot/IoT_Device_Demo/iot_link/inc/link_log.h"
+ 2358              		.file 13 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/liblwm2m
+ 2359              		.file 14 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\stdlib.h"
+ 2360              		.file 15 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\ctype.h"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s 			page 51
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 discover.c
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:18     .text.prv_findAttributes:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:25     .text.prv_findAttributes:00000000 prv_findAttributes
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:130    .rodata:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:152    .text.prv_serializeAttributes:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:158    .text.prv_serializeAttributes:00000000 prv_serializeAttributes
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:601    .text.prv_serializeAttributes:000002e8 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:607    .text.prv_serializeAttributes:000002f8 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:818    .text.prv_serializeAttributes:0000045c $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:839    .text.prv_serializeLinkData:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:845    .text.prv_serializeLinkData:00000000 prv_serializeLinkData
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:1288   .text.prv_serializeLinkData:000002c8 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:1295   .text.prv_serializeLinkData:000002dc $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:1456   .text.prv_serializeLinkData:000003d8 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:1478   .text.discover_serialize:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:1485   .text.discover_serialize:00000000 discover_serialize
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:1905   .text.discover_serialize:00000364 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:2343   .rodata.__func__.8698:00000000 __func__.8698
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:2337   .rodata.__FUNCTION__.8697:00000000 __FUNCTION__.8697
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:1915   .text.discover_serialize:00000384 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:2259   .text.discover_serialize:000006b0 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:2264   .text.discover_serialize:000006bc $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:2334   .rodata.__FUNCTION__.8697:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccq3YVxh.s:2340   .rodata.__func__.8698:00000000 $d
+
+UNDEFINED SYMBOLS
+observe_findByUri
+memcpy
+utils_intToText
+utils_floatToText
+link_log_level_get
+link_log_level_name
+osal_sys_time
+lwm2m_gettime
+printf
+memset
+uri_toString
+lwm2m_malloc

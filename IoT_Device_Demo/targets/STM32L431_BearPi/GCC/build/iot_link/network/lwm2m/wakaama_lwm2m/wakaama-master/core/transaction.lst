@@ -1,0 +1,3605 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"transaction.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata
+  18              		.align	2
+  19              	.LC0:
+  20 0000 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] transactionMessage->tok"
+  20      5B25755D 
+  20      5B25733A 
+  20      25645D20 
+  20      5B25645D 
+  21 0033 656E5F6C 		.ascii	"en_len is %d, len is %d\012\015\012\015\012\000"
+  21      656E2069 
+  21      73202564 
+  21      2C206C65 
+  21      6E206973 
+  22              		.align	2
+  23              	.LC1:
+  24 0050 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] %d\012\015\012\015\012\000"
+  24      5B25755D 
+  24      5B25733A 
+  24      25645D20 
+  24      5B25645D 
+  25              		.align	2
+  26              	.LC2:
+  27 0074 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] \012\012\015\012\015\012"
+  27      5B25755D 
+  27      5B25733A 
+  27      25645D20 
+  27      5B25645D 
+  28 0096 00       		.ascii	"\000"
+  29 0097 00       		.align	2
+  30              	.LC3:
+  31 0098 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] prv_checkFinished not f"
+  31      5B25755D 
+  31      5B25733A 
+  31      25645D20 
+  31      5B25645D 
+  32 00cb 696E6973 		.ascii	"inish!!!\012\015\012\015\012\000"
+  32      68212121 
+  32      0A0D0A0D 
+  32      0A00
+  33              		.section	.text.prv_checkFinished,"ax",%progbits
+  34              		.align	1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 2
+
+
+  35              		.arch armv7e-m
+  36              		.syntax unified
+  37              		.thumb
+  38              		.thumb_func
+  39              		.fpu fpv4-sp-d16
+  41              	prv_checkFinished:
+  42              	.LFB4:
+  43              		.file 1 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/transacti
+   1:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** /*----------------------------------------------------------------------------
+   2:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * All rights reserved.
+   4:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * are permitted provided that the following conditions are met:
+   6:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * conditions and the following disclaimer.
+   8:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * provided with the distribution.
+  11:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * permission.
+  14:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *---------------------------------------------------------------------------*/
+  26:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** /*----------------------------------------------------------------------------
+  27:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Notice of Export Control Law
+  28:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * ===============================================
+  29:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * applicable export control laws and regulations.
+  33:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *---------------------------------------------------------------------------*/
+  34:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  35:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** /*******************************************************************************
+  36:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+  37:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Copyright (c) 2013, 2014 Intel Corporation and others.
+  38:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * All rights reserved. This program and the accompanying materials
+  39:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * are made available under the terms of the Eclipse Public License v1.0
+  40:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * and Eclipse Distribution License v1.0 which accompany this distribution.
+  41:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+  42:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * The Eclipse Public License is available at
+  43:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    http://www.eclipse.org/legal/epl-v10.html
+  44:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * The Eclipse Distribution License is available at
+  45:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    http://www.eclipse.org/org/documents/edl-v10.php.
+  46:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+  47:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Contributors:
+  48:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    David Navarro, Intel Corporation - initial API and implementation
+  49:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    Simon Bernard - Please refer to git log
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 3
+
+
+  50:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    Toby Jaffey - Please refer to git log
+  51:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    Pascal Rieux - Please refer to git log
+  52:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    Bosch Software Innovations GmbH - Please refer to git log
+  53:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+  54:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *******************************************************************************/
+  55:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  56:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** /*
+  57:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  Copyright (c) 2013, 2014 Intel Corporation
+  58:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  59:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  Redistribution and use in source and binary forms, with or without modification,
+  60:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  are permitted provided that the following conditions are met:
+  61:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  62:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****      * Redistributions of source code must retain the above copyright notice,
+  63:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****        this list of conditions and the following disclaimer.
+  64:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****      * Redistributions in binary form must reproduce the above copyright notice,
+  65:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****        this list of conditions and the following disclaimer in the documentation
+  66:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****        and/or other materials provided with the distribution.
+  67:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****      * Neither the name of Intel Corporation nor the names of its contributors
+  68:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****        may be used to endorse or promote products derived from this software
+  69:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****        without specific prior written permission.
+  70:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  71:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  72:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  73:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  74:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  75:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  76:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  77:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  78:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  79:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+  80:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  THE POSSIBILITY OF SUCH DAMAGE.
+  81:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  82:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  David Navarro <david.navarro@intel.com>
+  83:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  84:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** */
+  85:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  86:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** /*
+  87:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** Contains code snippets which are:
+  88:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+  89:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Copyright (c) 2013, Institute for Pervasive Computing, ETH Zurich
+  90:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * All rights reserved.
+  91:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+  92:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Redistribution and use in source and binary forms, with or without
+  93:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * modification, are permitted provided that the following conditions
+  94:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * are met:
+  95:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * 1. Redistributions of source code must retain the above copyright
+  96:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    notice, this list of conditions and the following disclaimer.
+  97:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * 2. Redistributions in binary form must reproduce the above copyright
+  98:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    notice, this list of conditions and the following disclaimer in the
+  99:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    documentation and/or other materials provided with the distribution.
+ 100:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * 3. Neither the name of the Institute nor the names of its contributors
+ 101:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    may be used to endorse or promote products derived from this software
+ 102:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *    without specific prior written permission.
+ 103:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+ 104:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ 105:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ 106:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 4
+
+
+ 107:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ 108:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ 109:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ 110:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ 111:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ 112:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ 113:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ 114:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * SUCH DAMAGE.
+ 115:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 116:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** */
+ 117:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 118:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** /************************************************************************
+ 119:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  Function for communications transactions.
+ 120:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+ 121:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  Basic specification: rfc7252
+ 122:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+ 123:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  Transaction implements processing of piggybacked and separate response communication
+ 124:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  dialogs specified in section 2.2 of the above specification.
+ 125:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  The caller registers a callback function, which is called, when either the result is
+ 126:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  received or a timeout occurs.
+ 127:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *
+ 128:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  Supported dialogs:
+ 129:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  Requests (GET - DELETE):
+ 130:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  - CON with mid, without token => regular finished with corresponding ACK.MID
+ 131:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  - CON with mid, with token => regular finished with corresponding ACK.MID and response containi
+ 132:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *                  the token. Supports both versions, with piggybacked ACK and separate ACK/respon
+ 133:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *                  Though the ACK.MID may be lost in the separate version, a matching response may
+ 134:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *                  finish the transaction even without the ACK.MID.
+ 135:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  - NON without token => no transaction, no result expected!
+ 136:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  - NON with token => regular finished with response containing the token.
+ 137:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  Responses (COAP_201_CREATED - ?):
+ 138:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  *  - CON with mid => regular finished with corresponding ACK.MID
+ 139:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  */
+ 140:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 141:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** #include "internals.h"
+ 142:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** //#include "pdu.h"
+ 143:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** #include "commandline.h"
+ 144:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 145:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 146:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** /*
+ 147:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * Modulo mask (+1 and +0.5 for rounding) for a random number to get the tick number for the random
+ 148:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  * retransmission time between COAP_RESPONSE_TIMEOUT and COAP_RESPONSE_TIMEOUT*COAP_RESPONSE_RANDOM
+ 149:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****  */
+ 150:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** #define COAP_RESPONSE_TIMEOUT_TICKS         (CLOCK_SECOND * COAP_RESPONSE_TIMEOUT)
+ 151:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** #define COAP_RESPONSE_TIMEOUT_BACKOFF_MASK  ((CLOCK_SECOND * COAP_RESPONSE_TIMEOUT * (COAP_RESPONSE
+ 152:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 153:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** static int prv_checkFinished(lwm2m_transaction_t *transacP,
+ 154:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                              coap_packet_t *receivedMessage)
+ 155:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** {
+  44              		.loc 1 155 1
+  45              		.cfi_startproc
+  46              		@ args = 0, pretend = 0, frame = 24
+  47              		@ frame_needed = 1, uses_anonymous_args = 0
+  48 0000 B0B5     		push	{r4, r5, r7, lr}
+  49              	.LCFI0:
+  50              		.cfi_def_cfa_offset 16
+  51              		.cfi_offset 4, -16
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 5
+
+
+  52              		.cfi_offset 5, -12
+  53              		.cfi_offset 7, -8
+  54              		.cfi_offset 14, -4
+  55 0002 8CB0     		sub	sp, sp, #48
+  56              	.LCFI1:
+  57              		.cfi_def_cfa_offset 64
+  58 0004 06AF     		add	r7, sp, #24
+  59              	.LCFI2:
+  60              		.cfi_def_cfa 7, 40
+  61 0006 7860     		str	r0, [r7, #4]
+  62 0008 3960     		str	r1, [r7]
+ 156:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     int len;
+ 157:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     const uint8_t *token;
+ 158:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     coap_packet_t *transactionMessage = transacP->message;
+  63              		.loc 1 158 20
+  64 000a 7B68     		ldr	r3, [r7, #4]
+  65 000c 9B6A     		ldr	r3, [r3, #40]
+  66 000e 3B61     		str	r3, [r7, #16]
+ 159:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 160:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (COAP_DELETE < transactionMessage->code)
+  67              		.loc 1 160 41
+  68 0010 3B69     		ldr	r3, [r7, #16]
+  69 0012 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+  70              		.loc 1 160 8
+  71 0014 042B     		cmp	r3, #4
+  72 0016 07D9     		bls	.L2
+ 161:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 162:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         // response
+ 163:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         return transacP->ack_received ? 1 : 0;
+  73              		.loc 1 163 24
+  74 0018 7B68     		ldr	r3, [r7, #4]
+  75 001a 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+  76              		.loc 1 163 43
+  77 001c 002B     		cmp	r3, #0
+  78 001e 14BF     		ite	ne
+  79 0020 0123     		movne	r3, #1
+  80 0022 0023     		moveq	r3, #0
+  81 0024 DBB2     		uxtb	r3, r3
+  82 0026 F0E0     		b	.L15
+  83              	.L2:
+ 164:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 165:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (!IS_OPTION(transactionMessage, COAP_OPTION_TOKEN))
+  84              		.loc 1 165 10
+  85 0028 3B69     		ldr	r3, [r7, #16]
+  86 002a 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+  87 002c 03F00803 		and	r3, r3, #8
+  88              		.loc 1 165 8
+  89 0030 002B     		cmp	r3, #0
+  90 0032 07D1     		bne	.L4
+ 166:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 167:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         // request without token
+ 168:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         return transacP->ack_received ? 1 : 0;
+  91              		.loc 1 168 24
+  92 0034 7B68     		ldr	r3, [r7, #4]
+  93 0036 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+  94              		.loc 1 168 43
+  95 0038 002B     		cmp	r3, #0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 6
+
+
+  96 003a 14BF     		ite	ne
+  97 003c 0123     		movne	r3, #1
+  98 003e 0023     		moveq	r3, #0
+  99 0040 DBB2     		uxtb	r3, r3
+ 100 0042 E2E0     		b	.L15
+ 101              	.L4:
+ 169:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 170:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 171:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     len = coap_get_header_token(receivedMessage, &token);
+ 102              		.loc 1 171 11
+ 103 0044 07F10803 		add	r3, r7, #8
+ 104 0048 1946     		mov	r1, r3
+ 105 004a 3868     		ldr	r0, [r7]
+ 106 004c FFF7FEFF 		bl	coap_get_header_token
+ 107 0050 F860     		str	r0, [r7, #12]
+ 172:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (transactionMessage->token_len == len)
+ 108              		.loc 1 172 27
+ 109 0052 3B69     		ldr	r3, [r7, #16]
+ 110 0054 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+ 111 0058 1A46     		mov	r2, r3
+ 112              		.loc 1 172 8
+ 113 005a FB68     		ldr	r3, [r7, #12]
+ 114 005c 9342     		cmp	r3, r2
+ 115 005e 0BD1     		bne	.L5
+ 173:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 174:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (memcmp(transactionMessage->token, token, len) == 0) return 1;
+ 116              		.loc 1 174 38
+ 117 0060 3B69     		ldr	r3, [r7, #16]
+ 118 0062 4D33     		adds	r3, r3, #77
+ 119              		.loc 1 174 13
+ 120 0064 B968     		ldr	r1, [r7, #8]
+ 121 0066 FA68     		ldr	r2, [r7, #12]
+ 122 0068 1846     		mov	r0, r3
+ 123 006a FFF7FEFF 		bl	memcmp
+ 124 006e 0346     		mov	r3, r0
+ 125              		.loc 1 174 12
+ 126 0070 002B     		cmp	r3, #0
+ 127 0072 01D1     		bne	.L5
+ 128              		.loc 1 174 72 discriminator 1
+ 129 0074 0123     		movs	r3, #1
+ 130 0076 C8E0     		b	.L15
+ 131              	.L5:
+ 175:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 176:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG_ARG("transactionMessage->token_len is %d, len is %d\n", transactionMessage->token_len, len)
+ 132              		.loc 1 176 5
+ 133 0078 FFF7FEFF 		bl	link_log_level_get
+ 134 007c 0346     		mov	r3, r0
+ 135 007e 012B     		cmp	r3, #1
+ 136 0080 20D8     		bhi	.L6
+ 137              		.loc 1 176 5 is_stmt 0 discriminator 1
+ 138 0082 0120     		movs	r0, #1
+ 139 0084 FFF7FEFF 		bl	link_log_level_name
+ 140 0088 0446     		mov	r4, r0
+ 141 008a FFF7FEFF 		bl	osal_sys_time
+ 142 008e 0246     		mov	r2, r0
+ 143 0090 0B46     		mov	r3, r1
+ 144 0092 1546     		mov	r5, r2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 7
+
+
+ 145 0094 FFF7FEFF 		bl	lwm2m_gettime
+ 146 0098 0246     		mov	r2, r0
+ 147 009a 0B46     		mov	r3, r1
+ 148 009c 3B69     		ldr	r3, [r7, #16]
+ 149 009e 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+ 150 00a2 1946     		mov	r1, r3
+ 151 00a4 FB68     		ldr	r3, [r7, #12]
+ 152 00a6 0593     		str	r3, [sp, #20]
+ 153 00a8 0491     		str	r1, [sp, #16]
+ 154 00aa B023     		movs	r3, #176
+ 155 00ac 0393     		str	r3, [sp, #12]
+ 156 00ae 594B     		ldr	r3, .L16
+ 157 00b0 0293     		str	r3, [sp, #8]
+ 158 00b2 0192     		str	r2, [sp, #4]
+ 159 00b4 B023     		movs	r3, #176
+ 160 00b6 0093     		str	r3, [sp]
+ 161 00b8 574B     		ldr	r3, .L16+4
+ 162 00ba 2A46     		mov	r2, r5
+ 163 00bc 2146     		mov	r1, r4
+ 164 00be 5748     		ldr	r0, .L16+8
+ 165 00c0 FFF7FEFF 		bl	printf
+ 166              	.L6:
+ 177:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     int i = 0;
+ 167              		.loc 1 177 9 is_stmt 1
+ 168 00c4 0023     		movs	r3, #0
+ 169 00c6 7B61     		str	r3, [r7, #20]
+ 178:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     for(i = 0; i < transactionMessage->token_len; i++ )
+ 170              		.loc 1 178 11
+ 171 00c8 0023     		movs	r3, #0
+ 172 00ca 7B61     		str	r3, [r7, #20]
+ 173              		.loc 1 178 5
+ 174 00cc 28E0     		b	.L7
+ 175              	.L9:
+ 179:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         LOG_ARG("%d\n", transactionMessage->token[i]);
+ 176              		.loc 1 179 9
+ 177 00ce FFF7FEFF 		bl	link_log_level_get
+ 178 00d2 0346     		mov	r3, r0
+ 179 00d4 012B     		cmp	r3, #1
+ 180 00d6 20D8     		bhi	.L8
+ 181              		.loc 1 179 9 is_stmt 0 discriminator 1
+ 182 00d8 0120     		movs	r0, #1
+ 183 00da FFF7FEFF 		bl	link_log_level_name
+ 184 00de 0446     		mov	r4, r0
+ 185 00e0 FFF7FEFF 		bl	osal_sys_time
+ 186 00e4 0246     		mov	r2, r0
+ 187 00e6 0B46     		mov	r3, r1
+ 188 00e8 1546     		mov	r5, r2
+ 189 00ea FFF7FEFF 		bl	lwm2m_gettime
+ 190 00ee 0246     		mov	r2, r0
+ 191 00f0 0B46     		mov	r3, r1
+ 192 00f2 1146     		mov	r1, r2
+ 193 00f4 3A69     		ldr	r2, [r7, #16]
+ 194 00f6 7B69     		ldr	r3, [r7, #20]
+ 195 00f8 1344     		add	r3, r3, r2
+ 196 00fa 4D33     		adds	r3, r3, #77
+ 197 00fc 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 198 00fe 0493     		str	r3, [sp, #16]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 8
+
+
+ 199 0100 B323     		movs	r3, #179
+ 200 0102 0393     		str	r3, [sp, #12]
+ 201 0104 434B     		ldr	r3, .L16
+ 202 0106 0293     		str	r3, [sp, #8]
+ 203 0108 0191     		str	r1, [sp, #4]
+ 204 010a B323     		movs	r3, #179
+ 205 010c 0093     		str	r3, [sp]
+ 206 010e 424B     		ldr	r3, .L16+4
+ 207 0110 2A46     		mov	r2, r5
+ 208 0112 2146     		mov	r1, r4
+ 209 0114 4248     		ldr	r0, .L16+12
+ 210 0116 FFF7FEFF 		bl	printf
+ 211              	.L8:
+ 178:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     for(i = 0; i < transactionMessage->token_len; i++ )
+ 212              		.loc 1 178 52 is_stmt 1 discriminator 2
+ 213 011a 7B69     		ldr	r3, [r7, #20]
+ 214 011c 0133     		adds	r3, r3, #1
+ 215 011e 7B61     		str	r3, [r7, #20]
+ 216              	.L7:
+ 178:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     for(i = 0; i < transactionMessage->token_len; i++ )
+ 217              		.loc 1 178 38 discriminator 1
+ 218 0120 3B69     		ldr	r3, [r7, #16]
+ 219 0122 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+ 220 0126 1A46     		mov	r2, r3
+ 178:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     for(i = 0; i < transactionMessage->token_len; i++ )
+ 221              		.loc 1 178 5 discriminator 1
+ 222 0128 7B69     		ldr	r3, [r7, #20]
+ 223 012a 9342     		cmp	r3, r2
+ 224 012c CFDB     		blt	.L9
+ 180:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("\n\n");
+ 225              		.loc 1 180 5
+ 226 012e FFF7FEFF 		bl	link_log_level_get
+ 227 0132 0346     		mov	r3, r0
+ 228 0134 012B     		cmp	r3, #1
+ 229 0136 19D8     		bhi	.L10
+ 230              		.loc 1 180 5 is_stmt 0 discriminator 1
+ 231 0138 0120     		movs	r0, #1
+ 232 013a FFF7FEFF 		bl	link_log_level_name
+ 233 013e 0446     		mov	r4, r0
+ 234 0140 FFF7FEFF 		bl	osal_sys_time
+ 235 0144 0246     		mov	r2, r0
+ 236 0146 0B46     		mov	r3, r1
+ 237 0148 1546     		mov	r5, r2
+ 238 014a FFF7FEFF 		bl	lwm2m_gettime
+ 239 014e 0246     		mov	r2, r0
+ 240 0150 0B46     		mov	r3, r1
+ 241 0152 B423     		movs	r3, #180
+ 242 0154 0393     		str	r3, [sp, #12]
+ 243 0156 2F4B     		ldr	r3, .L16
+ 244 0158 0293     		str	r3, [sp, #8]
+ 245 015a 0192     		str	r2, [sp, #4]
+ 246 015c B423     		movs	r3, #180
+ 247 015e 0093     		str	r3, [sp]
+ 248 0160 2D4B     		ldr	r3, .L16+4
+ 249 0162 2A46     		mov	r2, r5
+ 250 0164 2146     		mov	r1, r4
+ 251 0166 2F48     		ldr	r0, .L16+16
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 9
+
+
+ 252 0168 FFF7FEFF 		bl	printf
+ 253              	.L10:
+ 181:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     for(i = 0; i < len; i++)
+ 254              		.loc 1 181 11 is_stmt 1
+ 255 016c 0023     		movs	r3, #0
+ 256 016e 7B61     		str	r3, [r7, #20]
+ 257              		.loc 1 181 5
+ 258 0170 27E0     		b	.L11
+ 259              	.L13:
+ 182:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         LOG_ARG("%d\n", token[i]);
+ 260              		.loc 1 182 9
+ 261 0172 FFF7FEFF 		bl	link_log_level_get
+ 262 0176 0346     		mov	r3, r0
+ 263 0178 012B     		cmp	r3, #1
+ 264 017a 1FD8     		bhi	.L12
+ 265              		.loc 1 182 9 is_stmt 0 discriminator 1
+ 266 017c 0120     		movs	r0, #1
+ 267 017e FFF7FEFF 		bl	link_log_level_name
+ 268 0182 0446     		mov	r4, r0
+ 269 0184 FFF7FEFF 		bl	osal_sys_time
+ 270 0188 0246     		mov	r2, r0
+ 271 018a 0B46     		mov	r3, r1
+ 272 018c 1546     		mov	r5, r2
+ 273 018e FFF7FEFF 		bl	lwm2m_gettime
+ 274 0192 0246     		mov	r2, r0
+ 275 0194 0B46     		mov	r3, r1
+ 276 0196 1146     		mov	r1, r2
+ 277 0198 BA68     		ldr	r2, [r7, #8]
+ 278 019a 7B69     		ldr	r3, [r7, #20]
+ 279 019c 1344     		add	r3, r3, r2
+ 280 019e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 281 01a0 0493     		str	r3, [sp, #16]
+ 282 01a2 B623     		movs	r3, #182
+ 283 01a4 0393     		str	r3, [sp, #12]
+ 284 01a6 1B4B     		ldr	r3, .L16
+ 285 01a8 0293     		str	r3, [sp, #8]
+ 286 01aa 0191     		str	r1, [sp, #4]
+ 287 01ac B623     		movs	r3, #182
+ 288 01ae 0093     		str	r3, [sp]
+ 289 01b0 194B     		ldr	r3, .L16+4
+ 290 01b2 2A46     		mov	r2, r5
+ 291 01b4 2146     		mov	r1, r4
+ 292 01b6 1A48     		ldr	r0, .L16+12
+ 293 01b8 FFF7FEFF 		bl	printf
+ 294              	.L12:
+ 181:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     for(i = 0; i < len; i++)
+ 295              		.loc 1 181 26 is_stmt 1 discriminator 2
+ 296 01bc 7B69     		ldr	r3, [r7, #20]
+ 297 01be 0133     		adds	r3, r3, #1
+ 298 01c0 7B61     		str	r3, [r7, #20]
+ 299              	.L11:
+ 181:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     for(i = 0; i < len; i++)
+ 300              		.loc 1 181 5 discriminator 1
+ 301 01c2 7A69     		ldr	r2, [r7, #20]
+ 302 01c4 FB68     		ldr	r3, [r7, #12]
+ 303 01c6 9A42     		cmp	r2, r3
+ 304 01c8 D3DB     		blt	.L13
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 10
+
+
+ 183:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("prv_checkFinished not finish!!!\n");
+ 305              		.loc 1 183 5
+ 306 01ca FFF7FEFF 		bl	link_log_level_get
+ 307 01ce 0346     		mov	r3, r0
+ 308 01d0 012B     		cmp	r3, #1
+ 309 01d2 19D8     		bhi	.L14
+ 310              		.loc 1 183 5 is_stmt 0 discriminator 1
+ 311 01d4 0120     		movs	r0, #1
+ 312 01d6 FFF7FEFF 		bl	link_log_level_name
+ 313 01da 0446     		mov	r4, r0
+ 314 01dc FFF7FEFF 		bl	osal_sys_time
+ 315 01e0 0246     		mov	r2, r0
+ 316 01e2 0B46     		mov	r3, r1
+ 317 01e4 1546     		mov	r5, r2
+ 318 01e6 FFF7FEFF 		bl	lwm2m_gettime
+ 319 01ea 0246     		mov	r2, r0
+ 320 01ec 0B46     		mov	r3, r1
+ 321 01ee B723     		movs	r3, #183
+ 322 01f0 0393     		str	r3, [sp, #12]
+ 323 01f2 084B     		ldr	r3, .L16
+ 324 01f4 0293     		str	r3, [sp, #8]
+ 325 01f6 0192     		str	r2, [sp, #4]
+ 326 01f8 B723     		movs	r3, #183
+ 327 01fa 0093     		str	r3, [sp]
+ 328 01fc 064B     		ldr	r3, .L16+4
+ 329 01fe 2A46     		mov	r2, r5
+ 330 0200 2146     		mov	r1, r4
+ 331 0202 0948     		ldr	r0, .L16+20
+ 332 0204 FFF7FEFF 		bl	printf
+ 333              	.L14:
+ 184:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     return 0;
+ 334              		.loc 1 184 12 is_stmt 1
+ 335 0208 0023     		movs	r3, #0
+ 336              	.L15:
+ 185:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** }
+ 337              		.loc 1 185 1 discriminator 1
+ 338 020a 1846     		mov	r0, r3
+ 339 020c 1837     		adds	r7, r7, #24
+ 340              	.LCFI3:
+ 341              		.cfi_def_cfa_offset 16
+ 342 020e BD46     		mov	sp, r7
+ 343              	.LCFI4:
+ 344              		.cfi_def_cfa_register 13
+ 345              		@ sp needed
+ 346 0210 B0BD     		pop	{r4, r5, r7, pc}
+ 347              	.L17:
+ 348 0212 00BF     		.align	2
+ 349              	.L16:
+ 350 0214 00000000 		.word	__func__.8681
+ 351 0218 00000000 		.word	__FUNCTION__.8680
+ 352 021c 00000000 		.word	.LC0
+ 353 0220 50000000 		.word	.LC1
+ 354 0224 74000000 		.word	.LC2
+ 355 0228 98000000 		.word	.LC3
+ 356              		.cfi_endproc
+ 357              	.LFE4:
+ 359              		.section	.rodata
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 11
+
+
+ 360 00d9 000000   		.align	2
+ 361              	.LC4:
+ 362 00dc 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] method: %d, altPath: \""
+ 362      5B25755D 
+ 362      5B25733A 
+ 362      25645D20 
+ 362      5B25645D 
+ 363 010e 2573222C 		.ascii	"%s\", mID: %d, token_len: %d\015\012\015\012\000"
+ 363      206D4944 
+ 363      3A202564 
+ 363      2C20746F 
+ 363      6B656E5F 
+ 364 012e 0000     		.align	2
+ 365              	.LC5:
+ 366 0130 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] method: %d, altPath: NU"
+ 366      5B25755D 
+ 366      5B25733A 
+ 366      25645D20 
+ 366      5B25645D 
+ 367 0163 4C4C2C20 		.ascii	"LL, mID: %d, token_len: %d\015\012\015\012\000"
+ 367      6D49443A 
+ 367      2025642C 
+ 367      20746F6B 
+ 367      656E5F6C 
+ 368 0182 0000     		.align	2
+ 369              	.LC6:
+ 370 0184 5B25735D 		.ascii	"[%s][%u][%s:%d] [%s:%d] NULL\015\012\015\012\000"
+ 370      5B25755D 
+ 370      5B25733A 
+ 370      25645D20 
+ 370      5B25733A 
+ 371 01a5 000000   		.align	2
+ 372              	.LC7:
+ 373 01a8 5B25735D 		.ascii	"[%s][%u][%s:%d] [%s:%d] /%d\015\012\000"
+ 373      5B25755D 
+ 373      5B25733A 
+ 373      25645D20 
+ 373      5B25733A 
+ 374 01c6 0000     		.align	2
+ 375              	.LC8:
+ 376 01c8 5B25735D 		.ascii	"[%s][%u][%s:%d] /%d\015\012\000"
+ 376      5B25755D 
+ 376      5B25733A 
+ 376      25645D20 
+ 376      2F25640D 
+ 377 01de 0000     		.align	2
+ 378              	.LC9:
+ 379 01e0 5B25735D 		.ascii	"[%s][%u][%s:%d] \015\012\015\012\000"
+ 379      5B25755D 
+ 379      5B25733A 
+ 379      25645D20 
+ 379      0D0A0D0A 
+ 380 01f5 000000   		.align	2
+ 381              	.LC10:
+ 382 01f8 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] send token is %d\012\015"
+ 382      5B25755D 
+ 382      5B25733A 
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 12
+
+
+ 382      25645D20 
+ 382      5B25645D 
+ 383 0226 0A0D0A00 		.ascii	"\012\015\012\000"
+ 384 022a 0000     		.align	2
+ 385              	.LC11:
+ 386 022c 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] Exiting on success\015\012"
+ 386      5B25755D 
+ 386      5B25733A 
+ 386      25645D20 
+ 386      5B25645D 
+ 387 025c 0D0A00   		.ascii	"\015\012\000"
+ 388 025f 00       		.align	2
+ 389              	.LC12:
+ 390 0260 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] Exiting on failure\015\012"
+ 390      5B25755D 
+ 390      5B25733A 
+ 390      25645D20 
+ 390      5B25645D 
+ 391 0290 0D0A00   		.ascii	"\015\012\000"
+ 392              		.section	.text.transaction_new,"ax",%progbits
+ 393              		.align	1
+ 394              		.global	transaction_new
+ 395              		.syntax unified
+ 396              		.thumb
+ 397              		.thumb_func
+ 398              		.fpu fpv4-sp-d16
+ 400              	transaction_new:
+ 401              	.LFB5:
+ 186:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** //transaction_new(server->sessionH, COAP_POST, NULL, NULL, contextP->nextMID++, 4, NULL)
+ 187:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** lwm2m_transaction_t *transaction_new(void *sessionH,
+ 188:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                      unsigned char method,
+ 189:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                      char *altPath,
+ 190:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                      lwm2m_uri_t *uriP,
+ 191:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                      uint16_t mID,
+ 192:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                      uint8_t token_len,
+ 193:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                      uint8_t *token)
+ 194:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** {
+ 402              		.loc 1 194 1
+ 403              		.cfi_startproc
+ 404              		@ args = 12, pretend = 0, frame = 56
+ 405              		@ frame_needed = 1, uses_anonymous_args = 0
+ 406 0000 B0B5     		push	{r4, r5, r7, lr}
+ 407              	.LCFI5:
+ 408              		.cfi_def_cfa_offset 16
+ 409              		.cfi_offset 4, -16
+ 410              		.cfi_offset 5, -12
+ 411              		.cfi_offset 7, -8
+ 412              		.cfi_offset 14, -4
+ 413 0002 96B0     		sub	sp, sp, #88
+ 414              	.LCFI6:
+ 415              		.cfi_def_cfa_offset 104
+ 416 0004 08AF     		add	r7, sp, #32
+ 417              	.LCFI7:
+ 418              		.cfi_def_cfa 7, 72
+ 419 0006 F860     		str	r0, [r7, #12]
+ 420 0008 7A60     		str	r2, [r7, #4]
+ 421 000a 3B60     		str	r3, [r7]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 13
+
+
+ 422 000c 0B46     		mov	r3, r1
+ 423 000e FB72     		strb	r3, [r7, #11]
+ 195:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     lwm2m_transaction_t *transacP;
+ 196:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     int result;
+ 197:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if(altPath != NULL){
+ 424              		.loc 1 197 7
+ 425 0010 7B68     		ldr	r3, [r7, #4]
+ 426 0012 002B     		cmp	r3, #0
+ 427 0014 2AD0     		beq	.L19
+ 198:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         LOG_ARG("method: %d, altPath: \"%s\", mID: %d, token_len: %d",
+ 428              		.loc 1 198 9
+ 429 0016 FFF7FEFF 		bl	link_log_level_get
+ 430 001a 0346     		mov	r3, r0
+ 431 001c 012B     		cmp	r3, #1
+ 432 001e 4DD8     		bhi	.L20
+ 433              		.loc 1 198 9 is_stmt 0 discriminator 1
+ 434 0020 0120     		movs	r0, #1
+ 435 0022 FFF7FEFF 		bl	link_log_level_name
+ 436 0026 0446     		mov	r4, r0
+ 437 0028 FFF7FEFF 		bl	osal_sys_time
+ 438 002c 0246     		mov	r2, r0
+ 439 002e 0B46     		mov	r3, r1
+ 440 0030 1546     		mov	r5, r2
+ 441 0032 FFF7FEFF 		bl	lwm2m_gettime
+ 442 0036 0246     		mov	r2, r0
+ 443 0038 0B46     		mov	r3, r1
+ 444 003a 1046     		mov	r0, r2
+ 445 003c FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 446 003e B7F84820 		ldrh	r2, [r7, #72]
+ 447 0042 97F84C10 		ldrb	r1, [r7, #76]	@ zero_extendqisi2
+ 448 0046 0791     		str	r1, [sp, #28]
+ 449 0048 0692     		str	r2, [sp, #24]
+ 450 004a 7A68     		ldr	r2, [r7, #4]
+ 451 004c 0592     		str	r2, [sp, #20]
+ 452 004e 0493     		str	r3, [sp, #16]
+ 453 0050 C623     		movs	r3, #198
+ 454 0052 0393     		str	r3, [sp, #12]
+ 455 0054 BB4B     		ldr	r3, .L51
+ 456 0056 0293     		str	r3, [sp, #8]
+ 457 0058 0190     		str	r0, [sp, #4]
+ 458 005a C623     		movs	r3, #198
+ 459 005c 0093     		str	r3, [sp]
+ 460 005e BA4B     		ldr	r3, .L51+4
+ 461 0060 2A46     		mov	r2, r5
+ 462 0062 2146     		mov	r1, r4
+ 463 0064 B948     		ldr	r0, .L51+8
+ 464 0066 FFF7FEFF 		bl	printf
+ 465 006a 27E0     		b	.L20
+ 466              	.L19:
+ 199:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             method, altPath, mID, token_len);
+ 200:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 201:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     else
+ 202:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 203:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         LOG_ARG("method: %d, altPath: NULL, mID: %d, token_len: %d",
+ 467              		.loc 1 203 9 is_stmt 1
+ 468 006c FFF7FEFF 		bl	link_log_level_get
+ 469 0070 0346     		mov	r3, r0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 14
+
+
+ 470 0072 012B     		cmp	r3, #1
+ 471 0074 22D8     		bhi	.L20
+ 472              		.loc 1 203 9 is_stmt 0 discriminator 1
+ 473 0076 0120     		movs	r0, #1
+ 474 0078 FFF7FEFF 		bl	link_log_level_name
+ 475 007c 0446     		mov	r4, r0
+ 476 007e FFF7FEFF 		bl	osal_sys_time
+ 477 0082 0246     		mov	r2, r0
+ 478 0084 0B46     		mov	r3, r1
+ 479 0086 1546     		mov	r5, r2
+ 480 0088 FFF7FEFF 		bl	lwm2m_gettime
+ 481 008c 0246     		mov	r2, r0
+ 482 008e 0B46     		mov	r3, r1
+ 483 0090 1046     		mov	r0, r2
+ 484 0092 FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 485 0094 B7F84820 		ldrh	r2, [r7, #72]
+ 486 0098 97F84C10 		ldrb	r1, [r7, #76]	@ zero_extendqisi2
+ 487 009c 0691     		str	r1, [sp, #24]
+ 488 009e 0592     		str	r2, [sp, #20]
+ 489 00a0 0493     		str	r3, [sp, #16]
+ 490 00a2 CB23     		movs	r3, #203
+ 491 00a4 0393     		str	r3, [sp, #12]
+ 492 00a6 A74B     		ldr	r3, .L51
+ 493 00a8 0293     		str	r3, [sp, #8]
+ 494 00aa 0190     		str	r0, [sp, #4]
+ 495 00ac CB23     		movs	r3, #203
+ 496 00ae 0093     		str	r3, [sp]
+ 497 00b0 A54B     		ldr	r3, .L51+4
+ 498 00b2 2A46     		mov	r2, r5
+ 499 00b4 2146     		mov	r1, r4
+ 500 00b6 A648     		ldr	r0, .L51+12
+ 501 00b8 FFF7FEFF 		bl	printf
+ 502              	.L20:
+ 204:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             method, mID, token_len);  
+ 205:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 206:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG_URI(uriP);
+ 503              		.loc 1 206 5 is_stmt 1
+ 504 00bc 3B68     		ldr	r3, [r7]
+ 505 00be 002B     		cmp	r3, #0
+ 506 00c0 18D1     		bne	.L21
+ 507              		.loc 1 206 5 is_stmt 0 discriminator 1
+ 508 00c2 FFF7FEFF 		bl	link_log_level_get
+ 509 00c6 0346     		mov	r3, r0
+ 510 00c8 012B     		cmp	r3, #1
+ 511 00ca 7CD8     		bhi	.L22
+ 512              		.loc 1 206 5 discriminator 3
+ 513 00cc 0120     		movs	r0, #1
+ 514 00ce FFF7FEFF 		bl	link_log_level_name
+ 515 00d2 0446     		mov	r4, r0
+ 516 00d4 FFF7FEFF 		bl	osal_sys_time
+ 517 00d8 0246     		mov	r2, r0
+ 518 00da 0B46     		mov	r3, r1
+ 519 00dc CE23     		movs	r3, #206
+ 520 00de 0293     		str	r3, [sp, #8]
+ 521 00e0 984B     		ldr	r3, .L51
+ 522 00e2 0193     		str	r3, [sp, #4]
+ 523 00e4 CE23     		movs	r3, #206
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 15
+
+
+ 524 00e6 0093     		str	r3, [sp]
+ 525 00e8 974B     		ldr	r3, .L51+4
+ 526 00ea 2146     		mov	r1, r4
+ 527 00ec 9948     		ldr	r0, .L51+16
+ 528 00ee FFF7FEFF 		bl	printf
+ 529 00f2 68E0     		b	.L22
+ 530              	.L21:
+ 531              		.loc 1 206 5 discriminator 2
+ 532 00f4 FFF7FEFF 		bl	link_log_level_get
+ 533 00f8 0346     		mov	r3, r0
+ 534 00fa 012B     		cmp	r3, #1
+ 535 00fc 15D8     		bhi	.L23
+ 536              		.loc 1 206 5 discriminator 4
+ 537 00fe 0120     		movs	r0, #1
+ 538 0100 FFF7FEFF 		bl	link_log_level_name
+ 539 0104 0446     		mov	r4, r0
+ 540 0106 FFF7FEFF 		bl	osal_sys_time
+ 541 010a 0246     		mov	r2, r0
+ 542 010c 0B46     		mov	r3, r1
+ 543 010e 3B68     		ldr	r3, [r7]
+ 544 0110 5B88     		ldrh	r3, [r3, #2]
+ 545 0112 0393     		str	r3, [sp, #12]
+ 546 0114 CE23     		movs	r3, #206
+ 547 0116 0293     		str	r3, [sp, #8]
+ 548 0118 8A4B     		ldr	r3, .L51
+ 549 011a 0193     		str	r3, [sp, #4]
+ 550 011c CE23     		movs	r3, #206
+ 551 011e 0093     		str	r3, [sp]
+ 552 0120 894B     		ldr	r3, .L51+4
+ 553 0122 2146     		mov	r1, r4
+ 554 0124 8C48     		ldr	r0, .L51+20
+ 555 0126 FFF7FEFF 		bl	printf
+ 556              	.L23:
+ 557              		.loc 1 206 5 discriminator 6
+ 558 012a 3B68     		ldr	r3, [r7]
+ 559 012c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 560 012e 03F00203 		and	r3, r3, #2
+ 561 0132 002B     		cmp	r3, #0
+ 562 0134 16D0     		beq	.L24
+ 563              		.loc 1 206 5 discriminator 7
+ 564 0136 FFF7FEFF 		bl	link_log_level_get
+ 565 013a 0346     		mov	r3, r0
+ 566 013c 012B     		cmp	r3, #1
+ 567 013e 11D8     		bhi	.L24
+ 568              		.loc 1 206 5 discriminator 9
+ 569 0140 0120     		movs	r0, #1
+ 570 0142 FFF7FEFF 		bl	link_log_level_name
+ 571 0146 0446     		mov	r4, r0
+ 572 0148 FFF7FEFF 		bl	osal_sys_time
+ 573 014c 0246     		mov	r2, r0
+ 574 014e 0B46     		mov	r3, r1
+ 575 0150 3B68     		ldr	r3, [r7]
+ 576 0152 9B88     		ldrh	r3, [r3, #4]
+ 577 0154 0193     		str	r3, [sp, #4]
+ 578 0156 CE23     		movs	r3, #206
+ 579 0158 0093     		str	r3, [sp]
+ 580 015a 7B4B     		ldr	r3, .L51+4
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 16
+
+
+ 581 015c 2146     		mov	r1, r4
+ 582 015e 7F48     		ldr	r0, .L51+24
+ 583 0160 FFF7FEFF 		bl	printf
+ 584              	.L24:
+ 585              		.loc 1 206 5 discriminator 11
+ 586 0164 3B68     		ldr	r3, [r7]
+ 587 0166 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 588 0168 03F00103 		and	r3, r3, #1
+ 589 016c 002B     		cmp	r3, #0
+ 590 016e 16D0     		beq	.L25
+ 591              		.loc 1 206 5 discriminator 12
+ 592 0170 FFF7FEFF 		bl	link_log_level_get
+ 593 0174 0346     		mov	r3, r0
+ 594 0176 012B     		cmp	r3, #1
+ 595 0178 11D8     		bhi	.L25
+ 596              		.loc 1 206 5 discriminator 14
+ 597 017a 0120     		movs	r0, #1
+ 598 017c FFF7FEFF 		bl	link_log_level_name
+ 599 0180 0446     		mov	r4, r0
+ 600 0182 FFF7FEFF 		bl	osal_sys_time
+ 601 0186 0246     		mov	r2, r0
+ 602 0188 0B46     		mov	r3, r1
+ 603 018a 3B68     		ldr	r3, [r7]
+ 604 018c DB88     		ldrh	r3, [r3, #6]
+ 605 018e 0193     		str	r3, [sp, #4]
+ 606 0190 CE23     		movs	r3, #206
+ 607 0192 0093     		str	r3, [sp]
+ 608 0194 6C4B     		ldr	r3, .L51+4
+ 609 0196 2146     		mov	r1, r4
+ 610 0198 7048     		ldr	r0, .L51+24
+ 611 019a FFF7FEFF 		bl	printf
+ 612              	.L25:
+ 613              		.loc 1 206 5 discriminator 16
+ 614 019e FFF7FEFF 		bl	link_log_level_get
+ 615 01a2 0346     		mov	r3, r0
+ 616 01a4 012B     		cmp	r3, #1
+ 617 01a6 0ED8     		bhi	.L22
+ 618              		.loc 1 206 5 discriminator 17
+ 619 01a8 0120     		movs	r0, #1
+ 620 01aa FFF7FEFF 		bl	link_log_level_name
+ 621 01ae 0446     		mov	r4, r0
+ 622 01b0 FFF7FEFF 		bl	osal_sys_time
+ 623 01b4 0246     		mov	r2, r0
+ 624 01b6 0B46     		mov	r3, r1
+ 625 01b8 CE23     		movs	r3, #206
+ 626 01ba 0093     		str	r3, [sp]
+ 627 01bc 624B     		ldr	r3, .L51+4
+ 628 01be 2146     		mov	r1, r4
+ 629 01c0 6748     		ldr	r0, .L51+28
+ 630 01c2 FFF7FEFF 		bl	printf
+ 631              	.L22:
+ 207:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 208:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     // no transactions without peer
+ 209:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (NULL == sessionH) return NULL;
+ 632              		.loc 1 209 8 is_stmt 1
+ 633 01c6 FB68     		ldr	r3, [r7, #12]
+ 634 01c8 002B     		cmp	r3, #0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 17
+
+
+ 635 01ca 01D1     		bne	.L26
+ 636              		.loc 1 209 34 discriminator 1
+ 637 01cc 0023     		movs	r3, #0
+ 638 01ce 89E1     		b	.L27
+ 639              	.L26:
+ 210:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 211:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     transacP = (lwm2m_transaction_t *)lwm2m_malloc(sizeof(lwm2m_transaction_t));
+ 640              		.loc 1 211 39
+ 641 01d0 4820     		movs	r0, #72
+ 642 01d2 FFF7FEFF 		bl	lwm2m_malloc
+ 643 01d6 3863     		str	r0, [r7, #48]
+ 212:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 213:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (NULL == transacP) return NULL;
+ 644              		.loc 1 213 8
+ 645 01d8 3B6B     		ldr	r3, [r7, #48]
+ 646 01da 002B     		cmp	r3, #0
+ 647 01dc 01D1     		bne	.L28
+ 648              		.loc 1 213 34 discriminator 1
+ 649 01de 0023     		movs	r3, #0
+ 650 01e0 80E1     		b	.L27
+ 651              	.L28:
+ 214:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     memset(transacP, 0, sizeof(lwm2m_transaction_t));
+ 652              		.loc 1 214 5
+ 653 01e2 4822     		movs	r2, #72
+ 654 01e4 0021     		movs	r1, #0
+ 655 01e6 386B     		ldr	r0, [r7, #48]
+ 656 01e8 FFF7FEFF 		bl	memset
+ 215:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 216:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     transacP->message = lwm2m_malloc(sizeof(coap_packet_t));
+ 657              		.loc 1 216 25
+ 658 01ec 8C20     		movs	r0, #140
+ 659 01ee FFF7FEFF 		bl	lwm2m_malloc
+ 660 01f2 0246     		mov	r2, r0
+ 661              		.loc 1 216 23
+ 662 01f4 3B6B     		ldr	r3, [r7, #48]
+ 663 01f6 9A62     		str	r2, [r3, #40]
+ 217:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (NULL == transacP->message) goto error;
+ 664              		.loc 1 217 25
+ 665 01f8 3B6B     		ldr	r3, [r7, #48]
+ 666 01fa 9B6A     		ldr	r3, [r3, #40]
+ 667              		.loc 1 217 8
+ 668 01fc 002B     		cmp	r3, #0
+ 669 01fe 00F04581 		beq	.L47
+ 218:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 219:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     coap_init_message(transacP->message, COAP_TYPE_CON, method, mID);
+ 670              		.loc 1 219 31
+ 671 0202 3B6B     		ldr	r3, [r7, #48]
+ 672 0204 986A     		ldr	r0, [r3, #40]
+ 673              		.loc 1 219 5
+ 674 0206 B7F84830 		ldrh	r3, [r7, #72]
+ 675 020a FA7A     		ldrb	r2, [r7, #11]	@ zero_extendqisi2
+ 676 020c 0021     		movs	r1, #0
+ 677 020e FFF7FEFF 		bl	coap_init_message
+ 220:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 221:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     transacP->peerH = sessionH;
+ 678              		.loc 1 221 21
+ 679 0212 3B6B     		ldr	r3, [r7, #48]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 18
+
+
+ 680 0214 FA68     		ldr	r2, [r7, #12]
+ 681 0216 9A60     		str	r2, [r3, #8]
+ 222:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 223:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     transacP->mID = mID;
+ 682              		.loc 1 223 19
+ 683 0218 3B6B     		ldr	r3, [r7, #48]
+ 684 021a B7F84820 		ldrh	r2, [r7, #72]	@ movhi
+ 685 021e 9A80     		strh	r2, [r3, #4]	@ movhi
+ 224:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 225:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (altPath != NULL)
+ 686              		.loc 1 225 8
+ 687 0220 7B68     		ldr	r3, [r7, #4]
+ 688 0222 002B     		cmp	r3, #0
+ 689 0224 07D0     		beq	.L31
+ 226:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 227:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         // TODO: Support multi-segment alternative path
+ 228:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         coap_set_header_uri_path_segment(transacP->message, altPath + 1);
+ 690              		.loc 1 228 50
+ 691 0226 3B6B     		ldr	r3, [r7, #48]
+ 692 0228 9A6A     		ldr	r2, [r3, #40]
+ 693              		.loc 1 228 69
+ 694 022a 7B68     		ldr	r3, [r7, #4]
+ 695 022c 0133     		adds	r3, r3, #1
+ 696              		.loc 1 228 9
+ 697 022e 1946     		mov	r1, r3
+ 698 0230 1046     		mov	r0, r2
+ 699 0232 FFF7FEFF 		bl	coap_set_header_uri_path_segment
+ 700              	.L31:
+ 229:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 230:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (NULL != uriP)
+ 701              		.loc 1 230 8
+ 702 0236 3B68     		ldr	r3, [r7]
+ 703 0238 002B     		cmp	r3, #0
+ 704 023a 72D0     		beq	.L32
+ 705              	.LBB2:
+ 231:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 232:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         char stringID[LWM2M_STRING_ID_MAX_LEN];
+ 233:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 234:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         result = utils_intToText(uriP->objectId, (uint8_t *)stringID, LWM2M_STRING_ID_MAX_LEN);
+ 706              		.loc 1 234 38
+ 707 023c 3B68     		ldr	r3, [r7]
+ 708 023e 5B88     		ldrh	r3, [r3, #2]
+ 709              		.loc 1 234 18
+ 710 0240 98B2     		uxth	r0, r3
+ 711 0242 4FF00001 		mov	r1, #0
+ 712 0246 07F11802 		add	r2, r7, #24
+ 713 024a 0623     		movs	r3, #6
+ 714 024c FFF7FEFF 		bl	utils_intToText
+ 715 0250 0346     		mov	r3, r0
+ 716              		.loc 1 234 16
+ 717 0252 FB62     		str	r3, [r7, #44]
+ 235:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (result == 0) goto error;
+ 718              		.loc 1 235 12
+ 719 0254 FB6A     		ldr	r3, [r7, #44]
+ 720 0256 002B     		cmp	r3, #0
+ 721 0258 00F01A81 		beq	.L48
+ 236:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         stringID[result] = 0;
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 19
+
+
+ 722              		.loc 1 236 26
+ 723 025c 07F11802 		add	r2, r7, #24
+ 724 0260 FB6A     		ldr	r3, [r7, #44]
+ 725 0262 1344     		add	r3, r3, r2
+ 726 0264 0022     		movs	r2, #0
+ 727 0266 1A70     		strb	r2, [r3]
+ 237:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         coap_set_header_uri_path_segment(transacP->message, stringID);
+ 728              		.loc 1 237 50
+ 729 0268 3B6B     		ldr	r3, [r7, #48]
+ 730 026a 9B6A     		ldr	r3, [r3, #40]
+ 731              		.loc 1 237 9
+ 732 026c 07F11802 		add	r2, r7, #24
+ 733 0270 1146     		mov	r1, r2
+ 734 0272 1846     		mov	r0, r3
+ 735 0274 FFF7FEFF 		bl	coap_set_header_uri_path_segment
+ 238:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 239:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (LWM2M_URI_IS_SET_INSTANCE(uriP))
+ 736              		.loc 1 239 13
+ 737 0278 3B68     		ldr	r3, [r7]
+ 738 027a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 739 027c 03F00203 		and	r3, r3, #2
+ 740              		.loc 1 239 12
+ 741 0280 002B     		cmp	r3, #0
+ 742 0282 1ED0     		beq	.L35
+ 240:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 241:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             result = utils_intToText(uriP->instanceId, (uint8_t *)stringID, LWM2M_STRING_ID_MAX_LEN
+ 743              		.loc 1 241 42
+ 744 0284 3B68     		ldr	r3, [r7]
+ 745 0286 9B88     		ldrh	r3, [r3, #4]
+ 746              		.loc 1 241 22
+ 747 0288 98B2     		uxth	r0, r3
+ 748 028a 4FF00001 		mov	r1, #0
+ 749 028e 07F11802 		add	r2, r7, #24
+ 750 0292 0623     		movs	r3, #6
+ 751 0294 FFF7FEFF 		bl	utils_intToText
+ 752 0298 0346     		mov	r3, r0
+ 753              		.loc 1 241 20
+ 754 029a FB62     		str	r3, [r7, #44]
+ 242:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (result == 0) goto error;
+ 755              		.loc 1 242 16
+ 756 029c FB6A     		ldr	r3, [r7, #44]
+ 757 029e 002B     		cmp	r3, #0
+ 758 02a0 00F0F880 		beq	.L49
+ 243:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             stringID[result] = 0;
+ 759              		.loc 1 243 30
+ 760 02a4 07F11802 		add	r2, r7, #24
+ 761 02a8 FB6A     		ldr	r3, [r7, #44]
+ 762 02aa 1344     		add	r3, r3, r2
+ 763 02ac 0022     		movs	r2, #0
+ 764 02ae 1A70     		strb	r2, [r3]
+ 244:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             coap_set_header_uri_path_segment(transacP->message, stringID);
+ 765              		.loc 1 244 54
+ 766 02b0 3B6B     		ldr	r3, [r7, #48]
+ 767 02b2 9B6A     		ldr	r3, [r3, #40]
+ 768              		.loc 1 244 13
+ 769 02b4 07F11802 		add	r2, r7, #24
+ 770 02b8 1146     		mov	r1, r2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 20
+
+
+ 771 02ba 1846     		mov	r0, r3
+ 772 02bc FFF7FEFF 		bl	coap_set_header_uri_path_segment
+ 773 02c0 0BE0     		b	.L37
+ 774              	.L35:
+ 245:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 246:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         else
+ 247:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 248:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (LWM2M_URI_IS_SET_RESOURCE(uriP))
+ 775              		.loc 1 248 17
+ 776 02c2 3B68     		ldr	r3, [r7]
+ 777 02c4 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 778 02c6 03F00103 		and	r3, r3, #1
+ 779              		.loc 1 248 16
+ 780 02ca 002B     		cmp	r3, #0
+ 781 02cc 05D0     		beq	.L37
+ 249:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 250:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 coap_set_header_uri_path_segment(transacP->message, NULL);
+ 782              		.loc 1 250 58
+ 783 02ce 3B6B     		ldr	r3, [r7, #48]
+ 784 02d0 9B6A     		ldr	r3, [r3, #40]
+ 785              		.loc 1 250 17
+ 786 02d2 0021     		movs	r1, #0
+ 787 02d4 1846     		mov	r0, r3
+ 788 02d6 FFF7FEFF 		bl	coap_set_header_uri_path_segment
+ 789              	.L37:
+ 251:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 252:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 253:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (LWM2M_URI_IS_SET_RESOURCE(uriP))
+ 790              		.loc 1 253 13
+ 791 02da 3B68     		ldr	r3, [r7]
+ 792 02dc 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 793 02de 03F00103 		and	r3, r3, #1
+ 794              		.loc 1 253 12
+ 795 02e2 002B     		cmp	r3, #0
+ 796 02e4 1DD0     		beq	.L32
+ 254:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 255:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             result = utils_intToText(uriP->resourceId, (uint8_t *)stringID, LWM2M_STRING_ID_MAX_LEN
+ 797              		.loc 1 255 42
+ 798 02e6 3B68     		ldr	r3, [r7]
+ 799 02e8 DB88     		ldrh	r3, [r3, #6]
+ 800              		.loc 1 255 22
+ 801 02ea 98B2     		uxth	r0, r3
+ 802 02ec 4FF00001 		mov	r1, #0
+ 803 02f0 07F11802 		add	r2, r7, #24
+ 804 02f4 0623     		movs	r3, #6
+ 805 02f6 FFF7FEFF 		bl	utils_intToText
+ 806 02fa 0346     		mov	r3, r0
+ 807              		.loc 1 255 20
+ 808 02fc FB62     		str	r3, [r7, #44]
+ 256:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (result == 0) goto error;
+ 809              		.loc 1 256 16
+ 810 02fe FB6A     		ldr	r3, [r7, #44]
+ 811 0300 002B     		cmp	r3, #0
+ 812 0302 00F0C980 		beq	.L50
+ 257:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             stringID[result] = 0;
+ 813              		.loc 1 257 30
+ 814 0306 07F11802 		add	r2, r7, #24
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 21
+
+
+ 815 030a FB6A     		ldr	r3, [r7, #44]
+ 816 030c 1344     		add	r3, r3, r2
+ 817 030e 0022     		movs	r2, #0
+ 818 0310 1A70     		strb	r2, [r3]
+ 258:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             coap_set_header_uri_path_segment(transacP->message, stringID);
+ 819              		.loc 1 258 54
+ 820 0312 3B6B     		ldr	r3, [r7, #48]
+ 821 0314 9B6A     		ldr	r3, [r3, #40]
+ 822              		.loc 1 258 13
+ 823 0316 07F11802 		add	r2, r7, #24
+ 824 031a 1146     		mov	r1, r2
+ 825 031c 1846     		mov	r0, r3
+ 826 031e FFF7FEFF 		bl	coap_set_header_uri_path_segment
+ 827              	.L32:
+ 828              	.LBE2:
+ 259:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 260:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 261:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (0 < token_len)
+ 829              		.loc 1 261 8
+ 830 0322 97F84C30 		ldrb	r3, [r7, #76]	@ zero_extendqisi2
+ 831 0326 002B     		cmp	r3, #0
+ 832 0328 00F08D80 		beq	.L40
+ 262:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 263:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (NULL != token)
+ 833              		.loc 1 263 12
+ 834 032c 3B6D     		ldr	r3, [r7, #80]
+ 835 032e 002B     		cmp	r3, #0
+ 836 0330 18D0     		beq	.L41
+ 264:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 265:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             coap_set_header_token(transacP->message, token, token_len);
+ 837              		.loc 1 265 43
+ 838 0332 3B6B     		ldr	r3, [r7, #48]
+ 839 0334 9B6A     		ldr	r3, [r3, #40]
+ 840              		.loc 1 265 13
+ 841 0336 97F84C20 		ldrb	r2, [r7, #76]	@ zero_extendqisi2
+ 842 033a 396D     		ldr	r1, [r7, #80]
+ 843 033c 1846     		mov	r0, r3
+ 844 033e FFF7FEFF 		bl	coap_set_header_token
+ 845 0342 80E0     		b	.L40
+ 846              	.L52:
+ 847              		.align	2
+ 848              	.L51:
+ 849 0344 00000000 		.word	__func__.8701
+ 850 0348 00000000 		.word	__FUNCTION__.8700
+ 851 034c DC000000 		.word	.LC4
+ 852 0350 30010000 		.word	.LC5
+ 853 0354 84010000 		.word	.LC6
+ 854 0358 A8010000 		.word	.LC7
+ 855 035c C8010000 		.word	.LC8
+ 856 0360 E0010000 		.word	.LC9
+ 857              	.L41:
+ 858              	.LBB3:
+ 266:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 267:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         else
+ 268:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 269:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             // generate a token
+ 270:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             uint8_t temp_token[COAP_TOKEN_LEN];
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 22
+
+
+ 271:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             time_t tv_sec = lwm2m_gettime();
+ 859              		.loc 1 271 29
+ 860 0364 FFF7FEFF 		bl	lwm2m_gettime
+ 861 0368 C7E90801 		strd	r0, [r7, #32]
+ 272:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 273:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             // initialize first 6 bytes, leave the last 2 random
+ 274:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             temp_token[0] = mID;
+ 862              		.loc 1 274 27
+ 863 036c B7F84830 		ldrh	r3, [r7, #72]	@ movhi
+ 864 0370 DBB2     		uxtb	r3, r3
+ 865 0372 3B74     		strb	r3, [r7, #16]
+ 275:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             temp_token[1] = mID >> 8;
+ 866              		.loc 1 275 27
+ 867 0374 B7F84830 		ldrh	r3, [r7, #72]
+ 868 0378 1B0A     		lsrs	r3, r3, #8
+ 869 037a 9BB2     		uxth	r3, r3
+ 870 037c DBB2     		uxtb	r3, r3
+ 871 037e 7B74     		strb	r3, [r7, #17]
+ 276:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             temp_token[2] = tv_sec;
+ 872              		.loc 1 276 27
+ 873 0380 97F82030 		ldrb	r3, [r7, #32]	@ zero_extendqisi2
+ 874 0384 BB74     		strb	r3, [r7, #18]
+ 277:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             temp_token[3] = tv_sec >> 8;
+ 875              		.loc 1 277 36
+ 876 0386 D7E90801 		ldrd	r0, [r7, #32]
+ 877 038a 4FF00002 		mov	r2, #0
+ 878 038e 4FF00003 		mov	r3, #0
+ 879 0392 020A     		lsrs	r2, r0, #8
+ 880 0394 42EA0162 		orr	r2, r2, r1, lsl #24
+ 881 0398 0B12     		asrs	r3, r1, #8
+ 882              		.loc 1 277 27
+ 883 039a D3B2     		uxtb	r3, r2
+ 884 039c FB74     		strb	r3, [r7, #19]
+ 278:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             temp_token[4] = tv_sec >> 16;
+ 885              		.loc 1 278 36
+ 886 039e D7E90801 		ldrd	r0, [r7, #32]
+ 887 03a2 4FF00002 		mov	r2, #0
+ 888 03a6 4FF00003 		mov	r3, #0
+ 889 03aa 020C     		lsrs	r2, r0, #16
+ 890 03ac 42EA0142 		orr	r2, r2, r1, lsl #16
+ 891 03b0 0B14     		asrs	r3, r1, #16
+ 892              		.loc 1 278 27
+ 893 03b2 D3B2     		uxtb	r3, r2
+ 894 03b4 3B75     		strb	r3, [r7, #20]
+ 279:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             temp_token[5] = tv_sec >> 24;
+ 895              		.loc 1 279 36
+ 896 03b6 D7E90801 		ldrd	r0, [r7, #32]
+ 897 03ba 4FF00002 		mov	r2, #0
+ 898 03be 4FF00003 		mov	r3, #0
+ 899 03c2 020E     		lsrs	r2, r0, #24
+ 900 03c4 42EA0122 		orr	r2, r2, r1, lsl #8
+ 901 03c8 0B16     		asrs	r3, r1, #24
+ 902              		.loc 1 279 27
+ 903 03ca D3B2     		uxtb	r3, r2
+ 904 03cc 7B75     		strb	r3, [r7, #21]
+ 280:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             // use just the provided amount of bytes
+ 281:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             coap_set_header_token(transacP->message, temp_token, token_len);
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 23
+
+
+ 905              		.loc 1 281 43
+ 906 03ce 3B6B     		ldr	r3, [r7, #48]
+ 907 03d0 9B6A     		ldr	r3, [r3, #40]
+ 908              		.loc 1 281 13
+ 909 03d2 97F84C20 		ldrb	r2, [r7, #76]	@ zero_extendqisi2
+ 910 03d6 07F11001 		add	r1, r7, #16
+ 911 03da 1846     		mov	r0, r3
+ 912 03dc FFF7FEFF 		bl	coap_set_header_token
+ 282:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             int i;
+ 283:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             for(i = 0; i < token_len; i++)
+ 913              		.loc 1 283 19
+ 914 03e0 0023     		movs	r3, #0
+ 915 03e2 7B63     		str	r3, [r7, #52]
+ 916              		.loc 1 283 13
+ 917 03e4 2AE0     		b	.L42
+ 918              	.L44:
+ 284:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 LOG_ARG("send token is %d\n", temp_token[i]);
+ 919              		.loc 1 284 17
+ 920 03e6 FFF7FEFF 		bl	link_log_level_get
+ 921 03ea 0346     		mov	r3, r0
+ 922 03ec 012B     		cmp	r3, #1
+ 923 03ee 22D8     		bhi	.L43
+ 924              		.loc 1 284 17 is_stmt 0 discriminator 1
+ 925 03f0 0120     		movs	r0, #1
+ 926 03f2 FFF7FEFF 		bl	link_log_level_name
+ 927 03f6 0446     		mov	r4, r0
+ 928 03f8 FFF7FEFF 		bl	osal_sys_time
+ 929 03fc 0246     		mov	r2, r0
+ 930 03fe 0B46     		mov	r3, r1
+ 931 0400 1546     		mov	r5, r2
+ 932 0402 FFF7FEFF 		bl	lwm2m_gettime
+ 933 0406 0246     		mov	r2, r0
+ 934 0408 0B46     		mov	r3, r1
+ 935 040a 1146     		mov	r1, r2
+ 936 040c 07F11002 		add	r2, r7, #16
+ 937 0410 7B6B     		ldr	r3, [r7, #52]
+ 938 0412 1344     		add	r3, r3, r2
+ 939 0414 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 940 0416 0493     		str	r3, [sp, #16]
+ 941 0418 4FF48E73 		mov	r3, #284
+ 942 041c 0393     		str	r3, [sp, #12]
+ 943 041e 334B     		ldr	r3, .L53
+ 944 0420 0293     		str	r3, [sp, #8]
+ 945 0422 0191     		str	r1, [sp, #4]
+ 946 0424 4FF48E73 		mov	r3, #284
+ 947 0428 0093     		str	r3, [sp]
+ 948 042a 314B     		ldr	r3, .L53+4
+ 949 042c 2A46     		mov	r2, r5
+ 950 042e 2146     		mov	r1, r4
+ 951 0430 3048     		ldr	r0, .L53+8
+ 952 0432 FFF7FEFF 		bl	printf
+ 953              	.L43:
+ 283:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 LOG_ARG("send token is %d\n", temp_token[i]);
+ 954              		.loc 1 283 40 is_stmt 1 discriminator 2
+ 955 0436 7B6B     		ldr	r3, [r7, #52]
+ 956 0438 0133     		adds	r3, r3, #1
+ 957 043a 7B63     		str	r3, [r7, #52]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 24
+
+
+ 958              	.L42:
+ 283:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 LOG_ARG("send token is %d\n", temp_token[i]);
+ 959              		.loc 1 283 26 discriminator 1
+ 960 043c 97F84C30 		ldrb	r3, [r7, #76]	@ zero_extendqisi2
+ 283:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 LOG_ARG("send token is %d\n", temp_token[i]);
+ 961              		.loc 1 283 13 discriminator 1
+ 962 0440 7A6B     		ldr	r2, [r7, #52]
+ 963 0442 9A42     		cmp	r2, r3
+ 964 0444 CFDB     		blt	.L44
+ 965              	.L40:
+ 966              	.LBE3:
+ 285:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 286:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 287:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 288:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("Exiting on success");
+ 967              		.loc 1 288 5
+ 968 0446 FFF7FEFF 		bl	link_log_level_get
+ 969 044a 0346     		mov	r3, r0
+ 970 044c 012B     		cmp	r3, #1
+ 971 044e 1BD8     		bhi	.L45
+ 972              		.loc 1 288 5 is_stmt 0 discriminator 1
+ 973 0450 0120     		movs	r0, #1
+ 974 0452 FFF7FEFF 		bl	link_log_level_name
+ 975 0456 0446     		mov	r4, r0
+ 976 0458 FFF7FEFF 		bl	osal_sys_time
+ 977 045c 0246     		mov	r2, r0
+ 978 045e 0B46     		mov	r3, r1
+ 979 0460 1546     		mov	r5, r2
+ 980 0462 FFF7FEFF 		bl	lwm2m_gettime
+ 981 0466 0246     		mov	r2, r0
+ 982 0468 0B46     		mov	r3, r1
+ 983 046a 4FF49073 		mov	r3, #288
+ 984 046e 0393     		str	r3, [sp, #12]
+ 985 0470 1E4B     		ldr	r3, .L53
+ 986 0472 0293     		str	r3, [sp, #8]
+ 987 0474 0192     		str	r2, [sp, #4]
+ 988 0476 4FF49073 		mov	r3, #288
+ 989 047a 0093     		str	r3, [sp]
+ 990 047c 1C4B     		ldr	r3, .L53+4
+ 991 047e 2A46     		mov	r2, r5
+ 992 0480 2146     		mov	r1, r4
+ 993 0482 1D48     		ldr	r0, .L53+12
+ 994 0484 FFF7FEFF 		bl	printf
+ 995              	.L45:
+ 289:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     return transacP;
+ 996              		.loc 1 289 12 is_stmt 1
+ 997 0488 3B6B     		ldr	r3, [r7, #48]
+ 998 048a 2BE0     		b	.L27
+ 999              	.L47:
+ 217:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 1000              		.loc 1 217 36
+ 1001 048c 00BF     		nop
+ 1002 048e 04E0     		b	.L30
+ 1003              	.L48:
+ 1004              	.LBB4:
+ 235:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         stringID[result] = 0;
+ 1005              		.loc 1 235 26
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 25
+
+
+ 1006 0490 00BF     		nop
+ 1007 0492 02E0     		b	.L30
+ 1008              	.L49:
+ 242:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             stringID[result] = 0;
+ 1009              		.loc 1 242 30
+ 1010 0494 00BF     		nop
+ 1011 0496 00E0     		b	.L30
+ 1012              	.L50:
+ 256:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             stringID[result] = 0;
+ 1013              		.loc 1 256 30
+ 1014 0498 00BF     		nop
+ 1015              	.L30:
+ 1016              	.LBE4:
+ 290:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 291:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** error:
+ 292:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("Exiting on failure");
+ 1017              		.loc 1 292 5
+ 1018 049a FFF7FEFF 		bl	link_log_level_get
+ 1019 049e 0346     		mov	r3, r0
+ 1020 04a0 012B     		cmp	r3, #1
+ 1021 04a2 1BD8     		bhi	.L46
+ 1022              		.loc 1 292 5 is_stmt 0 discriminator 1
+ 1023 04a4 0120     		movs	r0, #1
+ 1024 04a6 FFF7FEFF 		bl	link_log_level_name
+ 1025 04aa 0446     		mov	r4, r0
+ 1026 04ac FFF7FEFF 		bl	osal_sys_time
+ 1027 04b0 0246     		mov	r2, r0
+ 1028 04b2 0B46     		mov	r3, r1
+ 1029 04b4 1546     		mov	r5, r2
+ 1030 04b6 FFF7FEFF 		bl	lwm2m_gettime
+ 1031 04ba 0246     		mov	r2, r0
+ 1032 04bc 0B46     		mov	r3, r1
+ 1033 04be 4FF49273 		mov	r3, #292
+ 1034 04c2 0393     		str	r3, [sp, #12]
+ 1035 04c4 094B     		ldr	r3, .L53
+ 1036 04c6 0293     		str	r3, [sp, #8]
+ 1037 04c8 0192     		str	r2, [sp, #4]
+ 1038 04ca 4FF49273 		mov	r3, #292
+ 1039 04ce 0093     		str	r3, [sp]
+ 1040 04d0 074B     		ldr	r3, .L53+4
+ 1041 04d2 2A46     		mov	r2, r5
+ 1042 04d4 2146     		mov	r1, r4
+ 1043 04d6 0948     		ldr	r0, .L53+16
+ 1044 04d8 FFF7FEFF 		bl	printf
+ 1045              	.L46:
+ 293:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     lwm2m_free(transacP);
+ 1046              		.loc 1 293 5 is_stmt 1
+ 1047 04dc 386B     		ldr	r0, [r7, #48]
+ 1048 04de FFF7FEFF 		bl	lwm2m_free
+ 294:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     return NULL;
+ 1049              		.loc 1 294 12
+ 1050 04e2 0023     		movs	r3, #0
+ 1051              	.L27:
+ 295:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** }
+ 1052              		.loc 1 295 1
+ 1053 04e4 1846     		mov	r0, r3
+ 1054 04e6 3837     		adds	r7, r7, #56
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 26
+
+
+ 1055              	.LCFI8:
+ 1056              		.cfi_def_cfa_offset 16
+ 1057 04e8 BD46     		mov	sp, r7
+ 1058              	.LCFI9:
+ 1059              		.cfi_def_cfa_register 13
+ 1060              		@ sp needed
+ 1061 04ea B0BD     		pop	{r4, r5, r7, pc}
+ 1062              	.L54:
+ 1063              		.align	2
+ 1064              	.L53:
+ 1065 04ec 00000000 		.word	__func__.8701
+ 1066 04f0 00000000 		.word	__FUNCTION__.8700
+ 1067 04f4 F8010000 		.word	.LC10
+ 1068 04f8 2C020000 		.word	.LC11
+ 1069 04fc 60020000 		.word	.LC12
+ 1070              		.cfi_endproc
+ 1071              	.LFE5:
+ 1073              		.section	.rodata
+ 1074 0293 00       		.align	2
+ 1075              	.LC13:
+ 1076 0294 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] Entering\015\012\015\012"
+ 1076      5B25755D 
+ 1076      5B25733A 
+ 1076      25645D20 
+ 1076      5B25645D 
+ 1077 02bc 00       		.ascii	"\000"
+ 1078              		.section	.text.transaction_free,"ax",%progbits
+ 1079              		.align	1
+ 1080              		.global	transaction_free
+ 1081              		.syntax unified
+ 1082              		.thumb
+ 1083              		.thumb_func
+ 1084              		.fpu fpv4-sp-d16
+ 1086              	transaction_free:
+ 1087              	.LFB6:
+ 296:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 297:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** void transaction_free(lwm2m_transaction_t *transacP)
+ 298:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** {
+ 1088              		.loc 1 298 1
+ 1089              		.cfi_startproc
+ 1090              		@ args = 0, pretend = 0, frame = 8
+ 1091              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1092 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1093              	.LCFI10:
+ 1094              		.cfi_def_cfa_offset 16
+ 1095              		.cfi_offset 4, -16
+ 1096              		.cfi_offset 5, -12
+ 1097              		.cfi_offset 7, -8
+ 1098              		.cfi_offset 14, -4
+ 1099 0002 86B0     		sub	sp, sp, #24
+ 1100              	.LCFI11:
+ 1101              		.cfi_def_cfa_offset 40
+ 1102 0004 04AF     		add	r7, sp, #16
+ 1103              	.LCFI12:
+ 1104              		.cfi_def_cfa 7, 24
+ 1105 0006 7860     		str	r0, [r7, #4]
+ 299:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("Entering");
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 27
+
+
+ 1106              		.loc 1 299 5
+ 1107 0008 FFF7FEFF 		bl	link_log_level_get
+ 1108 000c 0346     		mov	r3, r0
+ 1109 000e 012B     		cmp	r3, #1
+ 1110 0010 1BD8     		bhi	.L56
+ 1111              		.loc 1 299 5 is_stmt 0 discriminator 1
+ 1112 0012 0120     		movs	r0, #1
+ 1113 0014 FFF7FEFF 		bl	link_log_level_name
+ 1114 0018 0446     		mov	r4, r0
+ 1115 001a FFF7FEFF 		bl	osal_sys_time
+ 1116 001e 0246     		mov	r2, r0
+ 1117 0020 0B46     		mov	r3, r1
+ 1118 0022 1546     		mov	r5, r2
+ 1119 0024 FFF7FEFF 		bl	lwm2m_gettime
+ 1120 0028 0246     		mov	r2, r0
+ 1121 002a 0B46     		mov	r3, r1
+ 1122 002c 40F22B13 		movw	r3, #299
+ 1123 0030 0393     		str	r3, [sp, #12]
+ 1124 0032 154B     		ldr	r3, .L59
+ 1125 0034 0293     		str	r3, [sp, #8]
+ 1126 0036 0192     		str	r2, [sp, #4]
+ 1127 0038 40F22B13 		movw	r3, #299
+ 1128 003c 0093     		str	r3, [sp]
+ 1129 003e 134B     		ldr	r3, .L59+4
+ 1130 0040 2A46     		mov	r2, r5
+ 1131 0042 2146     		mov	r1, r4
+ 1132 0044 1248     		ldr	r0, .L59+8
+ 1133 0046 FFF7FEFF 		bl	printf
+ 1134              	.L56:
+ 300:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (transacP->message)
+ 1135              		.loc 1 300 17 is_stmt 1
+ 1136 004a 7B68     		ldr	r3, [r7, #4]
+ 1137 004c 9B6A     		ldr	r3, [r3, #40]
+ 1138              		.loc 1 300 8
+ 1139 004e 002B     		cmp	r3, #0
+ 1140 0050 09D0     		beq	.L57
+ 301:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 302:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         coap_free_header(transacP->message);
+ 1141              		.loc 1 302 34
+ 1142 0052 7B68     		ldr	r3, [r7, #4]
+ 1143 0054 9B6A     		ldr	r3, [r3, #40]
+ 1144              		.loc 1 302 9
+ 1145 0056 1846     		mov	r0, r3
+ 1146 0058 FFF7FEFF 		bl	coap_free_header
+ 303:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         lwm2m_free(transacP->message);
+ 1147              		.loc 1 303 28
+ 1148 005c 7B68     		ldr	r3, [r7, #4]
+ 1149 005e 9B6A     		ldr	r3, [r3, #40]
+ 1150              		.loc 1 303 9
+ 1151 0060 1846     		mov	r0, r3
+ 1152 0062 FFF7FEFF 		bl	lwm2m_free
+ 1153              	.L57:
+ 304:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 305:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 306:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (transacP->buffer) lwm2m_free(transacP->buffer);
+ 1154              		.loc 1 306 17
+ 1155 0066 7B68     		ldr	r3, [r7, #4]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 28
+
+
+ 1156 0068 1B6B     		ldr	r3, [r3, #48]
+ 1157              		.loc 1 306 8
+ 1158 006a 002B     		cmp	r3, #0
+ 1159 006c 04D0     		beq	.L58
+ 1160              		.loc 1 306 46 discriminator 1
+ 1161 006e 7B68     		ldr	r3, [r7, #4]
+ 1162 0070 1B6B     		ldr	r3, [r3, #48]
+ 1163              		.loc 1 306 27 discriminator 1
+ 1164 0072 1846     		mov	r0, r3
+ 1165 0074 FFF7FEFF 		bl	lwm2m_free
+ 1166              	.L58:
+ 307:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     lwm2m_free(transacP);
+ 1167              		.loc 1 307 5
+ 1168 0078 7868     		ldr	r0, [r7, #4]
+ 1169 007a FFF7FEFF 		bl	lwm2m_free
+ 308:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** }
+ 1170              		.loc 1 308 1
+ 1171 007e 00BF     		nop
+ 1172 0080 0837     		adds	r7, r7, #8
+ 1173              	.LCFI13:
+ 1174              		.cfi_def_cfa_offset 16
+ 1175 0082 BD46     		mov	sp, r7
+ 1176              	.LCFI14:
+ 1177              		.cfi_def_cfa_register 13
+ 1178              		@ sp needed
+ 1179 0084 B0BD     		pop	{r4, r5, r7, pc}
+ 1180              	.L60:
+ 1181 0086 00BF     		.align	2
+ 1182              	.L59:
+ 1183 0088 00000000 		.word	__func__.8714
+ 1184 008c 00000000 		.word	__FUNCTION__.8713
+ 1185 0090 94020000 		.word	.LC13
+ 1186              		.cfi_endproc
+ 1187              	.LFE6:
+ 1189              		.section	.text.transaction_remove,"ax",%progbits
+ 1190              		.align	1
+ 1191              		.global	transaction_remove
+ 1192              		.syntax unified
+ 1193              		.thumb
+ 1194              		.thumb_func
+ 1195              		.fpu fpv4-sp-d16
+ 1197              	transaction_remove:
+ 1198              	.LFB7:
+ 309:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 310:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** void transaction_remove(lwm2m_context_t *contextP,
+ 311:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         lwm2m_transaction_t *transacP)
+ 312:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** {
+ 1199              		.loc 1 312 1
+ 1200              		.cfi_startproc
+ 1201              		@ args = 0, pretend = 0, frame = 8
+ 1202              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1203 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1204              	.LCFI15:
+ 1205              		.cfi_def_cfa_offset 16
+ 1206              		.cfi_offset 4, -16
+ 1207              		.cfi_offset 5, -12
+ 1208              		.cfi_offset 7, -8
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 29
+
+
+ 1209              		.cfi_offset 14, -4
+ 1210 0002 86B0     		sub	sp, sp, #24
+ 1211              	.LCFI16:
+ 1212              		.cfi_def_cfa_offset 40
+ 1213 0004 04AF     		add	r7, sp, #16
+ 1214              	.LCFI17:
+ 1215              		.cfi_def_cfa 7, 24
+ 1216 0006 7860     		str	r0, [r7, #4]
+ 1217 0008 3960     		str	r1, [r7]
+ 313:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("Entering");
+ 1218              		.loc 1 313 5
+ 1219 000a FFF7FEFF 		bl	link_log_level_get
+ 1220 000e 0346     		mov	r3, r0
+ 1221 0010 012B     		cmp	r3, #1
+ 1222 0012 1BD8     		bhi	.L62
+ 1223              		.loc 1 313 5 is_stmt 0 discriminator 1
+ 1224 0014 0120     		movs	r0, #1
+ 1225 0016 FFF7FEFF 		bl	link_log_level_name
+ 1226 001a 0446     		mov	r4, r0
+ 1227 001c FFF7FEFF 		bl	osal_sys_time
+ 1228 0020 0246     		mov	r2, r0
+ 1229 0022 0B46     		mov	r3, r1
+ 1230 0024 1546     		mov	r5, r2
+ 1231 0026 FFF7FEFF 		bl	lwm2m_gettime
+ 1232 002a 0246     		mov	r2, r0
+ 1233 002c 0B46     		mov	r3, r1
+ 1234 002e 40F23913 		movw	r3, #313
+ 1235 0032 0393     		str	r3, [sp, #12]
+ 1236 0034 0E4B     		ldr	r3, .L63
+ 1237 0036 0293     		str	r3, [sp, #8]
+ 1238 0038 0192     		str	r2, [sp, #4]
+ 1239 003a 40F23913 		movw	r3, #313
+ 1240 003e 0093     		str	r3, [sp]
+ 1241 0040 0C4B     		ldr	r3, .L63+4
+ 1242 0042 2A46     		mov	r2, r5
+ 1243 0044 2146     		mov	r1, r4
+ 1244 0046 0C48     		ldr	r0, .L63+8
+ 1245 0048 FFF7FEFF 		bl	printf
+ 1246              	.L62:
+ 314:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     contextP->transactionList = (lwm2m_transaction_t *) LWM2M_LIST_RM(contextP->transactionList, tr
+ 1247              		.loc 1 314 57 is_stmt 1
+ 1248 004c 7B68     		ldr	r3, [r7, #4]
+ 1249 004e 186B     		ldr	r0, [r3, #48]
+ 1250 0050 3B68     		ldr	r3, [r7]
+ 1251 0052 9B88     		ldrh	r3, [r3, #4]
+ 1252 0054 0022     		movs	r2, #0
+ 1253 0056 1946     		mov	r1, r3
+ 1254 0058 FFF7FEFF 		bl	lwm2m_list_remove
+ 1255 005c 0246     		mov	r2, r0
+ 1256              		.loc 1 314 31
+ 1257 005e 7B68     		ldr	r3, [r7, #4]
+ 1258 0060 1A63     		str	r2, [r3, #48]
+ 315:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     transaction_free(transacP);
+ 1259              		.loc 1 315 5
+ 1260 0062 3868     		ldr	r0, [r7]
+ 1261 0064 FFF7FEFF 		bl	transaction_free
+ 316:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** }
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 30
+
+
+ 1262              		.loc 1 316 1
+ 1263 0068 00BF     		nop
+ 1264 006a 0837     		adds	r7, r7, #8
+ 1265              	.LCFI18:
+ 1266              		.cfi_def_cfa_offset 16
+ 1267 006c BD46     		mov	sp, r7
+ 1268              	.LCFI19:
+ 1269              		.cfi_def_cfa_register 13
+ 1270              		@ sp needed
+ 1271 006e B0BD     		pop	{r4, r5, r7, pc}
+ 1272              	.L64:
+ 1273              		.align	2
+ 1274              	.L63:
+ 1275 0070 00000000 		.word	__func__.8720
+ 1276 0074 00000000 		.word	__FUNCTION__.8719
+ 1277 0078 94020000 		.word	.LC13
+ 1278              		.cfi_endproc
+ 1279              	.LFE7:
+ 1281              		.section	.rodata
+ 1282 02bd 000000   		.align	2
+ 1283              	.LC14:
+ 1284 02c0 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] Entering,message->code:"
+ 1284      5B25755D 
+ 1284      5B25733A 
+ 1284      25645D20 
+ 1284      5B25645D 
+ 1285 02f3 2025640D 		.ascii	" %d\015\012\015\012\000"
+ 1285      0A0D0A00 
+ 1286 02fb 00       		.align	2
+ 1287              	.LC15:
+ 1288 02fc 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] timeout in transaction_"
+ 1288      5B25755D 
+ 1288      5B25733A 
+ 1288      25645D20 
+ 1288      5B25645D 
+ 1289 032f 68616E64 		.ascii	"handleResponse\012\015\012\015\012\000"
+ 1289      6C655265 
+ 1289      73706F6E 
+ 1289      73650A0D 
+ 1289      0A0D0A00 
+ 1290 0343 00       		.align	2
+ 1291              	.LC16:
+ 1292 0344 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] only true25,fromSession"
+ 1292      5B25755D 
+ 1292      5B25733A 
+ 1292      25645D20 
+ 1292      5B25645D 
+ 1293 0377 48206973 		.ascii	"H is %p, transacP->peerH is %p\012\015\012\015\012\000"
+ 1293      2025702C 
+ 1293      20747261 
+ 1293      6E736163 
+ 1293      502D3E70 
+ 1294 039b 00       		.align	2
+ 1295              	.LC17:
+ 1296 039c 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] error25,fromSessionH is"
+ 1296      5B25755D 
+ 1296      5B25733A 
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 31
+
+
+ 1296      25645D20 
+ 1296      5B25645D 
+ 1297 03cf 2025702C 		.ascii	" %p, transacP->peerH is %p\012\015\012\015\012\000"
+ 1297      20747261 
+ 1297      6E736163 
+ 1297      502D3E70 
+ 1297      65657248 
+ 1298 03ef 00       		.align	2
+ 1299              	.LC18:
+ 1300 03f0 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] error25,return false in"
+ 1300      5B25755D 
+ 1300      5B25733A 
+ 1300      25645D20 
+ 1300      5B25645D 
+ 1301 0423 20747261 		.ascii	" transaction_handleResponse\012\015\012\015\012\000"
+ 1301      6E736163 
+ 1301      74696F6E 
+ 1301      5F68616E 
+ 1301      646C6552 
+ 1302              		.section	.text.transaction_handleResponse,"ax",%progbits
+ 1303              		.align	1
+ 1304              		.global	transaction_handleResponse
+ 1305              		.syntax unified
+ 1306              		.thumb
+ 1307              		.thumb_func
+ 1308              		.fpu fpv4-sp-d16
+ 1310              	transaction_handleResponse:
+ 1311              	.LFB8:
+ 317:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 318:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** bool transaction_handleResponse(lwm2m_context_t *contextP,
+ 319:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                 void *fromSessionH,
+ 320:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                 coap_packet_t *message,
+ 321:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                                 coap_packet_t *response)
+ 322:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** {
+ 1312              		.loc 1 322 1
+ 1313              		.cfi_startproc
+ 1314              		@ args = 0, pretend = 0, frame = 40
+ 1315              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1316 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1317              	.LCFI20:
+ 1318              		.cfi_def_cfa_offset 36
+ 1319              		.cfi_offset 4, -36
+ 1320              		.cfi_offset 5, -32
+ 1321              		.cfi_offset 6, -28
+ 1322              		.cfi_offset 7, -24
+ 1323              		.cfi_offset 8, -20
+ 1324              		.cfi_offset 9, -16
+ 1325              		.cfi_offset 10, -12
+ 1326              		.cfi_offset 11, -8
+ 1327              		.cfi_offset 14, -4
+ 1328 0004 91B0     		sub	sp, sp, #68
+ 1329              	.LCFI21:
+ 1330              		.cfi_def_cfa_offset 104
+ 1331 0006 06AF     		add	r7, sp, #24
+ 1332              	.LCFI22:
+ 1333              		.cfi_def_cfa 7, 80
+ 1334 0008 7861     		str	r0, [r7, #20]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 32
+
+
+ 1335 000a 3961     		str	r1, [r7, #16]
+ 1336 000c FA60     		str	r2, [r7, #12]
+ 1337 000e BB60     		str	r3, [r7, #8]
+ 323:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     bool found = false;
+ 1338              		.loc 1 323 10
+ 1339 0010 0023     		movs	r3, #0
+ 1340 0012 87F82730 		strb	r3, [r7, #39]
+ 324:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     bool reset = false;
+ 1341              		.loc 1 324 10
+ 1342 0016 0023     		movs	r3, #0
+ 1343 0018 87F82630 		strb	r3, [r7, #38]
+ 325:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     lwm2m_transaction_t *transacP;
+ 326:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 327:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG_ARG("Entering,message->code: %d", message->code);
+ 1344              		.loc 1 327 5
+ 1345 001c FFF7FEFF 		bl	link_log_level_get
+ 1346 0020 0346     		mov	r3, r0
+ 1347 0022 012B     		cmp	r3, #1
+ 1348 0024 1ED8     		bhi	.L66
+ 1349              		.loc 1 327 5 is_stmt 0 discriminator 1
+ 1350 0026 0120     		movs	r0, #1
+ 1351 0028 FFF7FEFF 		bl	link_log_level_name
+ 1352 002c 0646     		mov	r6, r0
+ 1353 002e FFF7FEFF 		bl	osal_sys_time
+ 1354 0032 0246     		mov	r2, r0
+ 1355 0034 0B46     		mov	r3, r1
+ 1356 0036 7A60     		str	r2, [r7, #4]
+ 1357 0038 FFF7FEFF 		bl	lwm2m_gettime
+ 1358 003c 0246     		mov	r2, r0
+ 1359 003e 0B46     		mov	r3, r1
+ 1360 0040 FB68     		ldr	r3, [r7, #12]
+ 1361 0042 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 1362 0044 0493     		str	r3, [sp, #16]
+ 1363 0046 40F24713 		movw	r3, #327
+ 1364 004a 0393     		str	r3, [sp, #12]
+ 1365 004c AB4B     		ldr	r3, .L85
+ 1366 004e 0293     		str	r3, [sp, #8]
+ 1367 0050 0192     		str	r2, [sp, #4]
+ 1368 0052 40F24713 		movw	r3, #327
+ 1369 0056 0093     		str	r3, [sp]
+ 1370 0058 A94B     		ldr	r3, .L85+4
+ 1371 005a 7A68     		ldr	r2, [r7, #4]
+ 1372 005c 3146     		mov	r1, r6
+ 1373 005e A948     		ldr	r0, .L85+8
+ 1374 0060 FFF7FEFF 		bl	printf
+ 1375              	.L66:
+ 328:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     transacP = contextP->transactionList;
+ 1376              		.loc 1 328 14 is_stmt 1
+ 1377 0064 7B69     		ldr	r3, [r7, #20]
+ 1378 0066 1B6B     		ldr	r3, [r3, #48]
+ 1379 0068 3B62     		str	r3, [r7, #32]
+ 329:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 330:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     while (NULL != transacP)
+ 1380              		.loc 1 330 11
+ 1381 006a 1BE1     		b	.L67
+ 1382              	.L83:
+ 331:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 33
+
+
+ 332:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (lwm2m_session_is_equal(fromSessionH, transacP->peerH, contextP->userData) == true)
+ 1383              		.loc 1 332 13
+ 1384 006c 3B6A     		ldr	r3, [r7, #32]
+ 1385 006e 9968     		ldr	r1, [r3, #8]
+ 1386 0070 7B69     		ldr	r3, [r7, #20]
+ 1387 0072 5B6B     		ldr	r3, [r3, #52]
+ 1388 0074 1A46     		mov	r2, r3
+ 1389 0076 3869     		ldr	r0, [r7, #16]
+ 1390 0078 FFF7FEFF 		bl	lwm2m_session_is_equal
+ 1391 007c 0346     		mov	r3, r0
+ 1392              		.loc 1 332 12
+ 1393 007e 002B     		cmp	r3, #0
+ 1394 0080 00F0E780 		beq	.L68
+ 333:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 334:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (!transacP->ack_received)
+ 1395              		.loc 1 334 26
+ 1396 0084 3B6A     		ldr	r3, [r7, #32]
+ 1397 0086 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 1398              		.loc 1 334 16
+ 1399 0088 002B     		cmp	r3, #0
+ 1400 008a 1BD1     		bne	.L69
+ 335:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 336:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 if ((COAP_TYPE_ACK == message->type) || (COAP_TYPE_RST == message->type))
+ 1401              		.loc 1 336 46
+ 1402 008c FB68     		ldr	r3, [r7, #12]
+ 1403 008e 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 1404              		.loc 1 336 20
+ 1405 0090 022B     		cmp	r3, #2
+ 1406 0092 03D0     		beq	.L70
+ 1407              		.loc 1 336 82 discriminator 1
+ 1408 0094 FB68     		ldr	r3, [r7, #12]
+ 1409 0096 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 1410              		.loc 1 336 54 discriminator 1
+ 1411 0098 032B     		cmp	r3, #3
+ 1412 009a 13D1     		bne	.L69
+ 1413              	.L70:
+ 337:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 {
+ 338:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     if (transacP->mID == message->mid)
+ 1414              		.loc 1 338 33
+ 1415 009c 3B6A     		ldr	r3, [r7, #32]
+ 1416 009e 9A88     		ldrh	r2, [r3, #4]
+ 1417              		.loc 1 338 49
+ 1418 00a0 FB68     		ldr	r3, [r7, #12]
+ 1419 00a2 1B89     		ldrh	r3, [r3, #8]
+ 1420              		.loc 1 338 24
+ 1421 00a4 9A42     		cmp	r2, r3
+ 1422 00a6 0DD1     		bne	.L69
+ 339:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     {
+ 340:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         found = true;
+ 1423              		.loc 1 340 31
+ 1424 00a8 0123     		movs	r3, #1
+ 1425 00aa 87F82730 		strb	r3, [r7, #39]
+ 341:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         transacP->ack_received = true;
+ 1426              		.loc 1 341 48
+ 1427 00ae 3B6A     		ldr	r3, [r7, #32]
+ 1428 00b0 0122     		movs	r2, #1
+ 1429 00b2 1A73     		strb	r2, [r3, #12]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 34
+
+
+ 342:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         reset = COAP_TYPE_RST == message->type;
+ 1430              		.loc 1 342 57
+ 1431 00b4 FB68     		ldr	r3, [r7, #12]
+ 1432 00b6 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 1433              		.loc 1 342 31
+ 1434 00b8 032B     		cmp	r3, #3
+ 1435 00ba 0CBF     		ite	eq
+ 1436 00bc 0123     		moveq	r3, #1
+ 1437 00be 0023     		movne	r3, #0
+ 1438 00c0 87F82630 		strb	r3, [r7, #38]
+ 1439              	.L69:
+ 343:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     }
+ 344:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 }
+ 345:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 346:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 347:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (reset || prv_checkFinished(transacP, message))
+ 1440              		.loc 1 347 16
+ 1441 00c4 97F82630 		ldrb	r3, [r7, #38]	@ zero_extendqisi2
+ 1442 00c8 002B     		cmp	r3, #0
+ 1443 00ca 06D1     		bne	.L71
+ 1444              		.loc 1 347 26 discriminator 1
+ 1445 00cc F968     		ldr	r1, [r7, #12]
+ 1446 00ce 386A     		ldr	r0, [r7, #32]
+ 1447 00d0 FFF7FEFF 		bl	prv_checkFinished
+ 1448 00d4 0346     		mov	r3, r0
+ 1449              		.loc 1 347 23 discriminator 1
+ 1450 00d6 002B     		cmp	r3, #0
+ 1451 00d8 5FD0     		beq	.L72
+ 1452              	.L71:
+ 348:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 349:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 // HACK: If a message is sent from the monitor callback,
+ 350:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 // it will arrive before the registration ACK.
+ 351:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 // So we resend transaction that were denied for authentication reason.
+ 352:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 if (!reset)
+ 1453              		.loc 1 352 21
+ 1454 00da 97F82630 		ldrb	r3, [r7, #38]
+ 1455 00de 83F00103 		eor	r3, r3, #1
+ 1456 00e2 DBB2     		uxtb	r3, r3
+ 1457              		.loc 1 352 20
+ 1458 00e4 002B     		cmp	r3, #0
+ 1459 00e6 49D0     		beq	.L73
+ 353:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 {
+ 354:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     if (COAP_TYPE_CON == message->type && NULL != response)
+ 1460              		.loc 1 354 49
+ 1461 00e8 FB68     		ldr	r3, [r7, #12]
+ 1462 00ea 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 1463              		.loc 1 354 24
+ 1464 00ec 002B     		cmp	r3, #0
+ 1465 00ee 0ED1     		bne	.L74
+ 1466              		.loc 1 354 56 discriminator 1
+ 1467 00f0 BB68     		ldr	r3, [r7, #8]
+ 1468 00f2 002B     		cmp	r3, #0
+ 1469 00f4 0BD0     		beq	.L74
+ 355:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     {
+ 356:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         coap_init_message(response, COAP_TYPE_ACK, 0, message->mid);
+ 1470              		.loc 1 356 25
+ 1471 00f6 FB68     		ldr	r3, [r7, #12]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 35
+
+
+ 1472 00f8 1B89     		ldrh	r3, [r3, #8]
+ 1473 00fa 0022     		movs	r2, #0
+ 1474 00fc 0221     		movs	r1, #2
+ 1475 00fe B868     		ldr	r0, [r7, #8]
+ 1476 0100 FFF7FEFF 		bl	coap_init_message
+ 357:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         message_send(contextP, response, fromSessionH);
+ 1477              		.loc 1 357 25
+ 1478 0104 3A69     		ldr	r2, [r7, #16]
+ 1479 0106 B968     		ldr	r1, [r7, #8]
+ 1480 0108 7869     		ldr	r0, [r7, #20]
+ 1481 010a FFF7FEFF 		bl	message_send
+ 1482              	.L74:
+ 358:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     }
+ 359:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 360:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     if ((COAP_401_UNAUTHORIZED == message->code) && (COAP_MAX_RETRANSMIT > transacP
+ 1483              		.loc 1 360 58
+ 1484 010e FB68     		ldr	r3, [r7, #12]
+ 1485 0110 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 1486              		.loc 1 360 24
+ 1487 0112 812B     		cmp	r3, #129
+ 1488 0114 32D1     		bne	.L73
+ 1489              		.loc 1 360 100 discriminator 1
+ 1490 0116 3B6A     		ldr	r3, [r7, #32]
+ 1491 0118 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 1492              		.loc 1 360 66 discriminator 1
+ 1493 011a 032B     		cmp	r3, #3
+ 1494 011c 2ED8     		bhi	.L73
+ 361:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     {
+ 362:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         transacP->ack_received = false;
+ 1495              		.loc 1 362 48
+ 1496 011e 3B6A     		ldr	r3, [r7, #32]
+ 1497 0120 0022     		movs	r2, #0
+ 1498 0122 1A73     		strb	r2, [r3, #12]
+ 363:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         transacP->retrans_time += COAP_RESPONSE_TIMEOUT;
+ 1499              		.loc 1 363 48
+ 1500 0124 3B6A     		ldr	r3, [r7, #32]
+ 1501 0126 D3E90823 		ldrd	r2, [r3, #32]
+ 1502 012a 141D     		adds	r4, r2, #4
+ 1503 012c 43F10005 		adc	r5, r3, #0
+ 1504 0130 3B6A     		ldr	r3, [r7, #32]
+ 1505 0132 C3E90845 		strd	r4, [r3, #32]
+ 364:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         LOG("timeout in transaction_handleResponse\n");
+ 1506              		.loc 1 364 25
+ 1507 0136 FFF7FEFF 		bl	link_log_level_get
+ 1508 013a 0346     		mov	r3, r0
+ 1509 013c 012B     		cmp	r3, #1
+ 1510 013e 1BD8     		bhi	.L75
+ 1511              		.loc 1 364 25 is_stmt 0 discriminator 1
+ 1512 0140 0120     		movs	r0, #1
+ 1513 0142 FFF7FEFF 		bl	link_log_level_name
+ 1514 0146 0446     		mov	r4, r0
+ 1515 0148 FFF7FEFF 		bl	osal_sys_time
+ 1516 014c 0246     		mov	r2, r0
+ 1517 014e 0B46     		mov	r3, r1
+ 1518 0150 1546     		mov	r5, r2
+ 1519 0152 FFF7FEFF 		bl	lwm2m_gettime
+ 1520 0156 0246     		mov	r2, r0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 36
+
+
+ 1521 0158 0B46     		mov	r3, r1
+ 1522 015a 4FF4B673 		mov	r3, #364
+ 1523 015e 0393     		str	r3, [sp, #12]
+ 1524 0160 664B     		ldr	r3, .L85
+ 1525 0162 0293     		str	r3, [sp, #8]
+ 1526 0164 0192     		str	r2, [sp, #4]
+ 1527 0166 4FF4B673 		mov	r3, #364
+ 1528 016a 0093     		str	r3, [sp]
+ 1529 016c 644B     		ldr	r3, .L85+4
+ 1530 016e 2A46     		mov	r2, r5
+ 1531 0170 2146     		mov	r1, r4
+ 1532 0172 6548     		ldr	r0, .L85+12
+ 1533 0174 FFF7FEFF 		bl	printf
+ 1534              	.L75:
+ 365:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                         return true;
+ 1535              		.loc 1 365 32 is_stmt 1
+ 1536 0178 0123     		movs	r3, #1
+ 1537 017a B9E0     		b	.L76
+ 1538              	.L73:
+ 366:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     }
+ 367:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 }
+ 368:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 if (transacP->callback != NULL)
+ 1539              		.loc 1 368 29
+ 1540 017c 3B6A     		ldr	r3, [r7, #32]
+ 1541 017e 1B6C     		ldr	r3, [r3, #64]
+ 1542              		.loc 1 368 20
+ 1543 0180 002B     		cmp	r3, #0
+ 1544 0182 04D0     		beq	.L77
+ 369:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 {
+ 370:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     transacP->callback(transacP, message);
+ 1545              		.loc 1 370 29
+ 1546 0184 3B6A     		ldr	r3, [r7, #32]
+ 1547 0186 1B6C     		ldr	r3, [r3, #64]
+ 1548              		.loc 1 370 21
+ 1549 0188 F968     		ldr	r1, [r7, #12]
+ 1550 018a 386A     		ldr	r0, [r7, #32]
+ 1551 018c 9847     		blx	r3
+ 1552              	.LVL0:
+ 1553              	.L77:
+ 371:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 }
+ 372:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 transaction_remove(contextP, transacP);
+ 1554              		.loc 1 372 17
+ 1555 018e 396A     		ldr	r1, [r7, #32]
+ 1556 0190 7869     		ldr	r0, [r7, #20]
+ 1557 0192 FFF7FEFF 		bl	transaction_remove
+ 373:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 return true;
+ 1558              		.loc 1 373 24
+ 1559 0196 0123     		movs	r3, #1
+ 1560 0198 AAE0     		b	.L76
+ 1561              	.L72:
+ 374:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 375:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             // if we found our guy, exit
+ 376:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (found)
+ 1562              		.loc 1 376 16
+ 1563 019a 97F82730 		ldrb	r3, [r7, #39]	@ zero_extendqisi2
+ 1564 019e 002B     		cmp	r3, #0
+ 1565 01a0 7DD0     		beq	.L78
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 37
+
+
+ 1566              	.LBB5:
+ 377:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 378:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 time_t tv_sec = lwm2m_gettime();
+ 1567              		.loc 1 378 33
+ 1568 01a2 FFF7FEFF 		bl	lwm2m_gettime
+ 1569 01a6 C7E90601 		strd	r0, [r7, #24]
+ 379:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 if (tv_sec)
+ 1570              		.loc 1 379 20
+ 1571 01aa D7E90623 		ldrd	r2, [r7, #24]
+ 1572 01ae 1343     		orrs	r3, r2, r3
+ 1573 01b0 04D0     		beq	.L79
+ 380:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 {
+ 381:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     transacP->retrans_time = tv_sec;
+ 1574              		.loc 1 381 44
+ 1575 01b2 396A     		ldr	r1, [r7, #32]
+ 1576 01b4 D7E90623 		ldrd	r2, [r7, #24]
+ 1577 01b8 C1E90823 		strd	r2, [r1, #32]
+ 1578              	.L79:
+ 382:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 }
+ 383:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 if (transacP->response_timeout)
+ 1579              		.loc 1 383 29
+ 1580 01bc 3B6A     		ldr	r3, [r7, #32]
+ 1581 01be D3E90423 		ldrd	r2, [r3, #16]
+ 1582              		.loc 1 383 20
+ 1583 01c2 1343     		orrs	r3, r2, r3
+ 1584 01c4 0DD0     		beq	.L80
+ 384:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 {
+ 385:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     transacP->retrans_time += transacP->response_timeout;
+ 1585              		.loc 1 385 44
+ 1586 01c6 3B6A     		ldr	r3, [r7, #32]
+ 1587 01c8 D3E90801 		ldrd	r0, [r3, #32]
+ 1588              		.loc 1 385 55
+ 1589 01cc 3B6A     		ldr	r3, [r7, #32]
+ 1590 01ce D3E90423 		ldrd	r2, [r3, #16]
+ 1591              		.loc 1 385 44
+ 1592 01d2 10EB0208 		adds	r8, r0, r2
+ 1593 01d6 41EB0309 		adc	r9, r1, r3
+ 1594 01da 3B6A     		ldr	r3, [r7, #32]
+ 1595 01dc C3E90889 		strd	r8, [r3, #32]
+ 1596 01e0 0FE0     		b	.L81
+ 1597              	.L80:
+ 386:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 }
+ 387:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 else
+ 388:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 {
+ 389:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                     transacP->retrans_time += COAP_RESPONSE_TIMEOUT * transacP->retrans_counter;
+ 1598              		.loc 1 389 44
+ 1599 01e2 3B6A     		ldr	r3, [r7, #32]
+ 1600 01e4 D3E90801 		ldrd	r0, [r3, #32]
+ 1601              		.loc 1 389 79
+ 1602 01e8 3B6A     		ldr	r3, [r7, #32]
+ 1603 01ea 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 1604              		.loc 1 389 69
+ 1605 01ec 9B00     		lsls	r3, r3, #2
+ 1606 01ee 1A46     		mov	r2, r3
+ 1607 01f0 4FEAE273 		asr	r3, r2, #31
+ 1608              		.loc 1 389 44
+ 1609 01f4 10EB020A 		adds	r10, r0, r2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 38
+
+
+ 1610 01f8 41EB030B 		adc	fp, r1, r3
+ 1611 01fc 3B6A     		ldr	r3, [r7, #32]
+ 1612 01fe C3E908AB 		strd	r10, [r3, #32]
+ 1613              	.L81:
+ 390:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 }
+ 391:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 LOG_ARG("only true25,fromSessionH is %p, transacP->peerH is %p\n", fromSessionH, tr
+ 1614              		.loc 1 391 17
+ 1615 0202 FFF7FEFF 		bl	link_log_level_get
+ 1616 0206 0346     		mov	r3, r0
+ 1617 0208 012B     		cmp	r3, #1
+ 1618 020a 20D8     		bhi	.L82
+ 1619              		.loc 1 391 17 is_stmt 0 discriminator 1
+ 1620 020c 0120     		movs	r0, #1
+ 1621 020e FFF7FEFF 		bl	link_log_level_name
+ 1622 0212 0446     		mov	r4, r0
+ 1623 0214 FFF7FEFF 		bl	osal_sys_time
+ 1624 0218 0246     		mov	r2, r0
+ 1625 021a 0B46     		mov	r3, r1
+ 1626 021c 1546     		mov	r5, r2
+ 1627 021e FFF7FEFF 		bl	lwm2m_gettime
+ 1628 0222 0246     		mov	r2, r0
+ 1629 0224 0B46     		mov	r3, r1
+ 1630 0226 3B6A     		ldr	r3, [r7, #32]
+ 1631 0228 9B68     		ldr	r3, [r3, #8]
+ 1632 022a 0593     		str	r3, [sp, #20]
+ 1633 022c 3B69     		ldr	r3, [r7, #16]
+ 1634 022e 0493     		str	r3, [sp, #16]
+ 1635 0230 40F28713 		movw	r3, #391
+ 1636 0234 0393     		str	r3, [sp, #12]
+ 1637 0236 314B     		ldr	r3, .L85
+ 1638 0238 0293     		str	r3, [sp, #8]
+ 1639 023a 0192     		str	r2, [sp, #4]
+ 1640 023c 40F28713 		movw	r3, #391
+ 1641 0240 0093     		str	r3, [sp]
+ 1642 0242 2F4B     		ldr	r3, .L85+4
+ 1643 0244 2A46     		mov	r2, r5
+ 1644 0246 2146     		mov	r1, r4
+ 1645 0248 3048     		ldr	r0, .L85+16
+ 1646 024a FFF7FEFF 		bl	printf
+ 1647              	.L82:
+ 392:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 return true;
+ 1648              		.loc 1 392 24 is_stmt 1
+ 1649 024e 0123     		movs	r3, #1
+ 1650 0250 4EE0     		b	.L76
+ 1651              	.L68:
+ 1652              	.LBE5:
+ 393:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 394:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 395:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         else
+ 396:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 397:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             LOG_ARG("error25,fromSessionH is %p, transacP->peerH is %p\n", fromSessionH, transacP->
+ 1653              		.loc 1 397 13
+ 1654 0252 FFF7FEFF 		bl	link_log_level_get
+ 1655 0256 0346     		mov	r3, r0
+ 1656 0258 012B     		cmp	r3, #1
+ 1657 025a 20D8     		bhi	.L78
+ 1658              		.loc 1 397 13 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 39
+
+
+ 1659 025c 0120     		movs	r0, #1
+ 1660 025e FFF7FEFF 		bl	link_log_level_name
+ 1661 0262 0646     		mov	r6, r0
+ 1662 0264 FFF7FEFF 		bl	osal_sys_time
+ 1663 0268 0246     		mov	r2, r0
+ 1664 026a 0B46     		mov	r3, r1
+ 1665 026c 7A60     		str	r2, [r7, #4]
+ 1666 026e FFF7FEFF 		bl	lwm2m_gettime
+ 1667 0272 0246     		mov	r2, r0
+ 1668 0274 0B46     		mov	r3, r1
+ 1669 0276 3B6A     		ldr	r3, [r7, #32]
+ 1670 0278 9B68     		ldr	r3, [r3, #8]
+ 1671 027a 0593     		str	r3, [sp, #20]
+ 1672 027c 3B69     		ldr	r3, [r7, #16]
+ 1673 027e 0493     		str	r3, [sp, #16]
+ 1674 0280 40F28D13 		movw	r3, #397
+ 1675 0284 0393     		str	r3, [sp, #12]
+ 1676 0286 1D4B     		ldr	r3, .L85
+ 1677 0288 0293     		str	r3, [sp, #8]
+ 1678 028a 0192     		str	r2, [sp, #4]
+ 1679 028c 40F28D13 		movw	r3, #397
+ 1680 0290 0093     		str	r3, [sp]
+ 1681 0292 1B4B     		ldr	r3, .L85+4
+ 1682 0294 7A68     		ldr	r2, [r7, #4]
+ 1683 0296 3146     		mov	r1, r6
+ 1684 0298 1D48     		ldr	r0, .L85+20
+ 1685 029a FFF7FEFF 		bl	printf
+ 1686              	.L78:
+ 398:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 399:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         transacP = transacP->next;
+ 1687              		.loc 1 399 18 is_stmt 1
+ 1688 029e 3B6A     		ldr	r3, [r7, #32]
+ 1689 02a0 1B68     		ldr	r3, [r3]
+ 1690 02a2 3B62     		str	r3, [r7, #32]
+ 1691              	.L67:
+ 330:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 1692              		.loc 1 330 11
+ 1693 02a4 3B6A     		ldr	r3, [r7, #32]
+ 1694 02a6 002B     		cmp	r3, #0
+ 1695 02a8 7FF4E0AE 		bne	.L83
+ 400:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 401:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("error25,return false in transaction_handleResponse\n");
+ 1696              		.loc 1 401 5
+ 1697 02ac FFF7FEFF 		bl	link_log_level_get
+ 1698 02b0 0346     		mov	r3, r0
+ 1699 02b2 012B     		cmp	r3, #1
+ 1700 02b4 1BD8     		bhi	.L84
+ 1701              		.loc 1 401 5 is_stmt 0 discriminator 1
+ 1702 02b6 0120     		movs	r0, #1
+ 1703 02b8 FFF7FEFF 		bl	link_log_level_name
+ 1704 02bc 0446     		mov	r4, r0
+ 1705 02be FFF7FEFF 		bl	osal_sys_time
+ 1706 02c2 0246     		mov	r2, r0
+ 1707 02c4 0B46     		mov	r3, r1
+ 1708 02c6 1546     		mov	r5, r2
+ 1709 02c8 FFF7FEFF 		bl	lwm2m_gettime
+ 1710 02cc 0246     		mov	r2, r0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 40
+
+
+ 1711 02ce 0B46     		mov	r3, r1
+ 1712 02d0 40F29113 		movw	r3, #401
+ 1713 02d4 0393     		str	r3, [sp, #12]
+ 1714 02d6 094B     		ldr	r3, .L85
+ 1715 02d8 0293     		str	r3, [sp, #8]
+ 1716 02da 0192     		str	r2, [sp, #4]
+ 1717 02dc 40F29113 		movw	r3, #401
+ 1718 02e0 0093     		str	r3, [sp]
+ 1719 02e2 074B     		ldr	r3, .L85+4
+ 1720 02e4 2A46     		mov	r2, r5
+ 1721 02e6 2146     		mov	r1, r4
+ 1722 02e8 0A48     		ldr	r0, .L85+24
+ 1723 02ea FFF7FEFF 		bl	printf
+ 1724              	.L84:
+ 402:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     return false;
+ 1725              		.loc 1 402 12 is_stmt 1
+ 1726 02ee 0023     		movs	r3, #0
+ 1727              	.L76:
+ 403:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** }
+ 1728              		.loc 1 403 1
+ 1729 02f0 1846     		mov	r0, r3
+ 1730 02f2 2C37     		adds	r7, r7, #44
+ 1731              	.LCFI23:
+ 1732              		.cfi_def_cfa_offset 36
+ 1733 02f4 BD46     		mov	sp, r7
+ 1734              	.LCFI24:
+ 1735              		.cfi_def_cfa_register 13
+ 1736              		@ sp needed
+ 1737 02f6 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1738              	.L86:
+ 1739 02fa 00BF     		.align	2
+ 1740              	.L85:
+ 1741 02fc 00000000 		.word	__func__.8731
+ 1742 0300 00000000 		.word	__FUNCTION__.8730
+ 1743 0304 C0020000 		.word	.LC14
+ 1744 0308 FC020000 		.word	.LC15
+ 1745 030c 44030000 		.word	.LC16
+ 1746 0310 9C030000 		.word	.LC17
+ 1747 0314 F0030000 		.word	.LC18
+ 1748              		.cfi_endproc
+ 1749              	.LFE8:
+ 1751              		.section	.rodata
+ 1752              		.align	2
+ 1753              	.LC19:
+ 1754 0444 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] transaction_send: ver %"
+ 1754      5B25755D 
+ 1754      5B25733A 
+ 1754      25645D20 
+ 1754      5B25645D 
+ 1755 0477 752C2074 		.ascii	"u, type %u, tkl %u, code %u.%.2u, mid %u, Content t"
+ 1755      79706520 
+ 1755      25752C20 
+ 1755      746B6C20 
+ 1755      25752C20 
+ 1756 04aa 7970653A 		.ascii	"ype: %d\015\012\015\012\000"
+ 1756      2025640D 
+ 1756      0A0D0A00 
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 41
+
+
+ 1757 04b6 0000     		.align	2
+ 1758              	.LC20:
+ 1759 04b8 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] time:%llu\015\012\015\012"
+ 1759      5B25755D 
+ 1759      5B25733A 
+ 1759      25645D20 
+ 1759      5B25645D 
+ 1760 04e1 00       		.ascii	"\000"
+ 1761 04e2 0000     		.align	2
+ 1762              	.LC21:
+ 1763 04e4 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] remove\015\012\015\012\000"
+ 1763      5B25755D 
+ 1763      5B25733A 
+ 1763      25645D20 
+ 1763      5B25645D 
+ 1764 050b 00       		.align	2
+ 1765              	.LC22:
+ 1766 050c 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] retrans_counter:%d\015\012"
+ 1766      5B25755D 
+ 1766      5B25733A 
+ 1766      25645D20 
+ 1766      5B25645D 
+ 1767 053c 0D0A00   		.ascii	"\015\012\000"
+ 1768 053f 00       		.align	2
+ 1769              	.LC23:
+ 1770 0540 5B25735D 		.ascii	"[%s][%u][%s:%d] [%d][%s:%d] remove, ACK:%d, timeout"
+ 1770      5B25755D 
+ 1770      5B25733A 
+ 1770      25645D20 
+ 1770      5B25645D 
+ 1771 0573 3A202564 		.ascii	": %d\015\012\015\012\000"
+ 1771      0D0A0D0A 
+ 1771      00
+ 1772              		.section	.text.transaction_send,"ax",%progbits
+ 1773              		.align	1
+ 1774              		.global	transaction_send
+ 1775              		.syntax unified
+ 1776              		.thumb
+ 1777              		.thumb_func
+ 1778              		.fpu fpv4-sp-d16
+ 1780              	transaction_send:
+ 1781              	.LFB9:
+ 404:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** //transacP�ж��󣬳�buffer���Ѿ���ֵ
+ 405:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** int transaction_send(lwm2m_context_t *contextP,
+ 406:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                      lwm2m_transaction_t *transacP)
+ 407:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** {
+ 1782              		.loc 1 407 1
+ 1783              		.cfi_startproc
+ 1784              		@ args = 0, pretend = 0, frame = 48
+ 1785              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1786 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1787              	.LCFI25:
+ 1788              		.cfi_def_cfa_offset 36
+ 1789              		.cfi_offset 4, -36
+ 1790              		.cfi_offset 5, -32
+ 1791              		.cfi_offset 6, -28
+ 1792              		.cfi_offset 7, -24
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 42
+
+
+ 1793              		.cfi_offset 8, -20
+ 1794              		.cfi_offset 9, -16
+ 1795              		.cfi_offset 10, -12
+ 1796              		.cfi_offset 11, -8
+ 1797              		.cfi_offset 14, -4
+ 1798 0004 99B0     		sub	sp, sp, #100
+ 1799              	.LCFI26:
+ 1800              		.cfi_def_cfa_offset 136
+ 1801 0006 0CAF     		add	r7, sp, #48
+ 1802              	.LCFI27:
+ 1803              		.cfi_def_cfa 7, 88
+ 1804 0008 7861     		str	r0, [r7, #20]
+ 1805 000a 3961     		str	r1, [r7, #16]
+ 408:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     bool maxRetriesReached = false;
+ 1806              		.loc 1 408 10
+ 1807 000c 0023     		movs	r3, #0
+ 1808 000e 87F82F30 		strb	r3, [r7, #47]
+ 409:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     coap_packet_t *message = transacP->message;
+ 1809              		.loc 1 409 20
+ 1810 0012 3B69     		ldr	r3, [r7, #16]
+ 1811 0014 9B6A     		ldr	r3, [r3, #40]
+ 1812 0016 7B62     		str	r3, [r7, #36]
+ 410:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 411:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("Entering");
+ 1813              		.loc 1 411 5
+ 1814 0018 FFF7FEFF 		bl	link_log_level_get
+ 1815 001c 0346     		mov	r3, r0
+ 1816 001e 012B     		cmp	r3, #1
+ 1817 0020 1BD8     		bhi	.L88
+ 1818              		.loc 1 411 5 is_stmt 0 discriminator 1
+ 1819 0022 0120     		movs	r0, #1
+ 1820 0024 FFF7FEFF 		bl	link_log_level_name
+ 1821 0028 0446     		mov	r4, r0
+ 1822 002a FFF7FEFF 		bl	osal_sys_time
+ 1823 002e 0246     		mov	r2, r0
+ 1824 0030 0B46     		mov	r3, r1
+ 1825 0032 1546     		mov	r5, r2
+ 1826 0034 FFF7FEFF 		bl	lwm2m_gettime
+ 1827 0038 0246     		mov	r2, r0
+ 1828 003a 0B46     		mov	r3, r1
+ 1829 003c 40F29B13 		movw	r3, #411
+ 1830 0040 0393     		str	r3, [sp, #12]
+ 1831 0042 A84B     		ldr	r3, .L109
+ 1832 0044 0293     		str	r3, [sp, #8]
+ 1833 0046 0192     		str	r2, [sp, #4]
+ 1834 0048 40F29B13 		movw	r3, #411
+ 1835 004c 0093     		str	r3, [sp]
+ 1836 004e A64B     		ldr	r3, .L109+4
+ 1837 0050 2A46     		mov	r2, r5
+ 1838 0052 2146     		mov	r1, r4
+ 1839 0054 A548     		ldr	r0, .L109+8
+ 1840 0056 FFF7FEFF 		bl	printf
+ 1841              	.L88:
+ 412:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 413:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG_ARG("transaction_send: ver %u, type %u, tkl %u, code %u.%.2u, mid %u, Content type: %d",
+ 1842              		.loc 1 413 5 is_stmt 1
+ 1843 005a FFF7FEFF 		bl	link_log_level_get
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 43
+
+
+ 1844 005e 0346     		mov	r3, r0
+ 1845 0060 012B     		cmp	r3, #1
+ 1846 0062 3DD8     		bhi	.L89
+ 1847              		.loc 1 413 5 is_stmt 0 discriminator 1
+ 1848 0064 0120     		movs	r0, #1
+ 1849 0066 FFF7FEFF 		bl	link_log_level_name
+ 1850 006a 0446     		mov	r4, r0
+ 1851 006c FFF7FEFF 		bl	osal_sys_time
+ 1852 0070 0246     		mov	r2, r0
+ 1853 0072 0B46     		mov	r3, r1
+ 1854 0074 FA60     		str	r2, [r7, #12]
+ 1855 0076 FFF7FEFF 		bl	lwm2m_gettime
+ 1856 007a 0246     		mov	r2, r0
+ 1857 007c 0B46     		mov	r3, r1
+ 1858 007e 1146     		mov	r1, r2
+ 1859 0080 7B6A     		ldr	r3, [r7, #36]
+ 1860 0082 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 1861 0084 1846     		mov	r0, r3
+ 1862 0086 7B6A     		ldr	r3, [r7, #36]
+ 1863 0088 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 1864 008a 1D46     		mov	r5, r3
+ 1865 008c 7B6A     		ldr	r3, [r7, #36]
+ 1866 008e 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+ 1867 0092 1E46     		mov	r6, r3
+ 1868 0094 7B6A     		ldr	r3, [r7, #36]
+ 1869 0096 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 1870 0098 5B09     		lsrs	r3, r3, #5
+ 1871 009a DBB2     		uxtb	r3, r3
+ 1872 009c BB60     		str	r3, [r7, #8]
+ 1873 009e 7B6A     		ldr	r3, [r7, #36]
+ 1874 00a0 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 1875 00a2 03F01F02 		and	r2, r3, #31
+ 1876 00a6 7B6A     		ldr	r3, [r7, #36]
+ 1877 00a8 1B89     		ldrh	r3, [r3, #8]
+ 1878 00aa 7B60     		str	r3, [r7, #4]
+ 1879 00ac 7B6A     		ldr	r3, [r7, #36]
+ 1880 00ae 1B8A     		ldrh	r3, [r3, #16]
+ 1881 00b0 0A93     		str	r3, [sp, #40]
+ 1882 00b2 7B68     		ldr	r3, [r7, #4]
+ 1883 00b4 0993     		str	r3, [sp, #36]
+ 1884 00b6 0892     		str	r2, [sp, #32]
+ 1885 00b8 BB68     		ldr	r3, [r7, #8]
+ 1886 00ba 0793     		str	r3, [sp, #28]
+ 1887 00bc 0696     		str	r6, [sp, #24]
+ 1888 00be 0595     		str	r5, [sp, #20]
+ 1889 00c0 0490     		str	r0, [sp, #16]
+ 1890 00c2 40F29D13 		movw	r3, #413
+ 1891 00c6 0393     		str	r3, [sp, #12]
+ 1892 00c8 864B     		ldr	r3, .L109
+ 1893 00ca 0293     		str	r3, [sp, #8]
+ 1894 00cc 0191     		str	r1, [sp, #4]
+ 1895 00ce 40F29D13 		movw	r3, #413
+ 1896 00d2 0093     		str	r3, [sp]
+ 1897 00d4 844B     		ldr	r3, .L109+4
+ 1898 00d6 FA68     		ldr	r2, [r7, #12]
+ 1899 00d8 2146     		mov	r1, r4
+ 1900 00da 8548     		ldr	r0, .L109+12
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 44
+
+
+ 1901 00dc FFF7FEFF 		bl	printf
+ 1902              	.L89:
+ 414:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             message->version, message->type, message->token_len, message->code >> 5, message->code 
+ 415:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG_ARG("time:%llu", osal_sys_time());
+ 1903              		.loc 1 415 5 is_stmt 1
+ 1904 00e0 FFF7FEFF 		bl	link_log_level_get
+ 1905 00e4 0346     		mov	r3, r0
+ 1906 00e6 012B     		cmp	r3, #1
+ 1907 00e8 22D8     		bhi	.L90
+ 1908              		.loc 1 415 5 is_stmt 0 discriminator 1
+ 1909 00ea 0120     		movs	r0, #1
+ 1910 00ec FFF7FEFF 		bl	link_log_level_name
+ 1911 00f0 0446     		mov	r4, r0
+ 1912 00f2 FFF7FEFF 		bl	osal_sys_time
+ 1913 00f6 0246     		mov	r2, r0
+ 1914 00f8 0B46     		mov	r3, r1
+ 1915 00fa 1646     		mov	r6, r2
+ 1916 00fc FFF7FEFF 		bl	lwm2m_gettime
+ 1917 0100 0246     		mov	r2, r0
+ 1918 0102 0B46     		mov	r3, r1
+ 1919 0104 1546     		mov	r5, r2
+ 1920 0106 FFF7FEFF 		bl	osal_sys_time
+ 1921 010a 0246     		mov	r2, r0
+ 1922 010c 0B46     		mov	r3, r1
+ 1923 010e CDE90423 		strd	r2, [sp, #16]
+ 1924 0112 40F29F13 		movw	r3, #415
+ 1925 0116 0393     		str	r3, [sp, #12]
+ 1926 0118 724B     		ldr	r3, .L109
+ 1927 011a 0293     		str	r3, [sp, #8]
+ 1928 011c 0195     		str	r5, [sp, #4]
+ 1929 011e 40F29F13 		movw	r3, #415
+ 1930 0122 0093     		str	r3, [sp]
+ 1931 0124 704B     		ldr	r3, .L109+4
+ 1932 0126 3246     		mov	r2, r6
+ 1933 0128 2146     		mov	r1, r4
+ 1934 012a 7248     		ldr	r0, .L109+16
+ 1935 012c FFF7FEFF 		bl	printf
+ 1936              	.L90:
+ 416:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (transacP->buffer == NULL)
+ 1937              		.loc 1 416 17 is_stmt 1
+ 1938 0130 3B69     		ldr	r3, [r7, #16]
+ 1939 0132 1B6B     		ldr	r3, [r3, #48]
+ 1940              		.loc 1 416 8
+ 1941 0134 002B     		cmp	r3, #0
+ 1942 0136 40F0A280 		bne	.L91
+ 417:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 418:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         transacP->buffer_len = coap_serialize_get_size(message);
+ 1943              		.loc 1 418 32
+ 1944 013a 786A     		ldr	r0, [r7, #36]
+ 1945 013c FFF7FEFF 		bl	coap_serialize_get_size
+ 1946 0140 0346     		mov	r3, r0
+ 1947              		.loc 1 418 30
+ 1948 0142 9AB2     		uxth	r2, r3
+ 1949 0144 3B69     		ldr	r3, [r7, #16]
+ 1950 0146 9A85     		strh	r2, [r3, #44]	@ movhi
+ 419:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (transacP->buffer_len == 0)
+ 1951              		.loc 1 419 21
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 45
+
+
+ 1952 0148 3B69     		ldr	r3, [r7, #16]
+ 1953 014a 9B8D     		ldrh	r3, [r3, #44]
+ 1954              		.loc 1 419 12
+ 1955 014c 002B     		cmp	r3, #0
+ 1956 014e 26D1     		bne	.L92
+ 420:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 421:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             transaction_remove(contextP, transacP);
+ 1957              		.loc 1 421 13
+ 1958 0150 3969     		ldr	r1, [r7, #16]
+ 1959 0152 7869     		ldr	r0, [r7, #20]
+ 1960 0154 FFF7FEFF 		bl	transaction_remove
+ 422:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             LOG("remove");
+ 1961              		.loc 1 422 13
+ 1962 0158 FFF7FEFF 		bl	link_log_level_get
+ 1963 015c 0346     		mov	r3, r0
+ 1964 015e 012B     		cmp	r3, #1
+ 1965 0160 1BD8     		bhi	.L93
+ 1966              		.loc 1 422 13 is_stmt 0 discriminator 1
+ 1967 0162 0120     		movs	r0, #1
+ 1968 0164 FFF7FEFF 		bl	link_log_level_name
+ 1969 0168 0446     		mov	r4, r0
+ 1970 016a FFF7FEFF 		bl	osal_sys_time
+ 1971 016e 0246     		mov	r2, r0
+ 1972 0170 0B46     		mov	r3, r1
+ 1973 0172 1546     		mov	r5, r2
+ 1974 0174 FFF7FEFF 		bl	lwm2m_gettime
+ 1975 0178 0246     		mov	r2, r0
+ 1976 017a 0B46     		mov	r3, r1
+ 1977 017c 4FF4D373 		mov	r3, #422
+ 1978 0180 0393     		str	r3, [sp, #12]
+ 1979 0182 584B     		ldr	r3, .L109
+ 1980 0184 0293     		str	r3, [sp, #8]
+ 1981 0186 0192     		str	r2, [sp, #4]
+ 1982 0188 4FF4D373 		mov	r3, #422
+ 1983 018c 0093     		str	r3, [sp]
+ 1984 018e 564B     		ldr	r3, .L109+4
+ 1985 0190 2A46     		mov	r2, r5
+ 1986 0192 2146     		mov	r1, r4
+ 1987 0194 5848     		ldr	r0, .L109+20
+ 1988 0196 FFF7FEFF 		bl	printf
+ 1989              	.L93:
+ 423:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             return COAP_500_INTERNAL_SERVER_ERROR;
+ 1990              		.loc 1 423 20 is_stmt 1
+ 1991 019a A023     		movs	r3, #160
+ 1992 019c 47E1     		b	.L94
+ 1993              	.L92:
+ 424:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 425:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 426:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         transacP->buffer = (uint8_t *)lwm2m_malloc(transacP->buffer_len);
+ 1994              		.loc 1 426 60
+ 1995 019e 3B69     		ldr	r3, [r7, #16]
+ 1996 01a0 9B8D     		ldrh	r3, [r3, #44]
+ 1997              		.loc 1 426 39
+ 1998 01a2 1846     		mov	r0, r3
+ 1999 01a4 FFF7FEFF 		bl	lwm2m_malloc
+ 2000 01a8 0246     		mov	r2, r0
+ 2001              		.loc 1 426 26
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 46
+
+
+ 2002 01aa 3B69     		ldr	r3, [r7, #16]
+ 2003 01ac 1A63     		str	r2, [r3, #48]
+ 427:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (transacP->buffer == NULL)
+ 2004              		.loc 1 427 21
+ 2005 01ae 3B69     		ldr	r3, [r7, #16]
+ 2006 01b0 1B6B     		ldr	r3, [r3, #48]
+ 2007              		.loc 1 427 12
+ 2008 01b2 002B     		cmp	r3, #0
+ 2009 01b4 26D1     		bne	.L95
+ 428:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 429:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             transaction_remove(contextP, transacP);
+ 2010              		.loc 1 429 13
+ 2011 01b6 3969     		ldr	r1, [r7, #16]
+ 2012 01b8 7869     		ldr	r0, [r7, #20]
+ 2013 01ba FFF7FEFF 		bl	transaction_remove
+ 430:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             LOG("remove");
+ 2014              		.loc 1 430 13
+ 2015 01be FFF7FEFF 		bl	link_log_level_get
+ 2016 01c2 0346     		mov	r3, r0
+ 2017 01c4 012B     		cmp	r3, #1
+ 2018 01c6 1BD8     		bhi	.L96
+ 2019              		.loc 1 430 13 is_stmt 0 discriminator 1
+ 2020 01c8 0120     		movs	r0, #1
+ 2021 01ca FFF7FEFF 		bl	link_log_level_name
+ 2022 01ce 0446     		mov	r4, r0
+ 2023 01d0 FFF7FEFF 		bl	osal_sys_time
+ 2024 01d4 0246     		mov	r2, r0
+ 2025 01d6 0B46     		mov	r3, r1
+ 2026 01d8 1546     		mov	r5, r2
+ 2027 01da FFF7FEFF 		bl	lwm2m_gettime
+ 2028 01de 0246     		mov	r2, r0
+ 2029 01e0 0B46     		mov	r3, r1
+ 2030 01e2 4FF4D773 		mov	r3, #430
+ 2031 01e6 0393     		str	r3, [sp, #12]
+ 2032 01e8 3E4B     		ldr	r3, .L109
+ 2033 01ea 0293     		str	r3, [sp, #8]
+ 2034 01ec 0192     		str	r2, [sp, #4]
+ 2035 01ee 4FF4D773 		mov	r3, #430
+ 2036 01f2 0093     		str	r3, [sp]
+ 2037 01f4 3C4B     		ldr	r3, .L109+4
+ 2038 01f6 2A46     		mov	r2, r5
+ 2039 01f8 2146     		mov	r1, r4
+ 2040 01fa 3F48     		ldr	r0, .L109+20
+ 2041 01fc FFF7FEFF 		bl	printf
+ 2042              	.L96:
+ 431:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             return COAP_500_INTERNAL_SERVER_ERROR;
+ 2043              		.loc 1 431 20 is_stmt 1
+ 2044 0200 A023     		movs	r3, #160
+ 2045 0202 14E1     		b	.L94
+ 2046              	.L95:
+ 432:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 433:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 434:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         transacP->buffer_len = coap_serialize_message(message, transacP->buffer);
+ 2047              		.loc 1 434 32
+ 2048 0204 3B69     		ldr	r3, [r7, #16]
+ 2049 0206 1B6B     		ldr	r3, [r3, #48]
+ 2050 0208 1946     		mov	r1, r3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 47
+
+
+ 2051 020a 786A     		ldr	r0, [r7, #36]
+ 2052 020c FFF7FEFF 		bl	coap_serialize_message
+ 2053 0210 0346     		mov	r3, r0
+ 2054              		.loc 1 434 30
+ 2055 0212 9AB2     		uxth	r2, r3
+ 2056 0214 3B69     		ldr	r3, [r7, #16]
+ 2057 0216 9A85     		strh	r2, [r3, #44]	@ movhi
+ 435:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (transacP->buffer_len == 0)
+ 2058              		.loc 1 435 21
+ 2059 0218 3B69     		ldr	r3, [r7, #16]
+ 2060 021a 9B8D     		ldrh	r3, [r3, #44]
+ 2061              		.loc 1 435 12
+ 2062 021c 002B     		cmp	r3, #0
+ 2063 021e 2ED1     		bne	.L91
+ 436:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 437:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             lwm2m_free(transacP->buffer);
+ 2064              		.loc 1 437 32
+ 2065 0220 3B69     		ldr	r3, [r7, #16]
+ 2066 0222 1B6B     		ldr	r3, [r3, #48]
+ 2067              		.loc 1 437 13
+ 2068 0224 1846     		mov	r0, r3
+ 2069 0226 FFF7FEFF 		bl	lwm2m_free
+ 438:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             transacP->buffer = NULL;
+ 2070              		.loc 1 438 30
+ 2071 022a 3B69     		ldr	r3, [r7, #16]
+ 2072 022c 0022     		movs	r2, #0
+ 2073 022e 1A63     		str	r2, [r3, #48]
+ 439:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             transaction_remove(contextP, transacP);
+ 2074              		.loc 1 439 13
+ 2075 0230 3969     		ldr	r1, [r7, #16]
+ 2076 0232 7869     		ldr	r0, [r7, #20]
+ 2077 0234 FFF7FEFF 		bl	transaction_remove
+ 440:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             LOG("remove");
+ 2078              		.loc 1 440 13
+ 2079 0238 FFF7FEFF 		bl	link_log_level_get
+ 2080 023c 0346     		mov	r3, r0
+ 2081 023e 012B     		cmp	r3, #1
+ 2082 0240 1BD8     		bhi	.L97
+ 2083              		.loc 1 440 13 is_stmt 0 discriminator 1
+ 2084 0242 0120     		movs	r0, #1
+ 2085 0244 FFF7FEFF 		bl	link_log_level_name
+ 2086 0248 0446     		mov	r4, r0
+ 2087 024a FFF7FEFF 		bl	osal_sys_time
+ 2088 024e 0246     		mov	r2, r0
+ 2089 0250 0B46     		mov	r3, r1
+ 2090 0252 1546     		mov	r5, r2
+ 2091 0254 FFF7FEFF 		bl	lwm2m_gettime
+ 2092 0258 0246     		mov	r2, r0
+ 2093 025a 0B46     		mov	r3, r1
+ 2094 025c 4FF4DC73 		mov	r3, #440
+ 2095 0260 0393     		str	r3, [sp, #12]
+ 2096 0262 204B     		ldr	r3, .L109
+ 2097 0264 0293     		str	r3, [sp, #8]
+ 2098 0266 0192     		str	r2, [sp, #4]
+ 2099 0268 4FF4DC73 		mov	r3, #440
+ 2100 026c 0093     		str	r3, [sp]
+ 2101 026e 1E4B     		ldr	r3, .L109+4
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 48
+
+
+ 2102 0270 2A46     		mov	r2, r5
+ 2103 0272 2146     		mov	r1, r4
+ 2104 0274 2048     		ldr	r0, .L109+20
+ 2105 0276 FFF7FEFF 		bl	printf
+ 2106              	.L97:
+ 441:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             return COAP_500_INTERNAL_SERVER_ERROR;
+ 2107              		.loc 1 441 20 is_stmt 1
+ 2108 027a A023     		movs	r3, #160
+ 2109 027c D7E0     		b	.L94
+ 2110              	.L91:
+ 442:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 443:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 444:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 445:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (!transacP->ack_received)
+ 2111              		.loc 1 445 18
+ 2112 027e 3B69     		ldr	r3, [r7, #16]
+ 2113 0280 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 2114              		.loc 1 445 8
+ 2115 0282 002B     		cmp	r3, #0
+ 2116 0284 40F09280 		bne	.L98
+ 2117              	.LBB6:
+ 446:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 447:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         long unsigned timeout = 0;
+ 2118              		.loc 1 447 23
+ 2119 0288 0023     		movs	r3, #0
+ 2120 028a BB62     		str	r3, [r7, #40]
+ 448:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 449:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (0 == transacP->retrans_counter)
+ 2121              		.loc 1 449 26
+ 2122 028c 3B69     		ldr	r3, [r7, #16]
+ 2123 028e 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 2124              		.loc 1 449 12
+ 2125 0290 002B     		cmp	r3, #0
+ 2126 0292 1AD1     		bne	.L99
+ 2127              	.LBB7:
+ 450:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 451:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             time_t tv_sec = lwm2m_gettime();
+ 2128              		.loc 1 451 29
+ 2129 0294 FFF7FEFF 		bl	lwm2m_gettime
+ 2130 0298 C7E90601 		strd	r0, [r7, #24]
+ 452:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (tv_sec)
+ 2131              		.loc 1 452 16
+ 2132 029c D7E90623 		ldrd	r2, [r7, #24]
+ 2133 02a0 1343     		orrs	r3, r2, r3
+ 2134 02a2 0ED0     		beq	.L100
+ 453:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 454:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 transacP->retrans_time = tv_sec + COAP_RESPONSE_TIMEOUT;
+ 2135              		.loc 1 454 49
+ 2136 02a4 D7E90623 		ldrd	r2, [r7, #24]
+ 2137 02a8 12F1040A 		adds	r10, r2, #4
+ 2138 02ac 43F1000B 		adc	fp, r3, #0
+ 2139              		.loc 1 454 40
+ 2140 02b0 3B69     		ldr	r3, [r7, #16]
+ 2141 02b2 C3E908AB 		strd	r10, [r3, #32]
+ 455:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 transacP->retrans_counter = 1;
+ 2142              		.loc 1 455 43
+ 2143 02b6 3B69     		ldr	r3, [r7, #16]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 49
+
+
+ 2144 02b8 0122     		movs	r2, #1
+ 2145 02ba 1A76     		strb	r2, [r3, #24]
+ 456:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 timeout = 0;
+ 2146              		.loc 1 456 25
+ 2147 02bc 0023     		movs	r3, #0
+ 2148 02be BB62     		str	r3, [r7, #40]
+ 2149 02c0 1EE0     		b	.L101
+ 2150              	.L100:
+ 457:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 458:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             else
+ 459:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 460:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 maxRetriesReached = true;
+ 2151              		.loc 1 460 35
+ 2152 02c2 0123     		movs	r3, #1
+ 2153 02c4 87F82F30 		strb	r3, [r7, #47]
+ 2154 02c8 1AE0     		b	.L101
+ 2155              	.L99:
+ 2156              	.LBE7:
+ 461:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 462:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 463:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         else
+ 464:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 465:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if(transacP->retrans_counter <= 4 )
+ 2157              		.loc 1 465 24
+ 2158 02ca 3B69     		ldr	r3, [r7, #16]
+ 2159 02cc 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 2160              		.loc 1 465 15
+ 2161 02ce 042B     		cmp	r3, #4
+ 2162 02d0 14D8     		bhi	.L102
+ 466:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 timeout = COAP_RESPONSE_TIMEOUT << (transacP->retrans_counter - 1);
+ 2163              		.loc 1 466 61
+ 2164 02d2 3B69     		ldr	r3, [r7, #16]
+ 2165 02d4 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 2166              		.loc 1 466 79
+ 2167 02d6 013B     		subs	r3, r3, #1
+ 2168              		.loc 1 466 49
+ 2169 02d8 0422     		movs	r2, #4
+ 2170 02da 02FA03F3 		lsl	r3, r2, r3
+ 2171              		.loc 1 466 25
+ 2172 02de BB62     		str	r3, [r7, #40]
+ 2173 02e0 0EE0     		b	.L101
+ 2174              	.L110:
+ 2175 02e2 00BF     		.align	2
+ 2176              	.L109:
+ 2177 02e4 00000000 		.word	__func__.8743
+ 2178 02e8 00000000 		.word	__FUNCTION__.8742
+ 2179 02ec 94020000 		.word	.LC13
+ 2180 02f0 44040000 		.word	.LC19
+ 2181 02f4 B8040000 		.word	.LC20
+ 2182 02f8 E4040000 		.word	.LC21
+ 2183              	.L102:
+ 467:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             else
+ 468:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 timeout = COAP_RESPONSE_TIMEOUT << (4 - 1);
+ 2184              		.loc 1 468 25
+ 2185 02fc 2023     		movs	r3, #32
+ 2186 02fe BB62     		str	r3, [r7, #40]
+ 2187              	.L101:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 50
+
+
+ 469:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 470:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 471:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (COAP_MAX_RETRANSMIT + 1 >= transacP->retrans_counter)
+ 2188              		.loc 1 471 48
+ 2189 0300 3B69     		ldr	r3, [r7, #16]
+ 2190 0302 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 2191              		.loc 1 471 12
+ 2192 0304 052B     		cmp	r3, #5
+ 2193 0306 4ED8     		bhi	.L103
+ 472:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 473:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             lwm2m_buffer_send(transacP->peerH, transacP->buffer, transacP->buffer_len, contextP->us
+ 2194              		.loc 1 473 13
+ 2195 0308 3B69     		ldr	r3, [r7, #16]
+ 2196 030a 9868     		ldr	r0, [r3, #8]
+ 2197 030c 3B69     		ldr	r3, [r7, #16]
+ 2198 030e 196B     		ldr	r1, [r3, #48]
+ 2199              		.loc 1 473 74
+ 2200 0310 3B69     		ldr	r3, [r7, #16]
+ 2201 0312 9B8D     		ldrh	r3, [r3, #44]
+ 2202              		.loc 1 473 13
+ 2203 0314 1A46     		mov	r2, r3
+ 2204 0316 7B69     		ldr	r3, [r7, #20]
+ 2205 0318 5B6B     		ldr	r3, [r3, #52]
+ 2206 031a FFF7FEFF 		bl	lwm2m_buffer_send
+ 474:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             output_buffer(stderr, (uint8_t *)(transacP->buffer), transacP->buffer_len, 0);
+ 2207              		.loc 1 474 27
+ 2208 031e 464B     		ldr	r3, .L111
+ 2209 0320 1B68     		ldr	r3, [r3]
+ 2210 0322 D868     		ldr	r0, [r3, #12]
+ 2211              		.loc 1 474 13
+ 2212 0324 3B69     		ldr	r3, [r7, #16]
+ 2213 0326 196B     		ldr	r1, [r3, #48]
+ 2214              		.loc 1 474 74
+ 2215 0328 3B69     		ldr	r3, [r7, #16]
+ 2216 032a 9B8D     		ldrh	r3, [r3, #44]
+ 2217              		.loc 1 474 13
+ 2218 032c 1A46     		mov	r2, r3
+ 2219 032e 0023     		movs	r3, #0
+ 2220 0330 FFF7FEFF 		bl	output_buffer
+ 475:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             transacP->retrans_time += timeout;
+ 2221              		.loc 1 475 36
+ 2222 0334 3B69     		ldr	r3, [r7, #16]
+ 2223 0336 D3E90801 		ldrd	r0, [r3, #32]
+ 2224 033a BB6A     		ldr	r3, [r7, #40]
+ 2225 033c 1A46     		mov	r2, r3
+ 2226 033e 4FF00003 		mov	r3, #0
+ 2227 0342 10EB0208 		adds	r8, r0, r2
+ 2228 0346 41EB0309 		adc	r9, r1, r3
+ 2229 034a 3B69     		ldr	r3, [r7, #16]
+ 2230 034c C3E90889 		strd	r8, [r3, #32]
+ 476:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             LOG_ARG("retrans_counter:%d",transacP->retrans_counter);
+ 2231              		.loc 1 476 13
+ 2232 0350 FFF7FEFF 		bl	link_log_level_get
+ 2233 0354 0346     		mov	r3, r0
+ 2234 0356 012B     		cmp	r3, #1
+ 2235 0358 1ED8     		bhi	.L104
+ 2236              		.loc 1 476 13 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 51
+
+
+ 2237 035a 0120     		movs	r0, #1
+ 2238 035c FFF7FEFF 		bl	link_log_level_name
+ 2239 0360 0446     		mov	r4, r0
+ 2240 0362 FFF7FEFF 		bl	osal_sys_time
+ 2241 0366 0246     		mov	r2, r0
+ 2242 0368 0B46     		mov	r3, r1
+ 2243 036a 1546     		mov	r5, r2
+ 2244 036c FFF7FEFF 		bl	lwm2m_gettime
+ 2245 0370 0246     		mov	r2, r0
+ 2246 0372 0B46     		mov	r3, r1
+ 2247 0374 3B69     		ldr	r3, [r7, #16]
+ 2248 0376 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 2249 0378 0493     		str	r3, [sp, #16]
+ 2250 037a 4FF4EE73 		mov	r3, #476
+ 2251 037e 0393     		str	r3, [sp, #12]
+ 2252 0380 2E4B     		ldr	r3, .L111+4
+ 2253 0382 0293     		str	r3, [sp, #8]
+ 2254 0384 0192     		str	r2, [sp, #4]
+ 2255 0386 4FF4EE73 		mov	r3, #476
+ 2256 038a 0093     		str	r3, [sp]
+ 2257 038c 2C4B     		ldr	r3, .L111+8
+ 2258 038e 2A46     		mov	r2, r5
+ 2259 0390 2146     		mov	r1, r4
+ 2260 0392 2C48     		ldr	r0, .L111+12
+ 2261 0394 FFF7FEFF 		bl	printf
+ 2262              	.L104:
+ 477:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             transacP->retrans_counter += 1;
+ 2263              		.loc 1 477 39 is_stmt 1
+ 2264 0398 3B69     		ldr	r3, [r7, #16]
+ 2265 039a 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 2266 039c 0133     		adds	r3, r3, #1
+ 2267 039e DAB2     		uxtb	r2, r3
+ 2268 03a0 3B69     		ldr	r3, [r7, #16]
+ 2269 03a2 1A76     		strb	r2, [r3, #24]
+ 2270 03a4 02E0     		b	.L98
+ 2271              	.L103:
+ 478:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 479:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         else
+ 480:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 481:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             maxRetriesReached = true;
+ 2272              		.loc 1 481 31
+ 2273 03a6 0123     		movs	r3, #1
+ 2274 03a8 87F82F30 		strb	r3, [r7, #47]
+ 2275              	.L98:
+ 2276              	.LBE6:
+ 482:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 483:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 484:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 485:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     if (transacP->ack_received || maxRetriesReached)
+ 2277              		.loc 1 485 17
+ 2278 03ac 3B69     		ldr	r3, [r7, #16]
+ 2279 03ae 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 2280              		.loc 1 485 8
+ 2281 03b0 002B     		cmp	r3, #0
+ 2282 03b2 03D1     		bne	.L105
+ 2283              		.loc 1 485 32 discriminator 1
+ 2284 03b4 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 52
+
+
+ 2285 03b8 002B     		cmp	r3, #0
+ 2286 03ba 37D0     		beq	.L106
+ 2287              	.L105:
+ 486:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 487:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (transacP->callback)
+ 2288              		.loc 1 487 21
+ 2289 03bc 3B69     		ldr	r3, [r7, #16]
+ 2290 03be 1B6C     		ldr	r3, [r3, #64]
+ 2291              		.loc 1 487 12
+ 2292 03c0 002B     		cmp	r3, #0
+ 2293 03c2 04D0     		beq	.L107
+ 488:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 489:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             transacP->callback(transacP, NULL);
+ 2294              		.loc 1 489 21
+ 2295 03c4 3B69     		ldr	r3, [r7, #16]
+ 2296 03c6 1B6C     		ldr	r3, [r3, #64]
+ 2297              		.loc 1 489 13
+ 2298 03c8 0021     		movs	r1, #0
+ 2299 03ca 3869     		ldr	r0, [r7, #16]
+ 2300 03cc 9847     		blx	r3
+ 2301              	.LVL1:
+ 2302              	.L107:
+ 490:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 491:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         transaction_remove(contextP, transacP);
+ 2303              		.loc 1 491 9
+ 2304 03ce 3969     		ldr	r1, [r7, #16]
+ 2305 03d0 7869     		ldr	r0, [r7, #20]
+ 2306 03d2 FFF7FEFF 		bl	transaction_remove
+ 492:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         LOG_ARG("remove, ACK:%d, timeout: %d", transacP->ack_received, maxRetriesReached);
+ 2307              		.loc 1 492 9
+ 2308 03d6 FFF7FEFF 		bl	link_log_level_get
+ 2309 03da 0346     		mov	r3, r0
+ 2310 03dc 012B     		cmp	r3, #1
+ 2311 03de 22D8     		bhi	.L108
+ 2312              		.loc 1 492 9 is_stmt 0 discriminator 1
+ 2313 03e0 0120     		movs	r0, #1
+ 2314 03e2 FFF7FEFF 		bl	link_log_level_name
+ 2315 03e6 0446     		mov	r4, r0
+ 2316 03e8 FFF7FEFF 		bl	osal_sys_time
+ 2317 03ec 0246     		mov	r2, r0
+ 2318 03ee 0B46     		mov	r3, r1
+ 2319 03f0 1546     		mov	r5, r2
+ 2320 03f2 FFF7FEFF 		bl	lwm2m_gettime
+ 2321 03f6 0246     		mov	r2, r0
+ 2322 03f8 0B46     		mov	r3, r1
+ 2323 03fa 3B69     		ldr	r3, [r7, #16]
+ 2324 03fc 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 2325 03fe 1946     		mov	r1, r3
+ 2326 0400 97F82F30 		ldrb	r3, [r7, #47]	@ zero_extendqisi2
+ 2327 0404 0593     		str	r3, [sp, #20]
+ 2328 0406 0491     		str	r1, [sp, #16]
+ 2329 0408 4FF4F673 		mov	r3, #492
+ 2330 040c 0393     		str	r3, [sp, #12]
+ 2331 040e 0B4B     		ldr	r3, .L111+4
+ 2332 0410 0293     		str	r3, [sp, #8]
+ 2333 0412 0192     		str	r2, [sp, #4]
+ 2334 0414 4FF4F673 		mov	r3, #492
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 53
+
+
+ 2335 0418 0093     		str	r3, [sp]
+ 2336 041a 094B     		ldr	r3, .L111+8
+ 2337 041c 2A46     		mov	r2, r5
+ 2338 041e 2146     		mov	r1, r4
+ 2339 0420 0948     		ldr	r0, .L111+16
+ 2340 0422 FFF7FEFF 		bl	printf
+ 2341              	.L108:
+ 493:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         return -1;
+ 2342              		.loc 1 493 16 is_stmt 1
+ 2343 0426 4FF0FF33 		mov	r3, #-1
+ 2344 042a 00E0     		b	.L94
+ 2345              	.L106:
+ 494:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 495:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 496:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     return 0;
+ 2346              		.loc 1 496 12
+ 2347 042c 0023     		movs	r3, #0
+ 2348              	.L94:
+ 497:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** }
+ 2349              		.loc 1 497 1
+ 2350 042e 1846     		mov	r0, r3
+ 2351 0430 3437     		adds	r7, r7, #52
+ 2352              	.LCFI28:
+ 2353              		.cfi_def_cfa_offset 36
+ 2354 0432 BD46     		mov	sp, r7
+ 2355              	.LCFI29:
+ 2356              		.cfi_def_cfa_register 13
+ 2357              		@ sp needed
+ 2358 0434 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2359              	.L112:
+ 2360              		.align	2
+ 2361              	.L111:
+ 2362 0438 00000000 		.word	_impure_ptr
+ 2363 043c 00000000 		.word	__func__.8743
+ 2364 0440 00000000 		.word	__FUNCTION__.8742
+ 2365 0444 0C050000 		.word	.LC22
+ 2366 0448 40050000 		.word	.LC23
+ 2367              		.cfi_endproc
+ 2368              	.LFE9:
+ 2370              		.section	.text.transaction_step,"ax",%progbits
+ 2371              		.align	1
+ 2372              		.global	transaction_step
+ 2373              		.syntax unified
+ 2374              		.thumb
+ 2375              		.thumb_func
+ 2376              		.fpu fpv4-sp-d16
+ 2378              	transaction_step:
+ 2379              	.LFB10:
+ 498:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 499:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** void transaction_step(lwm2m_context_t *contextP,
+ 500:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                       time_t currentTime,
+ 501:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                       time_t *timeoutP)
+ 502:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** {
+ 2380              		.loc 1 502 1
+ 2381              		.cfi_startproc
+ 2382              		@ args = 4, pretend = 0, frame = 40
+ 2383              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 54
+
+
+ 2384 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 2385              	.LCFI30:
+ 2386              		.cfi_def_cfa_offset 24
+ 2387              		.cfi_offset 4, -24
+ 2388              		.cfi_offset 5, -20
+ 2389              		.cfi_offset 6, -16
+ 2390              		.cfi_offset 7, -12
+ 2391              		.cfi_offset 8, -8
+ 2392              		.cfi_offset 14, -4
+ 2393 0004 8EB0     		sub	sp, sp, #56
+ 2394              	.LCFI31:
+ 2395              		.cfi_def_cfa_offset 80
+ 2396 0006 04AF     		add	r7, sp, #16
+ 2397              	.LCFI32:
+ 2398              		.cfi_def_cfa 7, 64
+ 2399 0008 F860     		str	r0, [r7, #12]
+ 2400 000a C7E90023 		strd	r2, [r7]
+ 503:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     lwm2m_transaction_t *transacP;
+ 504:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 505:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     LOG("Entering");
+ 2401              		.loc 1 505 5
+ 2402 000e FFF7FEFF 		bl	link_log_level_get
+ 2403 0012 0346     		mov	r3, r0
+ 2404 0014 012B     		cmp	r3, #1
+ 2405 0016 1BD8     		bhi	.L114
+ 2406              		.loc 1 505 5 is_stmt 0 discriminator 1
+ 2407 0018 0120     		movs	r0, #1
+ 2408 001a FFF7FEFF 		bl	link_log_level_name
+ 2409 001e 0646     		mov	r6, r0
+ 2410 0020 FFF7FEFF 		bl	osal_sys_time
+ 2411 0024 0246     		mov	r2, r0
+ 2412 0026 0B46     		mov	r3, r1
+ 2413 0028 9046     		mov	r8, r2
+ 2414 002a FFF7FEFF 		bl	lwm2m_gettime
+ 2415 002e 0246     		mov	r2, r0
+ 2416 0030 0B46     		mov	r3, r1
+ 2417 0032 40F2F913 		movw	r3, #505
+ 2418 0036 0393     		str	r3, [sp, #12]
+ 2419 0038 304B     		ldr	r3, .L122
+ 2420 003a 0293     		str	r3, [sp, #8]
+ 2421 003c 0192     		str	r2, [sp, #4]
+ 2422 003e 40F2F913 		movw	r3, #505
+ 2423 0042 0093     		str	r3, [sp]
+ 2424 0044 2E4B     		ldr	r3, .L122+4
+ 2425 0046 4246     		mov	r2, r8
+ 2426 0048 3146     		mov	r1, r6
+ 2427 004a 2E48     		ldr	r0, .L122+8
+ 2428 004c FFF7FEFF 		bl	printf
+ 2429              	.L114:
+ 506:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     transacP = contextP->transactionList;
+ 2430              		.loc 1 506 14 is_stmt 1
+ 2431 0050 FB68     		ldr	r3, [r7, #12]
+ 2432 0052 1B6B     		ldr	r3, [r3, #48]
+ 2433 0054 7B62     		str	r3, [r7, #36]
+ 507:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     while (transacP != NULL)
+ 2434              		.loc 1 507 11
+ 2435 0056 47E0     		b	.L115
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 55
+
+
+ 2436              	.L121:
+ 2437              	.LBB8:
+ 508:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 509:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         // transaction_send() may remove transaction from the linked list
+ 510:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         lwm2m_transaction_t *nextP = transacP->next;
+ 2438              		.loc 1 510 30
+ 2439 0058 7B6A     		ldr	r3, [r7, #36]
+ 2440 005a 1B68     		ldr	r3, [r3]
+ 2441 005c 7B61     		str	r3, [r7, #20]
+ 511:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         int removed = 0;
+ 2442              		.loc 1 511 13
+ 2443 005e 0023     		movs	r3, #0
+ 2444 0060 3B62     		str	r3, [r7, #32]
+ 512:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 513:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (transacP->retrans_time <= currentTime)
+ 2445              		.loc 1 513 21
+ 2446 0062 7B6A     		ldr	r3, [r7, #36]
+ 2447 0064 D3E90823 		ldrd	r2, [r3, #32]
+ 2448              		.loc 1 513 12
+ 2449 0068 D7E90001 		ldrd	r0, [r7]
+ 2450 006c 9042     		cmp	r0, r2
+ 2451 006e 71EB0303 		sbcs	r3, r1, r3
+ 2452 0072 04DB     		blt	.L116
+ 514:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 515:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             removed = transaction_send(contextP, transacP);
+ 2453              		.loc 1 515 23
+ 2454 0074 796A     		ldr	r1, [r7, #36]
+ 2455 0076 F868     		ldr	r0, [r7, #12]
+ 2456 0078 FFF7FEFF 		bl	transaction_send
+ 2457 007c 3862     		str	r0, [r7, #32]
+ 2458              	.L116:
+ 516:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 517:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 518:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         if (0 == removed)
+ 2459              		.loc 1 518 12
+ 2460 007e 3B6A     		ldr	r3, [r7, #32]
+ 2461 0080 002B     		cmp	r3, #0
+ 2462 0082 28D1     		bne	.L117
+ 2463              	.LBB9:
+ 519:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 520:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             time_t interval;
+ 521:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 522:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (transacP->retrans_time > currentTime)
+ 2464              		.loc 1 522 25
+ 2465 0084 7B6A     		ldr	r3, [r7, #36]
+ 2466 0086 D3E90823 		ldrd	r2, [r3, #32]
+ 2467              		.loc 1 522 16
+ 2468 008a D7E90001 		ldrd	r0, [r7]
+ 2469 008e 9042     		cmp	r0, r2
+ 2470 0090 71EB0303 		sbcs	r3, r1, r3
+ 2471 0094 0ADA     		bge	.L118
+ 523:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 524:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 interval = transacP->retrans_time - currentTime;
+ 2472              		.loc 1 524 36
+ 2473 0096 7B6A     		ldr	r3, [r7, #36]
+ 2474 0098 D3E90801 		ldrd	r0, [r3, #32]
+ 2475              		.loc 1 524 26
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 56
+
+
+ 2476 009c D7E90023 		ldrd	r2, [r7]
+ 2477 00a0 841A     		subs	r4, r0, r2
+ 2478 00a2 61EB0305 		sbc	r5, r1, r3
+ 2479 00a6 C7E90645 		strd	r4, [r7, #24]
+ 2480 00aa 05E0     		b	.L119
+ 2481              	.L118:
+ 525:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 526:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             else
+ 527:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 528:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 interval = 1;
+ 2482              		.loc 1 528 26
+ 2483 00ac 4FF00102 		mov	r2, #1
+ 2484 00b0 4FF00003 		mov	r3, #0
+ 2485 00b4 C7E90623 		strd	r2, [r7, #24]
+ 2486              	.L119:
+ 529:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 530:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 531:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             if (*timeoutP > interval)
+ 2487              		.loc 1 531 17
+ 2488 00b8 3B6C     		ldr	r3, [r7, #64]
+ 2489 00ba D3E90023 		ldrd	r2, [r3]
+ 2490              		.loc 1 531 16
+ 2491 00be D7E90601 		ldrd	r0, [r7, #24]
+ 2492 00c2 9042     		cmp	r0, r2
+ 2493 00c4 71EB0303 		sbcs	r3, r1, r3
+ 2494 00c8 0CDA     		bge	.L120
+ 532:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             {
+ 533:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****                 *timeoutP = interval;
+ 2495              		.loc 1 533 27
+ 2496 00ca 396C     		ldr	r1, [r7, #64]
+ 2497 00cc D7E90623 		ldrd	r2, [r7, #24]
+ 2498 00d0 C1E90023 		strd	r2, [r1]
+ 2499 00d4 06E0     		b	.L120
+ 2500              	.L117:
+ 2501              	.LBE9:
+ 534:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             }
+ 535:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 536:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         else
+ 537:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         {
+ 538:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****             *timeoutP = 1;
+ 2502              		.loc 1 538 23
+ 2503 00d6 396C     		ldr	r1, [r7, #64]
+ 2504 00d8 4FF00102 		mov	r2, #1
+ 2505 00dc 4FF00003 		mov	r3, #0
+ 2506 00e0 C1E90023 		strd	r2, [r1]
+ 2507              	.L120:
+ 539:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         }
+ 540:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** 
+ 541:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****         transacP = nextP;
+ 2508              		.loc 1 541 18
+ 2509 00e4 7B69     		ldr	r3, [r7, #20]
+ 2510 00e6 7B62     		str	r3, [r7, #36]
+ 2511              	.L115:
+ 2512              	.LBE8:
+ 507:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     {
+ 2513              		.loc 1 507 11
+ 2514 00e8 7B6A     		ldr	r3, [r7, #36]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 57
+
+
+ 2515 00ea 002B     		cmp	r3, #0
+ 2516 00ec B4D1     		bne	.L121
+ 542:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c ****     }
+ 543:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core\transaction.c **** }
+ 2517              		.loc 1 543 1
+ 2518 00ee 00BF     		nop
+ 2519 00f0 00BF     		nop
+ 2520 00f2 2837     		adds	r7, r7, #40
+ 2521              	.LCFI33:
+ 2522              		.cfi_def_cfa_offset 24
+ 2523 00f4 BD46     		mov	sp, r7
+ 2524              	.LCFI34:
+ 2525              		.cfi_def_cfa_register 13
+ 2526              		@ sp needed
+ 2527 00f6 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 2528              	.L123:
+ 2529 00fa 00BF     		.align	2
+ 2530              	.L122:
+ 2531 00fc 00000000 		.word	__func__.8753
+ 2532 0100 00000000 		.word	__FUNCTION__.8752
+ 2533 0104 94020000 		.word	.LC13
+ 2534              		.cfi_endproc
+ 2535              	.LFE10:
+ 2537              		.section	.rodata.__FUNCTION__.8680,"a"
+ 2538              		.align	2
+ 2541              	__FUNCTION__.8680:
+ 2542 0000 7072765F 		.ascii	"prv_checkFinished\000"
+ 2542      63686563 
+ 2542      6B46696E 
+ 2542      69736865 
+ 2542      6400
+ 2543              		.section	.rodata.__func__.8681,"a"
+ 2544              		.align	2
+ 2547              	__func__.8681:
+ 2548 0000 7072765F 		.ascii	"prv_checkFinished\000"
+ 2548      63686563 
+ 2548      6B46696E 
+ 2548      69736865 
+ 2548      6400
+ 2549              		.section	.rodata.__FUNCTION__.8700,"a"
+ 2550              		.align	2
+ 2553              	__FUNCTION__.8700:
+ 2554 0000 7472616E 		.ascii	"transaction_new\000"
+ 2554      73616374 
+ 2554      696F6E5F 
+ 2554      6E657700 
+ 2555              		.section	.rodata.__func__.8701,"a"
+ 2556              		.align	2
+ 2559              	__func__.8701:
+ 2560 0000 7472616E 		.ascii	"transaction_new\000"
+ 2560      73616374 
+ 2560      696F6E5F 
+ 2560      6E657700 
+ 2561              		.section	.rodata.__FUNCTION__.8713,"a"
+ 2562              		.align	2
+ 2565              	__FUNCTION__.8713:
+ 2566 0000 7472616E 		.ascii	"transaction_free\000"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 58
+
+
+ 2566      73616374 
+ 2566      696F6E5F 
+ 2566      66726565 
+ 2566      00
+ 2567              		.section	.rodata.__func__.8714,"a"
+ 2568              		.align	2
+ 2571              	__func__.8714:
+ 2572 0000 7472616E 		.ascii	"transaction_free\000"
+ 2572      73616374 
+ 2572      696F6E5F 
+ 2572      66726565 
+ 2572      00
+ 2573              		.section	.rodata.__FUNCTION__.8719,"a"
+ 2574              		.align	2
+ 2577              	__FUNCTION__.8719:
+ 2578 0000 7472616E 		.ascii	"transaction_remove\000"
+ 2578      73616374 
+ 2578      696F6E5F 
+ 2578      72656D6F 
+ 2578      766500
+ 2579              		.section	.rodata.__func__.8720,"a"
+ 2580              		.align	2
+ 2583              	__func__.8720:
+ 2584 0000 7472616E 		.ascii	"transaction_remove\000"
+ 2584      73616374 
+ 2584      696F6E5F 
+ 2584      72656D6F 
+ 2584      766500
+ 2585              		.section	.rodata.__FUNCTION__.8730,"a"
+ 2586              		.align	2
+ 2589              	__FUNCTION__.8730:
+ 2590 0000 7472616E 		.ascii	"transaction_handleResponse\000"
+ 2590      73616374 
+ 2590      696F6E5F 
+ 2590      68616E64 
+ 2590      6C655265 
+ 2591              		.section	.rodata.__func__.8731,"a"
+ 2592              		.align	2
+ 2595              	__func__.8731:
+ 2596 0000 7472616E 		.ascii	"transaction_handleResponse\000"
+ 2596      73616374 
+ 2596      696F6E5F 
+ 2596      68616E64 
+ 2596      6C655265 
+ 2597              		.section	.rodata.__FUNCTION__.8742,"a"
+ 2598              		.align	2
+ 2601              	__FUNCTION__.8742:
+ 2602 0000 7472616E 		.ascii	"transaction_send\000"
+ 2602      73616374 
+ 2602      696F6E5F 
+ 2602      73656E64 
+ 2602      00
+ 2603              		.section	.rodata.__func__.8743,"a"
+ 2604              		.align	2
+ 2607              	__func__.8743:
+ 2608 0000 7472616E 		.ascii	"transaction_send\000"
+ 2608      73616374 
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 59
+
+
+ 2608      696F6E5F 
+ 2608      73656E64 
+ 2608      00
+ 2609              		.section	.rodata.__FUNCTION__.8752,"a"
+ 2610              		.align	2
+ 2613              	__FUNCTION__.8752:
+ 2614 0000 7472616E 		.ascii	"transaction_step\000"
+ 2614      73616374 
+ 2614      696F6E5F 
+ 2614      73746570 
+ 2614      00
+ 2615              		.section	.rodata.__func__.8753,"a"
+ 2616              		.align	2
+ 2619              	__func__.8753:
+ 2620 0000 7472616E 		.ascii	"transaction_step\000"
+ 2620      73616374 
+ 2620      696F6E5F 
+ 2620      73746570 
+ 2620      00
+ 2621              		.text
+ 2622              	.Letext0:
+ 2623              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 2624              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 2625              		.file 4 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/liblwm2m_
+ 2626              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 2627              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 2628              		.file 7 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 2629              		.file 8 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 2630              		.file 9 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_timev
+ 2631              		.file 10 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\time.h"
+ 2632              		.file 11 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/er-coap-
+ 2633              		.file 12 "g:/iot/IoT_Device_Demo/iot_link/inc/link_log.h"
+ 2634              		.file 13 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/liblwm2m
+ 2635              		.file 14 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\stdlib.h"
+ 2636              		.file 15 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\ctype.h"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 60
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 transaction.c
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:18     .rodata:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:34     .text.prv_checkFinished:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:41     .text.prv_checkFinished:00000000 prv_checkFinished
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:350    .text.prv_checkFinished:00000214 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2547   .rodata.__func__.8681:00000000 __func__.8681
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2541   .rodata.__FUNCTION__.8680:00000000 __FUNCTION__.8680
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:393    .text.transaction_new:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:400    .text.transaction_new:00000000 transaction_new
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:849    .text.transaction_new:00000344 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2559   .rodata.__func__.8701:00000000 __func__.8701
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2553   .rodata.__FUNCTION__.8700:00000000 __FUNCTION__.8700
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:860    .text.transaction_new:00000364 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1065   .text.transaction_new:000004ec $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1079   .text.transaction_free:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1086   .text.transaction_free:00000000 transaction_free
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1183   .text.transaction_free:00000088 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2571   .rodata.__func__.8714:00000000 __func__.8714
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2565   .rodata.__FUNCTION__.8713:00000000 __FUNCTION__.8713
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1190   .text.transaction_remove:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1197   .text.transaction_remove:00000000 transaction_remove
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1275   .text.transaction_remove:00000070 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2583   .rodata.__func__.8720:00000000 __func__.8720
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2577   .rodata.__FUNCTION__.8719:00000000 __FUNCTION__.8719
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1303   .text.transaction_handleResponse:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1310   .text.transaction_handleResponse:00000000 transaction_handleResponse
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1741   .text.transaction_handleResponse:000002fc $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2595   .rodata.__func__.8731:00000000 __func__.8731
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2589   .rodata.__FUNCTION__.8730:00000000 __FUNCTION__.8730
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1773   .text.transaction_send:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:1780   .text.transaction_send:00000000 transaction_send
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2177   .text.transaction_send:000002e4 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2607   .rodata.__func__.8743:00000000 __func__.8743
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2601   .rodata.__FUNCTION__.8742:00000000 __FUNCTION__.8742
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2185   .text.transaction_send:000002fc $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2362   .text.transaction_send:00000438 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2371   .text.transaction_step:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2378   .text.transaction_step:00000000 transaction_step
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2531   .text.transaction_step:000000fc $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2619   .rodata.__func__.8753:00000000 __func__.8753
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2613   .rodata.__FUNCTION__.8752:00000000 __FUNCTION__.8752
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2538   .rodata.__FUNCTION__.8680:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2544   .rodata.__func__.8681:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2550   .rodata.__FUNCTION__.8700:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2556   .rodata.__func__.8701:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2562   .rodata.__FUNCTION__.8713:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2568   .rodata.__func__.8714:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2574   .rodata.__FUNCTION__.8719:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2580   .rodata.__func__.8720:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2586   .rodata.__FUNCTION__.8730:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2592   .rodata.__func__.8731:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2598   .rodata.__FUNCTION__.8742:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2604   .rodata.__func__.8743:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2610   .rodata.__FUNCTION__.8752:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s:2616   .rodata.__func__.8753:00000000 $d
+
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc2SyzLE.s 			page 61
+
+
+UNDEFINED SYMBOLS
+coap_get_header_token
+memcmp
+link_log_level_get
+link_log_level_name
+osal_sys_time
+lwm2m_gettime
+printf
+lwm2m_malloc
+memset
+coap_init_message
+coap_set_header_uri_path_segment
+utils_intToText
+coap_set_header_token
+lwm2m_free
+coap_free_header
+lwm2m_list_remove
+lwm2m_session_is_equal
+message_send
+coap_serialize_get_size
+coap_serialize_message
+lwm2m_buffer_send
+output_buffer
+_impure_ptr
