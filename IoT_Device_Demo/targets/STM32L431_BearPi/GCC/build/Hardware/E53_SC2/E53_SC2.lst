@@ -1,0 +1,2875 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"E53_SC2.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	I2cxTimeout
+  18              		.section	.data.I2cxTimeout,"aw"
+  19              		.align	2
+  22              	I2cxTimeout:
+  23 0000 B80B0000 		.word	3000
+  24              		.section	.text.MPU6050_WriteReg,"ax",%progbits
+  25              		.align	1
+  26              		.global	MPU6050_WriteReg
+  27              		.arch armv7e-m
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  31              		.fpu fpv4-sp-d16
+  33              	MPU6050_WriteReg:
+  34              	.LFB287:
+  35              		.file 1 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2/E53_SC2.c"
+   1:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /********************************************************************************
+   2:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 文件名称 ：E53_SC2.c
+   3:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 作     者：小熊派开源社区
+   4:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 版     本：V1.0
+   5:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 编写日期 ：2019-5-27
+   6:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 功     能：E53_SC2扩展板驱动
+   7:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** *********************************************************************************
+   8:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 说    明 ：本例程配套小熊派开源社区开发板使用
+   9:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     *
+  10:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 淘     宝：https://shop336827451.taobao.com/
+  11:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 论     坛：https://bbs.huaweicloud.com/forum/forum-734-1.html
+  12:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     * 微信公众号：小熊派开源社区
+  13:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** *********************************************************************************/
+  14:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** #include "E53_SC2.h"
+  15:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** #include "i2c.h"
+  16:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** #include "stm32l4xx.h"
+  17:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** #include "dwt.h"
+  18:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+  19:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** #include<math.h>
+  20:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+  21:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** #define EVAL_I2Cx_TIMEOUT_MAX                   3000
+  22:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** uint32_t I2cxTimeout = EVAL_I2Cx_TIMEOUT_MAX;
+  23:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+  24:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 写数据到MPU6050寄存器
+  25:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 2
+
+
+  26:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+  27:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+  28:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   ***************************************************************/
+  29:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void MPU6050_WriteReg(uint8_t reg_add,uint8_t reg_dat,short iicno)
+  30:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+  36              		.loc 1 30 1
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 8
+  39              		@ frame_needed = 1, uses_anonymous_args = 0
+  40 0000 80B5     		push	{r7, lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 8
+  43              		.cfi_offset 7, -8
+  44              		.cfi_offset 14, -4
+  45 0002 82B0     		sub	sp, sp, #8
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 16
+  48 0004 00AF     		add	r7, sp, #0
+  49              	.LCFI2:
+  50              		.cfi_def_cfa_register 7
+  51 0006 0346     		mov	r3, r0
+  52 0008 FB71     		strb	r3, [r7, #7]
+  53 000a 0B46     		mov	r3, r1
+  54 000c BB71     		strb	r3, [r7, #6]
+  55 000e 1346     		mov	r3, r2	@ movhi
+  56 0010 BB80     		strh	r3, [r7, #4]	@ movhi
+  31:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   I2C_MPU6050_WriteData(MPU6050_SLAVE_ADDRESS,reg_add,reg_dat,iicno);
+  57              		.loc 1 31 3
+  58 0012 B7F90430 		ldrsh	r3, [r7, #4]
+  59 0016 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+  60 0018 F979     		ldrb	r1, [r7, #7]	@ zero_extendqisi2
+  61 001a D020     		movs	r0, #208
+  62 001c FFF7FEFF 		bl	I2C_MPU6050_WriteData
+  32:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+  63              		.loc 1 32 1
+  64 0020 00BF     		nop
+  65 0022 0837     		adds	r7, r7, #8
+  66              	.LCFI3:
+  67              		.cfi_def_cfa_offset 8
+  68 0024 BD46     		mov	sp, r7
+  69              	.LCFI4:
+  70              		.cfi_def_cfa_register 13
+  71              		@ sp needed
+  72 0026 80BD     		pop	{r7, pc}
+  73              		.cfi_endproc
+  74              	.LFE287:
+  76              		.section	.text.MPU6050_ReadData,"ax",%progbits
+  77              		.align	1
+  78              		.global	MPU6050_ReadData
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  82              		.fpu fpv4-sp-d16
+  84              	MPU6050_ReadData:
+  85              	.LFB288:
+  33:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+  34:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 3
+
+
+  35:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 从MPU6050寄存器读取数据
+  36:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+  37:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+  38:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+  39:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** ***************************************************************/ 
+  40:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void MPU6050_ReadData(uint8_t reg_add,unsigned char *Read,uint8_t num, short iicno)
+  41:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+  86              		.loc 1 41 1
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 8
+  89              		@ frame_needed = 1, uses_anonymous_args = 0
+  90 0000 80B5     		push	{r7, lr}
+  91              	.LCFI5:
+  92              		.cfi_def_cfa_offset 8
+  93              		.cfi_offset 7, -8
+  94              		.cfi_offset 14, -4
+  95 0002 84B0     		sub	sp, sp, #16
+  96              	.LCFI6:
+  97              		.cfi_def_cfa_offset 24
+  98 0004 02AF     		add	r7, sp, #8
+  99              	.LCFI7:
+ 100              		.cfi_def_cfa 7, 16
+ 101 0006 3960     		str	r1, [r7]
+ 102 0008 1146     		mov	r1, r2
+ 103 000a 1A46     		mov	r2, r3
+ 104 000c 0346     		mov	r3, r0
+ 105 000e FB71     		strb	r3, [r7, #7]
+ 106 0010 0B46     		mov	r3, r1
+ 107 0012 BB71     		strb	r3, [r7, #6]
+ 108 0014 1346     		mov	r3, r2	@ movhi
+ 109 0016 BB80     		strh	r3, [r7, #4]	@ movhi
+  42:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   I2C_MPU6050_ReadBuffer(MPU6050_SLAVE_ADDRESS,reg_add,I2C_MEMADD_SIZE_8BIT,Read,num,iicno);
+ 110              		.loc 1 42 3
+ 111 0018 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 112 001a 9BB2     		uxth	r3, r3
+ 113 001c F979     		ldrb	r1, [r7, #7]	@ zero_extendqisi2
+ 114 001e B7F90420 		ldrsh	r2, [r7, #4]
+ 115 0022 0192     		str	r2, [sp, #4]
+ 116 0024 0093     		str	r3, [sp]
+ 117 0026 3B68     		ldr	r3, [r7]
+ 118 0028 0122     		movs	r2, #1
+ 119 002a D020     		movs	r0, #208
+ 120 002c FFF7FEFF 		bl	I2C_MPU6050_ReadBuffer
+  43:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 121              		.loc 1 43 1
+ 122 0030 00BF     		nop
+ 123 0032 0837     		adds	r7, r7, #8
+ 124              	.LCFI8:
+ 125              		.cfi_def_cfa_offset 8
+ 126 0034 BD46     		mov	sp, r7
+ 127              	.LCFI9:
+ 128              		.cfi_def_cfa_register 13
+ 129              		@ sp needed
+ 130 0036 80BD     		pop	{r7, pc}
+ 131              		.cfi_endproc
+ 132              	.LFE288:
+ 134              		.section	.text.MPU6050_Init,"ax",%progbits
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 4
+
+
+ 135              		.align	1
+ 136              		.global	MPU6050_Init
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ 140              		.fpu fpv4-sp-d16
+ 142              	MPU6050_Init:
+ 143              	.LFB289:
+  44:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+  45:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+  46:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 初始化MPU6050芯片
+  47:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+  48:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+  49:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+  50:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   ***************************************************************/ 
+  51:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void MPU6050_Init(short iicno)
+  52:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 144              		.loc 1 52 1
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 16
+ 147              		@ frame_needed = 1, uses_anonymous_args = 0
+ 148 0000 80B5     		push	{r7, lr}
+ 149              	.LCFI10:
+ 150              		.cfi_def_cfa_offset 8
+ 151              		.cfi_offset 7, -8
+ 152              		.cfi_offset 14, -4
+ 153 0002 84B0     		sub	sp, sp, #16
+ 154              	.LCFI11:
+ 155              		.cfi_def_cfa_offset 24
+ 156 0004 00AF     		add	r7, sp, #0
+ 157              	.LCFI12:
+ 158              		.cfi_def_cfa_register 7
+ 159 0006 0346     		mov	r3, r0
+ 160 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+  53:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   int i=0,j=0;
+ 161              		.loc 1 53 7
+ 162 000a 0023     		movs	r3, #0
+ 163 000c FB60     		str	r3, [r7, #12]
+ 164              		.loc 1 53 11
+ 165 000e 0023     		movs	r3, #0
+ 166 0010 BB60     		str	r3, [r7, #8]
+  54:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   //在初始化之前要延时一段时间，若没有延时，则断电后再上电数据可能�
+  55:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   for(i=0;i<1000;i++)
+ 167              		.loc 1 55 8
+ 168 0012 0023     		movs	r3, #0
+ 169 0014 FB60     		str	r3, [r7, #12]
+ 170              		.loc 1 55 3
+ 171 0016 0CE0     		b	.L4
+ 172              	.L7:
+  56:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+  57:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     for(j=0;j<1000;j++)
+ 173              		.loc 1 57 10
+ 174 0018 0023     		movs	r3, #0
+ 175 001a BB60     		str	r3, [r7, #8]
+ 176              		.loc 1 57 5
+ 177 001c 02E0     		b	.L5
+ 178              	.L6:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 5
+
+
+ 179              		.loc 1 57 21 discriminator 3
+ 180 001e BB68     		ldr	r3, [r7, #8]
+ 181 0020 0133     		adds	r3, r3, #1
+ 182 0022 BB60     		str	r3, [r7, #8]
+ 183              	.L5:
+ 184              		.loc 1 57 5 discriminator 1
+ 185 0024 BB68     		ldr	r3, [r7, #8]
+ 186 0026 B3F57A7F 		cmp	r3, #1000
+ 187 002a F8DB     		blt	.L6
+  55:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 188              		.loc 1 55 19 discriminator 2
+ 189 002c FB68     		ldr	r3, [r7, #12]
+ 190 002e 0133     		adds	r3, r3, #1
+ 191 0030 FB60     		str	r3, [r7, #12]
+ 192              	.L4:
+  55:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 193              		.loc 1 55 3 discriminator 1
+ 194 0032 FB68     		ldr	r3, [r7, #12]
+ 195 0034 B3F57A7F 		cmp	r3, #1000
+ 196 0038 EEDB     		blt	.L7
+  58:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     {
+  59:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       ;
+  60:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     }
+  61:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+  62:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_PWR_MGMT_1,0X80,iicno);       //复位MPU6050
+ 197              		.loc 1 62 2
+ 198 003a B7F90630 		ldrsh	r3, [r7, #6]
+ 199 003e 1A46     		mov	r2, r3
+ 200 0040 8021     		movs	r1, #128
+ 201 0042 6B20     		movs	r0, #107
+ 202 0044 FFF7FEFF 		bl	MPU6050_WriteReg
+  63:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	delay10ms(10);
+ 203              		.loc 1 63 2
+ 204 0048 0A20     		movs	r0, #10
+ 205 004a FFF7FEFF 		bl	delay10ms
+  64:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_PWR_MGMT_1,0X00,iicno);       //唤醒MPU6050
+ 206              		.loc 1 64 2
+ 207 004e B7F90630 		ldrsh	r3, [r7, #6]
+ 208 0052 1A46     		mov	r2, r3
+ 209 0054 0021     		movs	r1, #0
+ 210 0056 6B20     		movs	r0, #107
+ 211 0058 FFF7FEFF 		bl	MPU6050_WriteReg
+  65:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_INT_ENABLE,0X00,iicno);       //关闭所有中断
+ 212              		.loc 1 65 2
+ 213 005c B7F90630 		ldrsh	r3, [r7, #6]
+ 214 0060 1A46     		mov	r2, r3
+ 215 0062 0021     		movs	r1, #0
+ 216 0064 3820     		movs	r0, #56
+ 217 0066 FFF7FEFF 		bl	MPU6050_WriteReg
+  66:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_USER_CTRL,0X00,iicno);        //I2C主模式关闭
+ 218              		.loc 1 66 2
+ 219 006a B7F90630 		ldrsh	r3, [r7, #6]
+ 220 006e 1A46     		mov	r2, r3
+ 221 0070 0021     		movs	r1, #0
+ 222 0072 6A20     		movs	r0, #106
+ 223 0074 FFF7FEFF 		bl	MPU6050_WriteReg
+  67:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_FIFO_EN,0X00,iicno);          //关闭FIFO
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 6
+
+
+ 224              		.loc 1 67 2
+ 225 0078 B7F90630 		ldrsh	r3, [r7, #6]
+ 226 007c 1A46     		mov	r2, r3
+ 227 007e 0021     		movs	r1, #0
+ 228 0080 2320     		movs	r0, #35
+ 229 0082 FFF7FEFF 		bl	MPU6050_WriteReg
+  68:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_INT_PIN_CFG,0X80,iicno);      //中断的逻辑电平模式,设置为0
+ 230              		.loc 1 68 2
+ 231 0086 B7F90630 		ldrsh	r3, [r7, #6]
+ 232 008a 1A46     		mov	r2, r3
+ 233 008c 8021     		movs	r1, #128
+ 234 008e 3720     		movs	r0, #55
+ 235 0090 FFF7FEFF 		bl	MPU6050_WriteReg
+  69:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	Motion_Interrupt(iicno);           					           	//运动中断
+ 236              		.loc 1 69 2
+ 237 0094 B7F90630 		ldrsh	r3, [r7, #6]
+ 238 0098 1846     		mov	r0, r3
+ 239 009a FFF7FEFF 		bl	Motion_Interrupt
+  70:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_CONFIG,0x04,iicno);           //配置外部引脚采样和DLPF数字�
+ 240              		.loc 1 70 2
+ 241 009e B7F90630 		ldrsh	r3, [r7, #6]
+ 242 00a2 1A46     		mov	r2, r3
+ 243 00a4 0421     		movs	r1, #4
+ 244 00a6 1A20     		movs	r0, #26
+ 245 00a8 FFF7FEFF 		bl	MPU6050_WriteReg
+  71:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_ACCEL_CONFIG,0x00,iicno);     //加速度传感器量程和高通滤�
+ 246              		.loc 1 71 2
+ 247 00ac B7F90630 		ldrsh	r3, [r7, #6]
+ 248 00b0 1A46     		mov	r2, r3
+ 249 00b2 0021     		movs	r1, #0
+ 250 00b4 1C20     		movs	r0, #28
+ 251 00b6 FFF7FEFF 		bl	MPU6050_WriteReg
+  72:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   MPU6050_WriteReg(MPU6050_RA_GYRO_CONFIG,0x18,iicno);
+ 252              		.loc 1 72 3
+ 253 00ba B7F90630 		ldrsh	r3, [r7, #6]
+ 254 00be 1A46     		mov	r2, r3
+ 255 00c0 1821     		movs	r1, #24
+ 256 00c2 1B20     		movs	r0, #27
+ 257 00c4 FFF7FEFF 		bl	MPU6050_WriteReg
+  73:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_INT_PIN_CFG,0X1C,iicno);      //INT引脚低电平平时
+ 258              		.loc 1 73 2
+ 259 00c8 B7F90630 		ldrsh	r3, [r7, #6]
+ 260 00cc 1A46     		mov	r2, r3
+ 261 00ce 1C21     		movs	r1, #28
+ 262 00d0 3720     		movs	r0, #55
+ 263 00d2 FFF7FEFF 		bl	MPU6050_WriteReg
+  74:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_WriteReg(MPU6050_RA_INT_ENABLE,0x40,iicno);       //中断使能寄存器
+ 264              		.loc 1 74 2
+ 265 00d6 B7F90630 		ldrsh	r3, [r7, #6]
+ 266 00da 1A46     		mov	r2, r3
+ 267 00dc 4021     		movs	r1, #64
+ 268 00de 3820     		movs	r0, #56
+ 269 00e0 FFF7FEFF 		bl	MPU6050_WriteReg
+  75:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 270              		.loc 1 75 1
+ 271 00e4 00BF     		nop
+ 272 00e6 1037     		adds	r7, r7, #16
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 7
+
+
+ 273              	.LCFI13:
+ 274              		.cfi_def_cfa_offset 8
+ 275 00e8 BD46     		mov	sp, r7
+ 276              	.LCFI14:
+ 277              		.cfi_def_cfa_register 13
+ 278              		@ sp needed
+ 279 00ea 80BD     		pop	{r7, pc}
+ 280              		.cfi_endproc
+ 281              	.LFE289:
+ 283              		.section	.rodata
+ 284              		.align	2
+ 285              	.LC0:
+ 286 0000 4D505536 		.ascii	"MPU6050 dectected error!\015\000"
+ 286      30353020 
+ 286      64656374 
+ 286      65637465 
+ 286      64206572 
+ 287              		.section	.text.MPU6050ReadID,"ax",%progbits
+ 288              		.align	1
+ 289              		.global	MPU6050ReadID
+ 290              		.syntax unified
+ 291              		.thumb
+ 292              		.thumb_func
+ 293              		.fpu fpv4-sp-d16
+ 295              	MPU6050ReadID:
+ 296              	.LFB290:
+  76:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+  77:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+  78:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 读取MPU6050的ID
+  79:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 需要读取的串行线标识符
+  80:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+  81:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+  82:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   ***************************************************************/ 
+  83:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** uint8_t MPU6050ReadID(short iicno)
+  84:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 297              		.loc 1 84 1
+ 298              		.cfi_startproc
+ 299              		@ args = 0, pretend = 0, frame = 16
+ 300              		@ frame_needed = 1, uses_anonymous_args = 0
+ 301 0000 80B5     		push	{r7, lr}
+ 302              	.LCFI15:
+ 303              		.cfi_def_cfa_offset 8
+ 304              		.cfi_offset 7, -8
+ 305              		.cfi_offset 14, -4
+ 306 0002 84B0     		sub	sp, sp, #16
+ 307              	.LCFI16:
+ 308              		.cfi_def_cfa_offset 24
+ 309 0004 00AF     		add	r7, sp, #0
+ 310              	.LCFI17:
+ 311              		.cfi_def_cfa_register 7
+ 312 0006 0346     		mov	r3, r0
+ 313 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+  85:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	unsigned char Re = 0;
+ 314              		.loc 1 85 16
+ 315 000a 0023     		movs	r3, #0
+ 316 000c FB73     		strb	r3, [r7, #15]
+  86:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_ReadData(MPU6050_RA_WHO_AM_I,&Re,1,iicno);    //读器件地址
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 8
+
+
+ 317              		.loc 1 86 2
+ 318 000e B7F90630 		ldrsh	r3, [r7, #6]
+ 319 0012 07F10F01 		add	r1, r7, #15
+ 320 0016 0122     		movs	r2, #1
+ 321 0018 7520     		movs	r0, #117
+ 322 001a FFF7FEFF 		bl	MPU6050_ReadData
+  87:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	if(Re != 0x68)
+ 323              		.loc 1 87 8
+ 324 001e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 325              		.loc 1 87 4
+ 326 0020 682B     		cmp	r3, #104
+ 327 0022 04D0     		beq	.L9
+  88:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	{
+  89:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 		printf("MPU6050 dectected error!\r\n");
+ 328              		.loc 1 89 3
+ 329 0024 0448     		ldr	r0, .L12
+ 330 0026 FFF7FEFF 		bl	puts
+  90:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 		return 0;
+ 331              		.loc 1 90 10
+ 332 002a 0023     		movs	r3, #0
+ 333 002c 00E0     		b	.L11
+ 334              	.L9:
+  91:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	}
+  92:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	else
+  93:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	{
+  94:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 		//printf("MPU6050 ID = %d\r\n",Re);
+  95:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 		return 1;
+ 335              		.loc 1 95 10
+ 336 002e 0123     		movs	r3, #1
+ 337              	.L11:
+  96:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	}
+  97:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 338              		.loc 1 97 1 discriminator 1
+ 339 0030 1846     		mov	r0, r3
+ 340 0032 1037     		adds	r7, r7, #16
+ 341              	.LCFI18:
+ 342              		.cfi_def_cfa_offset 8
+ 343 0034 BD46     		mov	sp, r7
+ 344              	.LCFI19:
+ 345              		.cfi_def_cfa_register 13
+ 346              		@ sp needed
+ 347 0036 80BD     		pop	{r7, pc}
+ 348              	.L13:
+ 349              		.align	2
+ 350              	.L12:
+ 351 0038 00000000 		.word	.LC0
+ 352              		.cfi_endproc
+ 353              	.LFE290:
+ 355              		.section	.text.MPU6050ReadAcc,"ax",%progbits
+ 356              		.align	1
+ 357              		.global	MPU6050ReadAcc
+ 358              		.syntax unified
+ 359              		.thumb
+ 360              		.thumb_func
+ 361              		.fpu fpv4-sp-d16
+ 363              	MPU6050ReadAcc:
+ 364              	.LFB291:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 9
+
+
+  98:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+  99:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 100:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 读取MPU6050的加速度数据
+ 101:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+ 102:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+ 103:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 104:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** ***************************************************************/ 
+ 105:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void MPU6050ReadAcc(short *accData, short iicno)
+ 106:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 365              		.loc 1 106 1
+ 366              		.cfi_startproc
+ 367              		@ args = 0, pretend = 0, frame = 16
+ 368              		@ frame_needed = 1, uses_anonymous_args = 0
+ 369 0000 80B5     		push	{r7, lr}
+ 370              	.LCFI20:
+ 371              		.cfi_def_cfa_offset 8
+ 372              		.cfi_offset 7, -8
+ 373              		.cfi_offset 14, -4
+ 374 0002 84B0     		sub	sp, sp, #16
+ 375              	.LCFI21:
+ 376              		.cfi_def_cfa_offset 24
+ 377 0004 00AF     		add	r7, sp, #0
+ 378              	.LCFI22:
+ 379              		.cfi_def_cfa_register 7
+ 380 0006 7860     		str	r0, [r7, #4]
+ 381 0008 0B46     		mov	r3, r1
+ 382 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 107:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     uint8_t buf[6];
+ 108:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_ReadData(MPU6050_ACC_OUT, buf, 6, iicno);
+ 383              		.loc 1 108 5
+ 384 000c B7F90230 		ldrsh	r3, [r7, #2]
+ 385 0010 07F10801 		add	r1, r7, #8
+ 386 0014 0622     		movs	r2, #6
+ 387 0016 3B20     		movs	r0, #59
+ 388 0018 FFF7FEFF 		bl	MPU6050_ReadData
+ 109:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     accData[0] = (buf[0] << 8) | buf[1];
+ 389              		.loc 1 109 22
+ 390 001c 3B7A     		ldrb	r3, [r7, #8]	@ zero_extendqisi2
+ 391              		.loc 1 109 26
+ 392 001e 1B02     		lsls	r3, r3, #8
+ 393              		.loc 1 109 32
+ 394 0020 1AB2     		sxth	r2, r3
+ 395              		.loc 1 109 37
+ 396 0022 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 397 0024 1BB2     		sxth	r3, r3
+ 398              		.loc 1 109 32
+ 399 0026 1343     		orrs	r3, r3, r2
+ 400 0028 1AB2     		sxth	r2, r3
+ 401              		.loc 1 109 16
+ 402 002a 7B68     		ldr	r3, [r7, #4]
+ 403 002c 1A80     		strh	r2, [r3]	@ movhi
+ 110:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     accData[1] = (buf[2] << 8) | buf[3];
+ 404              		.loc 1 110 22
+ 405 002e BB7A     		ldrb	r3, [r7, #10]	@ zero_extendqisi2
+ 406              		.loc 1 110 26
+ 407 0030 1B02     		lsls	r3, r3, #8
+ 408              		.loc 1 110 32
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 10
+
+
+ 409 0032 19B2     		sxth	r1, r3
+ 410              		.loc 1 110 37
+ 411 0034 FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 412 0036 1AB2     		sxth	r2, r3
+ 413              		.loc 1 110 12
+ 414 0038 7B68     		ldr	r3, [r7, #4]
+ 415 003a 0233     		adds	r3, r3, #2
+ 416              		.loc 1 110 32
+ 417 003c 0A43     		orrs	r2, r2, r1
+ 418 003e 12B2     		sxth	r2, r2
+ 419              		.loc 1 110 16
+ 420 0040 1A80     		strh	r2, [r3]	@ movhi
+ 111:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     accData[2] = (buf[4] << 8) | buf[5];
+ 421              		.loc 1 111 22
+ 422 0042 3B7B     		ldrb	r3, [r7, #12]	@ zero_extendqisi2
+ 423              		.loc 1 111 26
+ 424 0044 1B02     		lsls	r3, r3, #8
+ 425              		.loc 1 111 32
+ 426 0046 19B2     		sxth	r1, r3
+ 427              		.loc 1 111 37
+ 428 0048 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 429 004a 1AB2     		sxth	r2, r3
+ 430              		.loc 1 111 12
+ 431 004c 7B68     		ldr	r3, [r7, #4]
+ 432 004e 0433     		adds	r3, r3, #4
+ 433              		.loc 1 111 32
+ 434 0050 0A43     		orrs	r2, r2, r1
+ 435 0052 12B2     		sxth	r2, r2
+ 436              		.loc 1 111 16
+ 437 0054 1A80     		strh	r2, [r3]	@ movhi
+ 112:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 438              		.loc 1 112 1
+ 439 0056 00BF     		nop
+ 440 0058 1037     		adds	r7, r7, #16
+ 441              	.LCFI23:
+ 442              		.cfi_def_cfa_offset 8
+ 443 005a BD46     		mov	sp, r7
+ 444              	.LCFI24:
+ 445              		.cfi_def_cfa_register 13
+ 446              		@ sp needed
+ 447 005c 80BD     		pop	{r7, pc}
+ 448              		.cfi_endproc
+ 449              	.LFE291:
+ 451              		.section	.text.MPU6050ReadGyro,"ax",%progbits
+ 452              		.align	1
+ 453              		.global	MPU6050ReadGyro
+ 454              		.syntax unified
+ 455              		.thumb
+ 456              		.thumb_func
+ 457              		.fpu fpv4-sp-d16
+ 459              	MPU6050ReadGyro:
+ 460              	.LFB292:
+ 113:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 114:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 115:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 116:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 读取MPU6050的角速度数据
+ 117:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 11
+
+
+ 118:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+ 119:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 120:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****  ***************************************************************/ 
+ 121:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void MPU6050ReadGyro(short *gyroData, short iicno)
+ 122:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 461              		.loc 1 122 1
+ 462              		.cfi_startproc
+ 463              		@ args = 0, pretend = 0, frame = 16
+ 464              		@ frame_needed = 1, uses_anonymous_args = 0
+ 465 0000 80B5     		push	{r7, lr}
+ 466              	.LCFI25:
+ 467              		.cfi_def_cfa_offset 8
+ 468              		.cfi_offset 7, -8
+ 469              		.cfi_offset 14, -4
+ 470 0002 84B0     		sub	sp, sp, #16
+ 471              	.LCFI26:
+ 472              		.cfi_def_cfa_offset 24
+ 473 0004 00AF     		add	r7, sp, #0
+ 474              	.LCFI27:
+ 475              		.cfi_def_cfa_register 7
+ 476 0006 7860     		str	r0, [r7, #4]
+ 477 0008 0B46     		mov	r3, r1
+ 478 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 123:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     uint8_t buf[6];
+ 124:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_ReadData(MPU6050_GYRO_OUT,buf,6,iicno);
+ 479              		.loc 1 124 5
+ 480 000c B7F90230 		ldrsh	r3, [r7, #2]
+ 481 0010 07F10801 		add	r1, r7, #8
+ 482 0014 0622     		movs	r2, #6
+ 483 0016 4320     		movs	r0, #67
+ 484 0018 FFF7FEFF 		bl	MPU6050_ReadData
+ 125:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     gyroData[0] = (buf[0] << 8) | buf[1];
+ 485              		.loc 1 125 23
+ 486 001c 3B7A     		ldrb	r3, [r7, #8]	@ zero_extendqisi2
+ 487              		.loc 1 125 27
+ 488 001e 1B02     		lsls	r3, r3, #8
+ 489              		.loc 1 125 33
+ 490 0020 1AB2     		sxth	r2, r3
+ 491              		.loc 1 125 38
+ 492 0022 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 493 0024 1BB2     		sxth	r3, r3
+ 494              		.loc 1 125 33
+ 495 0026 1343     		orrs	r3, r3, r2
+ 496 0028 1AB2     		sxth	r2, r3
+ 497              		.loc 1 125 17
+ 498 002a 7B68     		ldr	r3, [r7, #4]
+ 499 002c 1A80     		strh	r2, [r3]	@ movhi
+ 126:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     gyroData[1] = (buf[2] << 8) | buf[3];
+ 500              		.loc 1 126 23
+ 501 002e BB7A     		ldrb	r3, [r7, #10]	@ zero_extendqisi2
+ 502              		.loc 1 126 27
+ 503 0030 1B02     		lsls	r3, r3, #8
+ 504              		.loc 1 126 33
+ 505 0032 19B2     		sxth	r1, r3
+ 506              		.loc 1 126 38
+ 507 0034 FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 508 0036 1AB2     		sxth	r2, r3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 12
+
+
+ 509              		.loc 1 126 13
+ 510 0038 7B68     		ldr	r3, [r7, #4]
+ 511 003a 0233     		adds	r3, r3, #2
+ 512              		.loc 1 126 33
+ 513 003c 0A43     		orrs	r2, r2, r1
+ 514 003e 12B2     		sxth	r2, r2
+ 515              		.loc 1 126 17
+ 516 0040 1A80     		strh	r2, [r3]	@ movhi
+ 127:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     gyroData[2] = (buf[4] << 8) | buf[5];
+ 517              		.loc 1 127 23
+ 518 0042 3B7B     		ldrb	r3, [r7, #12]	@ zero_extendqisi2
+ 519              		.loc 1 127 27
+ 520 0044 1B02     		lsls	r3, r3, #8
+ 521              		.loc 1 127 33
+ 522 0046 19B2     		sxth	r1, r3
+ 523              		.loc 1 127 38
+ 524 0048 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 525 004a 1AB2     		sxth	r2, r3
+ 526              		.loc 1 127 13
+ 527 004c 7B68     		ldr	r3, [r7, #4]
+ 528 004e 0433     		adds	r3, r3, #4
+ 529              		.loc 1 127 33
+ 530 0050 0A43     		orrs	r2, r2, r1
+ 531 0052 12B2     		sxth	r2, r2
+ 532              		.loc 1 127 17
+ 533 0054 1A80     		strh	r2, [r3]	@ movhi
+ 128:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 534              		.loc 1 128 1
+ 535 0056 00BF     		nop
+ 536 0058 1037     		adds	r7, r7, #16
+ 537              	.LCFI28:
+ 538              		.cfi_def_cfa_offset 8
+ 539 005a BD46     		mov	sp, r7
+ 540              	.LCFI29:
+ 541              		.cfi_def_cfa_register 13
+ 542              		@ sp needed
+ 543 005c 80BD     		pop	{r7, pc}
+ 544              		.cfi_endproc
+ 545              	.LFE292:
+ 547              		.section	.text.MPU6050ReadTemp,"ax",%progbits
+ 548              		.align	1
+ 549              		.global	MPU6050ReadTemp
+ 550              		.syntax unified
+ 551              		.thumb
+ 552              		.thumb_func
+ 553              		.fpu fpv4-sp-d16
+ 555              	MPU6050ReadTemp:
+ 556              	.LFB293:
+ 129:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 130:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 131:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 132:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 读取MPU6050的原始温度数据
+ 133:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+ 134:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+ 135:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 136:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   ***************************************************************/
+ 137:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void MPU6050ReadTemp(short *tempData,short iicno)
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 13
+
+
+ 138:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 557              		.loc 1 138 1
+ 558              		.cfi_startproc
+ 559              		@ args = 0, pretend = 0, frame = 16
+ 560              		@ frame_needed = 1, uses_anonymous_args = 0
+ 561 0000 80B5     		push	{r7, lr}
+ 562              	.LCFI30:
+ 563              		.cfi_def_cfa_offset 8
+ 564              		.cfi_offset 7, -8
+ 565              		.cfi_offset 14, -4
+ 566 0002 84B0     		sub	sp, sp, #16
+ 567              	.LCFI31:
+ 568              		.cfi_def_cfa_offset 24
+ 569 0004 00AF     		add	r7, sp, #0
+ 570              	.LCFI32:
+ 571              		.cfi_def_cfa_register 7
+ 572 0006 7860     		str	r0, [r7, #4]
+ 573 0008 0B46     		mov	r3, r1
+ 574 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 139:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	uint8_t buf[2];
+ 140:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2,iicno);     //读取温度值
+ 575              		.loc 1 140 5
+ 576 000c B7F90230 		ldrsh	r3, [r7, #2]
+ 577 0010 07F10C01 		add	r1, r7, #12
+ 578 0014 0222     		movs	r2, #2
+ 579 0016 4120     		movs	r0, #65
+ 580 0018 FFF7FEFF 		bl	MPU6050_ReadData
+ 141:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     *tempData = (buf[0] << 8) | buf[1];
+ 581              		.loc 1 141 21
+ 582 001c 3B7B     		ldrb	r3, [r7, #12]	@ zero_extendqisi2
+ 583              		.loc 1 141 25
+ 584 001e 1B02     		lsls	r3, r3, #8
+ 585              		.loc 1 141 31
+ 586 0020 1AB2     		sxth	r2, r3
+ 587              		.loc 1 141 36
+ 588 0022 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 589 0024 1BB2     		sxth	r3, r3
+ 590              		.loc 1 141 31
+ 591 0026 1343     		orrs	r3, r3, r2
+ 592 0028 1AB2     		sxth	r2, r3
+ 593              		.loc 1 141 15
+ 594 002a 7B68     		ldr	r3, [r7, #4]
+ 595 002c 1A80     		strh	r2, [r3]	@ movhi
+ 142:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 596              		.loc 1 142 1
+ 597 002e 00BF     		nop
+ 598 0030 1037     		adds	r7, r7, #16
+ 599              	.LCFI33:
+ 600              		.cfi_def_cfa_offset 8
+ 601 0032 BD46     		mov	sp, r7
+ 602              	.LCFI34:
+ 603              		.cfi_def_cfa_register 13
+ 604              		@ sp needed
+ 605 0034 80BD     		pop	{r7, pc}
+ 606              		.cfi_endproc
+ 607              	.LFE293:
+ 609              		.global	__aeabi_i2d
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 14
+
+
+ 610              		.global	__aeabi_ddiv
+ 611              		.global	__aeabi_dsub
+ 612              		.global	__aeabi_d2iz
+ 613              		.section	.text.MPU6050_ReturnTemp,"ax",%progbits
+ 614              		.align	1
+ 615              		.global	MPU6050_ReturnTemp
+ 616              		.syntax unified
+ 617              		.thumb
+ 618              		.thumb_func
+ 619              		.fpu fpv4-sp-d16
+ 621              	MPU6050_ReturnTemp:
+ 622              	.LFB294:
+ 143:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 144:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 145:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 读取MPU6050的温度数据，转化成摄氏度
+ 146:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+ 147:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+ 148:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 149:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/ 
+ 150:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void MPU6050_ReturnTemp(short*Temperature, short iicno)
+ 151:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 623              		.loc 1 151 1
+ 624              		.cfi_startproc
+ 625              		@ args = 0, pretend = 0, frame = 16
+ 626              		@ frame_needed = 1, uses_anonymous_args = 0
+ 627 0000 80B5     		push	{r7, lr}
+ 628              	.LCFI35:
+ 629              		.cfi_def_cfa_offset 8
+ 630              		.cfi_offset 7, -8
+ 631              		.cfi_offset 14, -4
+ 632 0002 84B0     		sub	sp, sp, #16
+ 633              	.LCFI36:
+ 634              		.cfi_def_cfa_offset 24
+ 635 0004 00AF     		add	r7, sp, #0
+ 636              	.LCFI37:
+ 637              		.cfi_def_cfa_register 7
+ 638 0006 7860     		str	r0, [r7, #4]
+ 639 0008 0B46     		mov	r3, r1
+ 640 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 152:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	short temp3;
+ 153:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	uint8_t buf[2];
+ 154:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	
+ 155:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2,iicno);     //读取温度值
+ 641              		.loc 1 155 2
+ 642 000c B7F90230 		ldrsh	r3, [r7, #2]
+ 643 0010 07F10C01 		add	r1, r7, #12
+ 644 0014 0222     		movs	r2, #2
+ 645 0016 4120     		movs	r0, #65
+ 646 0018 FFF7FEFF 		bl	MPU6050_ReadData
+ 156:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	temp3= (buf[0] << 8) | buf[1];
+ 647              		.loc 1 156 13
+ 648 001c 3B7B     		ldrb	r3, [r7, #12]	@ zero_extendqisi2
+ 649              		.loc 1 156 17
+ 650 001e 1B02     		lsls	r3, r3, #8
+ 651              		.loc 1 156 23
+ 652 0020 1AB2     		sxth	r2, r3
+ 653              		.loc 1 156 28
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 15
+
+
+ 654 0022 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 655 0024 1BB2     		sxth	r3, r3
+ 656              		.loc 1 156 7
+ 657 0026 1343     		orrs	r3, r3, r2
+ 658 0028 FB81     		strh	r3, [r7, #14]	@ movhi
+ 157:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	*Temperature=(((double) (temp3 + 13200)) / 280)-13;
+ 659              		.loc 1 157 33
+ 660 002a B7F90E30 		ldrsh	r3, [r7, #14]
+ 661 002e 03F54E53 		add	r3, r3, #13184
+ 662 0032 1033     		adds	r3, r3, #16
+ 663              		.loc 1 157 17
+ 664 0034 1846     		mov	r0, r3
+ 665 0036 FFF7FEFF 		bl	__aeabi_i2d
+ 666              	.LVL0:
+ 667              		.loc 1 157 43
+ 668 003a 4FF00002 		mov	r2, #0
+ 669 003e 0D4B     		ldr	r3, .L18
+ 670 0040 FFF7FEFF 		bl	__aeabi_ddiv
+ 671              	.LVL1:
+ 672 0044 0246     		mov	r2, r0
+ 673 0046 0B46     		mov	r3, r1
+ 674 0048 1046     		mov	r0, r2
+ 675 004a 1946     		mov	r1, r3
+ 676              		.loc 1 157 49
+ 677 004c 4FF00002 		mov	r2, #0
+ 678 0050 094B     		ldr	r3, .L18+4
+ 679 0052 FFF7FEFF 		bl	__aeabi_dsub
+ 680              	.LVL2:
+ 681 0056 0246     		mov	r2, r0
+ 682 0058 0B46     		mov	r3, r1
+ 683              		.loc 1 157 14
+ 684 005a 1046     		mov	r0, r2
+ 685 005c 1946     		mov	r1, r3
+ 686 005e FFF7FEFF 		bl	__aeabi_d2iz
+ 687              	.LVL3:
+ 688 0062 0346     		mov	r3, r0
+ 689 0064 1AB2     		sxth	r2, r3
+ 690 0066 7B68     		ldr	r3, [r7, #4]
+ 691 0068 1A80     		strh	r2, [r3]	@ movhi
+ 158:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 692              		.loc 1 158 1
+ 693 006a 00BF     		nop
+ 694 006c 1037     		adds	r7, r7, #16
+ 695              	.LCFI38:
+ 696              		.cfi_def_cfa_offset 8
+ 697 006e BD46     		mov	sp, r7
+ 698              	.LCFI39:
+ 699              		.cfi_def_cfa_register 13
+ 700              		@ sp needed
+ 701 0070 80BD     		pop	{r7, pc}
+ 702              	.L19:
+ 703 0072 00BF     		.align	2
+ 704              	.L18:
+ 705 0074 00807140 		.word	1081180160
+ 706 0078 00002A40 		.word	1076494336
+ 707              		.cfi_endproc
+ 708              	.LFE294:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 16
+
+
+ 710              		.section	.text.Free_Fall_Interrupt,"ax",%progbits
+ 711              		.align	1
+ 712              		.global	Free_Fall_Interrupt
+ 713              		.syntax unified
+ 714              		.thumb
+ 715              		.thumb_func
+ 716              		.fpu fpv4-sp-d16
+ 718              	Free_Fall_Interrupt:
+ 719              	.LFB295:
+ 159:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 160:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 161:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 自由落体中断
+ 162:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+ 163:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+ 164:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 165:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/
+ 166:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void Free_Fall_Interrupt(short iicno)          //自由落体中断
+ 167:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 720              		.loc 1 167 1
+ 721              		.cfi_startproc
+ 722              		@ args = 0, pretend = 0, frame = 8
+ 723              		@ frame_needed = 1, uses_anonymous_args = 0
+ 724 0000 80B5     		push	{r7, lr}
+ 725              	.LCFI40:
+ 726              		.cfi_def_cfa_offset 8
+ 727              		.cfi_offset 7, -8
+ 728              		.cfi_offset 14, -4
+ 729 0002 82B0     		sub	sp, sp, #8
+ 730              	.LCFI41:
+ 731              		.cfi_def_cfa_offset 16
+ 732 0004 00AF     		add	r7, sp, #0
+ 733              	.LCFI42:
+ 734              		.cfi_def_cfa_register 7
+ 735 0006 0346     		mov	r3, r0
+ 736 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 168:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_WriteReg(MPU6050_RA_FF_THR,0x01,iicno);             //自由落体阈值
+ 737              		.loc 1 168 5
+ 738 000a B7F90630 		ldrsh	r3, [r7, #6]
+ 739 000e 1A46     		mov	r2, r3
+ 740 0010 0121     		movs	r1, #1
+ 741 0012 1D20     		movs	r0, #29
+ 742 0014 FFF7FEFF 		bl	MPU6050_WriteReg
+ 169:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_WriteReg(MPU6050_RA_FF_DUR,0x01,iicno);             //自由落体检测时间20ms 单�
+ 743              		.loc 1 169 5
+ 744 0018 B7F90630 		ldrsh	r3, [r7, #6]
+ 745 001c 1A46     		mov	r2, r3
+ 746 001e 0121     		movs	r1, #1
+ 747 0020 1E20     		movs	r0, #30
+ 748 0022 FFF7FEFF 		bl	MPU6050_WriteReg
+ 170:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 749              		.loc 1 170 1
+ 750 0026 00BF     		nop
+ 751 0028 0837     		adds	r7, r7, #8
+ 752              	.LCFI43:
+ 753              		.cfi_def_cfa_offset 8
+ 754 002a BD46     		mov	sp, r7
+ 755              	.LCFI44:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 17
+
+
+ 756              		.cfi_def_cfa_register 13
+ 757              		@ sp needed
+ 758 002c 80BD     		pop	{r7, pc}
+ 759              		.cfi_endproc
+ 760              	.LFE295:
+ 762              		.section	.text.Motion_Interrupt,"ax",%progbits
+ 763              		.align	1
+ 764              		.global	Motion_Interrupt
+ 765              		.syntax unified
+ 766              		.thumb
+ 767              		.thumb_func
+ 768              		.fpu fpv4-sp-d16
+ 770              	Motion_Interrupt:
+ 771              	.LFB296:
+ 171:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void Motion_Interrupt(short iicno)             //运动中断
+ 172:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 772              		.loc 1 172 1
+ 773              		.cfi_startproc
+ 774              		@ args = 0, pretend = 0, frame = 8
+ 775              		@ frame_needed = 1, uses_anonymous_args = 0
+ 776 0000 80B5     		push	{r7, lr}
+ 777              	.LCFI45:
+ 778              		.cfi_def_cfa_offset 8
+ 779              		.cfi_offset 7, -8
+ 780              		.cfi_offset 14, -4
+ 781 0002 82B0     		sub	sp, sp, #8
+ 782              	.LCFI46:
+ 783              		.cfi_def_cfa_offset 16
+ 784 0004 00AF     		add	r7, sp, #0
+ 785              	.LCFI47:
+ 786              		.cfi_def_cfa_register 7
+ 787 0006 0346     		mov	r3, r0
+ 788 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 173:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_WriteReg(MPU6050_RA_MOT_THR,0x03,iicno);            //运动阈值
+ 789              		.loc 1 173 5
+ 790 000a B7F90630 		ldrsh	r3, [r7, #6]
+ 791 000e 1A46     		mov	r2, r3
+ 792 0010 0321     		movs	r1, #3
+ 793 0012 1F20     		movs	r0, #31
+ 794 0014 FFF7FEFF 		bl	MPU6050_WriteReg
+ 174:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_WriteReg(MPU6050_RA_MOT_DUR,0x14,iicno);            //检测时间20ms 单位1ms 寄存
+ 795              		.loc 1 174 5
+ 796 0018 B7F90630 		ldrsh	r3, [r7, #6]
+ 797 001c 1A46     		mov	r2, r3
+ 798 001e 1421     		movs	r1, #20
+ 799 0020 2020     		movs	r0, #32
+ 800 0022 FFF7FEFF 		bl	MPU6050_WriteReg
+ 175:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 801              		.loc 1 175 1
+ 802 0026 00BF     		nop
+ 803 0028 0837     		adds	r7, r7, #8
+ 804              	.LCFI48:
+ 805              		.cfi_def_cfa_offset 8
+ 806 002a BD46     		mov	sp, r7
+ 807              	.LCFI49:
+ 808              		.cfi_def_cfa_register 13
+ 809              		@ sp needed
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 18
+
+
+ 810 002c 80BD     		pop	{r7, pc}
+ 811              		.cfi_endproc
+ 812              	.LFE296:
+ 814              		.section	.text.Zero_Motion_Interrupt,"ax",%progbits
+ 815              		.align	1
+ 816              		.global	Zero_Motion_Interrupt
+ 817              		.syntax unified
+ 818              		.thumb
+ 819              		.thumb_func
+ 820              		.fpu fpv4-sp-d16
+ 822              	Zero_Motion_Interrupt:
+ 823              	.LFB297:
+ 176:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void Zero_Motion_Interrupt(short iicno)        //静止中断
+ 177:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 824              		.loc 1 177 1
+ 825              		.cfi_startproc
+ 826              		@ args = 0, pretend = 0, frame = 8
+ 827              		@ frame_needed = 1, uses_anonymous_args = 0
+ 828 0000 80B5     		push	{r7, lr}
+ 829              	.LCFI50:
+ 830              		.cfi_def_cfa_offset 8
+ 831              		.cfi_offset 7, -8
+ 832              		.cfi_offset 14, -4
+ 833 0002 82B0     		sub	sp, sp, #8
+ 834              	.LCFI51:
+ 835              		.cfi_def_cfa_offset 16
+ 836 0004 00AF     		add	r7, sp, #0
+ 837              	.LCFI52:
+ 838              		.cfi_def_cfa_register 7
+ 839 0006 0346     		mov	r3, r0
+ 840 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 178:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_WriteReg(MPU6050_RA_ZRMOT_THR,0x20,iicno);          //静止阈值
+ 841              		.loc 1 178 5
+ 842 000a B7F90630 		ldrsh	r3, [r7, #6]
+ 843 000e 1A46     		mov	r2, r3
+ 844 0010 2021     		movs	r1, #32
+ 845 0012 2120     		movs	r0, #33
+ 846 0014 FFF7FEFF 		bl	MPU6050_WriteReg
+ 179:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_WriteReg(MPU6050_RA_ZRMOT_DUR,0x20,iicno);          //静止检测时间20ms 单位1ms 
+ 847              		.loc 1 179 5
+ 848 0018 B7F90630 		ldrsh	r3, [r7, #6]
+ 849 001c 1A46     		mov	r2, r3
+ 850 001e 2021     		movs	r1, #32
+ 851 0020 2220     		movs	r0, #34
+ 852 0022 FFF7FEFF 		bl	MPU6050_WriteReg
+ 180:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 853              		.loc 1 180 1
+ 854 0026 00BF     		nop
+ 855 0028 0837     		adds	r7, r7, #8
+ 856              	.LCFI53:
+ 857              		.cfi_def_cfa_offset 8
+ 858 002a BD46     		mov	sp, r7
+ 859              	.LCFI54:
+ 860              		.cfi_def_cfa_register 13
+ 861              		@ sp needed
+ 862 002c 80BD     		pop	{r7, pc}
+ 863              		.cfi_endproc
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 19
+
+
+ 864              	.LFE297:
+ 866              		.section	.rodata
+ 867 001a 0000     		.align	2
+ 868              	.LC1:
+ 869 001c 4D505536 		.ascii	"MPU6050 I2C Delay\357\274\201\357\274\201\357\274\201"
+ 869      30353020 
+ 869      49324320 
+ 869      44656C61 
+ 869      79EFBC81 
+ 870 0036 20526573 		.ascii	" Reset I2C...\000"
+ 870      65742049 
+ 870      32432E2E 
+ 870      2E00
+ 871              		.section	.text.I2C_MPU6050_Error,"ax",%progbits
+ 872              		.align	1
+ 873              		.syntax unified
+ 874              		.thumb
+ 875              		.thumb_func
+ 876              		.fpu fpv4-sp-d16
+ 878              	I2C_MPU6050_Error:
+ 879              	.LFB298:
+ 181:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 182:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 183:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: I2C通信错误处理函数
+ 184:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: 无
+ 185:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+ 186:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 一般在I2C通信超时时调用该函数
+ 187:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/
+ 188:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** static void I2C_MPU6050_Error (short iicno)
+ 189:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 880              		.loc 1 189 1
+ 881              		.cfi_startproc
+ 882              		@ args = 0, pretend = 0, frame = 8
+ 883              		@ frame_needed = 1, uses_anonymous_args = 0
+ 884 0000 80B5     		push	{r7, lr}
+ 885              	.LCFI55:
+ 886              		.cfi_def_cfa_offset 8
+ 887              		.cfi_offset 7, -8
+ 888              		.cfi_offset 14, -4
+ 889 0002 82B0     		sub	sp, sp, #8
+ 890              	.LCFI56:
+ 891              		.cfi_def_cfa_offset 16
+ 892 0004 00AF     		add	r7, sp, #0
+ 893              	.LCFI57:
+ 894              		.cfi_def_cfa_register 7
+ 895 0006 0346     		mov	r3, r0
+ 896 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 190:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   /* 反初始化I2C通信总线 */
+ 191:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 1)
+ 897              		.loc 1 191 5
+ 898 000a B7F90630 		ldrsh	r3, [r7, #6]
+ 899 000e 012B     		cmp	r3, #1
+ 900 0010 02D1     		bne	.L24
+ 192:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 193:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     HAL_I2C_DeInit(&hi2c1);
+ 901              		.loc 1 193 5
+ 902 0012 0848     		ldr	r0, .L26
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 20
+
+
+ 903 0014 FFF7FEFF 		bl	HAL_I2C_DeInit
+ 904              	.L24:
+ 194:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 195:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 3)
+ 905              		.loc 1 195 5
+ 906 0018 B7F90630 		ldrsh	r3, [r7, #6]
+ 907 001c 032B     		cmp	r3, #3
+ 908 001e 02D1     		bne	.L25
+ 196:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 197:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     HAL_I2C_DeInit(&hi2c3);
+ 909              		.loc 1 197 5
+ 910 0020 0548     		ldr	r0, .L26+4
+ 911 0022 FFF7FEFF 		bl	HAL_I2C_DeInit
+ 912              	.L25:
+ 198:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 199:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   
+ 200:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   /* 重新初始化I2C通信总线*/
+ 201:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   printf("MPU6050 I2C Delay！！！ Reset I2C...\n");
+ 913              		.loc 1 201 3
+ 914 0026 0548     		ldr	r0, .L26+8
+ 915 0028 FFF7FEFF 		bl	puts
+ 202:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 916              		.loc 1 202 1
+ 917 002c 00BF     		nop
+ 918 002e 0837     		adds	r7, r7, #8
+ 919              	.LCFI58:
+ 920              		.cfi_def_cfa_offset 8
+ 921 0030 BD46     		mov	sp, r7
+ 922              	.LCFI59:
+ 923              		.cfi_def_cfa_register 13
+ 924              		@ sp needed
+ 925 0032 80BD     		pop	{r7, pc}
+ 926              	.L27:
+ 927              		.align	2
+ 928              	.L26:
+ 929 0034 00000000 		.word	hi2c1
+ 930 0038 00000000 		.word	hi2c3
+ 931 003c 1C000000 		.word	.LC1
+ 932              		.cfi_endproc
+ 933              	.LFE298:
+ 935              		.section	.text.I2C_MPU6050_WriteData,"ax",%progbits
+ 936              		.align	1
+ 937              		.global	I2C_MPU6050_WriteData
+ 938              		.syntax unified
+ 939              		.thumb
+ 940              		.thumb_func
+ 941              		.fpu fpv4-sp-d16
+ 943              	I2C_MPU6050_WriteData:
+ 944              	.LFB299:
+ 203:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 204:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 205:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 通过I2C写入一个值到指定寄存器内
+ 206:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: Addr：I2C设备地址
+ 207:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Reg：目标寄存器
+ 208:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Value：值
+ 209:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: 无
+ 210:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 21
+
+
+ 211:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/
+ 212:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void I2C_MPU6050_WriteData(uint16_t Addr, uint8_t Reg, uint8_t Value, short iicno)
+ 213:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 945              		.loc 1 213 1
+ 946              		.cfi_startproc
+ 947              		@ args = 0, pretend = 0, frame = 16
+ 948              		@ frame_needed = 1, uses_anonymous_args = 0
+ 949 0000 90B5     		push	{r4, r7, lr}
+ 950              	.LCFI60:
+ 951              		.cfi_def_cfa_offset 12
+ 952              		.cfi_offset 4, -12
+ 953              		.cfi_offset 7, -8
+ 954              		.cfi_offset 14, -4
+ 955 0002 89B0     		sub	sp, sp, #36
+ 956              	.LCFI61:
+ 957              		.cfi_def_cfa_offset 48
+ 958 0004 04AF     		add	r7, sp, #16
+ 959              	.LCFI62:
+ 960              		.cfi_def_cfa 7, 32
+ 961 0006 0446     		mov	r4, r0
+ 962 0008 0846     		mov	r0, r1
+ 963 000a 1146     		mov	r1, r2
+ 964 000c 1A46     		mov	r2, r3
+ 965 000e 2346     		mov	r3, r4	@ movhi
+ 966 0010 FB80     		strh	r3, [r7, #6]	@ movhi
+ 967 0012 0346     		mov	r3, r0
+ 968 0014 7B71     		strb	r3, [r7, #5]
+ 969 0016 0B46     		mov	r3, r1
+ 970 0018 3B71     		strb	r3, [r7, #4]
+ 971 001a 1346     		mov	r3, r2	@ movhi
+ 972 001c 7B80     		strh	r3, [r7, #2]	@ movhi
+ 214:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   HAL_StatusTypeDef status = HAL_OK;
+ 973              		.loc 1 214 21
+ 974 001e 0023     		movs	r3, #0
+ 975 0020 FB73     		strb	r3, [r7, #15]
+ 215:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   
+ 216:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 1)
+ 976              		.loc 1 216 5
+ 977 0022 B7F90230 		ldrsh	r3, [r7, #2]
+ 978 0026 012B     		cmp	r3, #1
+ 979 0028 0FD1     		bne	.L29
+ 217:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 218:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Write(&hi2c1, Addr, (uint16_t)Reg, I2C_MEMADD_SIZE_8BIT, &Value, 1, I2cxTi
+ 980              		.loc 1 218 14
+ 981 002a 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 982 002c 9AB2     		uxth	r2, r3
+ 983 002e 174B     		ldr	r3, .L33
+ 984 0030 1B68     		ldr	r3, [r3]
+ 985 0032 F988     		ldrh	r1, [r7, #6]
+ 986 0034 0293     		str	r3, [sp, #8]
+ 987 0036 0123     		movs	r3, #1
+ 988 0038 0193     		str	r3, [sp, #4]
+ 989 003a 3B1D     		adds	r3, r7, #4
+ 990 003c 0093     		str	r3, [sp]
+ 991 003e 0123     		movs	r3, #1
+ 992 0040 1348     		ldr	r0, .L33+4
+ 993 0042 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 22
+
+
+ 994 0046 0346     		mov	r3, r0
+ 995 0048 FB73     		strb	r3, [r7, #15]
+ 996              	.L29:
+ 219:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 220:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 3)
+ 997              		.loc 1 220 5
+ 998 004a B7F90230 		ldrsh	r3, [r7, #2]
+ 999 004e 032B     		cmp	r3, #3
+ 1000 0050 0FD1     		bne	.L30
+ 221:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 222:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Write(&hi2c3, Addr, (uint16_t)Reg, I2C_MEMADD_SIZE_8BIT, &Value, 1, I2cxTi
+ 1001              		.loc 1 222 14
+ 1002 0052 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 1003 0054 9AB2     		uxth	r2, r3
+ 1004 0056 0D4B     		ldr	r3, .L33
+ 1005 0058 1B68     		ldr	r3, [r3]
+ 1006 005a F988     		ldrh	r1, [r7, #6]
+ 1007 005c 0293     		str	r3, [sp, #8]
+ 1008 005e 0123     		movs	r3, #1
+ 1009 0060 0193     		str	r3, [sp, #4]
+ 1010 0062 3B1D     		adds	r3, r7, #4
+ 1011 0064 0093     		str	r3, [sp]
+ 1012 0066 0123     		movs	r3, #1
+ 1013 0068 0A48     		ldr	r0, .L33+8
+ 1014 006a FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 1015 006e 0346     		mov	r3, r0
+ 1016 0070 FB73     		strb	r3, [r7, #15]
+ 1017              	.L30:
+ 223:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 224:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   
+ 225:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   /* 检测I2C通信状态 */
+ 226:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(status != HAL_OK)
+ 1018              		.loc 1 226 5
+ 1019 0072 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1020 0074 002B     		cmp	r3, #0
+ 1021 0076 04D0     		beq	.L32
+ 227:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 228:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     /* 调用I2C通信错误处理函数 */
+ 229:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     I2C_MPU6050_Error(iicno);
+ 1022              		.loc 1 229 5
+ 1023 0078 B7F90230 		ldrsh	r3, [r7, #2]
+ 1024 007c 1846     		mov	r0, r3
+ 1025 007e FFF7FEFF 		bl	I2C_MPU6050_Error
+ 1026              	.L32:
+ 230:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 231:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1027              		.loc 1 231 1
+ 1028 0082 00BF     		nop
+ 1029 0084 1437     		adds	r7, r7, #20
+ 1030              	.LCFI63:
+ 1031              		.cfi_def_cfa_offset 12
+ 1032 0086 BD46     		mov	sp, r7
+ 1033              	.LCFI64:
+ 1034              		.cfi_def_cfa_register 13
+ 1035              		@ sp needed
+ 1036 0088 90BD     		pop	{r4, r7, pc}
+ 1037              	.L34:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 23
+
+
+ 1038 008a 00BF     		.align	2
+ 1039              	.L33:
+ 1040 008c 00000000 		.word	I2cxTimeout
+ 1041 0090 00000000 		.word	hi2c1
+ 1042 0094 00000000 		.word	hi2c3
+ 1043              		.cfi_endproc
+ 1044              	.LFE299:
+ 1046              		.section	.text.I2C_MPU6050_WriteBuffer,"ax",%progbits
+ 1047              		.align	1
+ 1048              		.global	I2C_MPU6050_WriteBuffer
+ 1049              		.syntax unified
+ 1050              		.thumb
+ 1051              		.thumb_func
+ 1052              		.fpu fpv4-sp-d16
+ 1054              	I2C_MPU6050_WriteBuffer:
+ 1055              	.LFB300:
+ 232:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 233:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 234:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 通过I2C写入一段数据到指定寄存器内
+ 235:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: Addr：I2C设备地址
+ 236:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Reg：目标寄存器
+ 237:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           RegSize：寄存器尺寸(8位或者16位)
+ 238:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           pBuffer：缓冲区指针
+ 239:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Length：缓冲区长度
+ 240:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: HAL_StatusTypeDef：操作结果
+ 241:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 在循环调用是需加一定延时时间
+ 242:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/
+ 243:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** HAL_StatusTypeDef I2C_MPU6050_WriteBuffer(uint16_t Addr, uint8_t Reg, uint16_t RegSize, uint8_t *pB
+ 244:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 1056              		.loc 1 244 1
+ 1057              		.cfi_startproc
+ 1058              		@ args = 8, pretend = 0, frame = 24
+ 1059              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1060 0000 80B5     		push	{r7, lr}
+ 1061              	.LCFI65:
+ 1062              		.cfi_def_cfa_offset 8
+ 1063              		.cfi_offset 7, -8
+ 1064              		.cfi_offset 14, -4
+ 1065 0002 8AB0     		sub	sp, sp, #40
+ 1066              	.LCFI66:
+ 1067              		.cfi_def_cfa_offset 48
+ 1068 0004 04AF     		add	r7, sp, #16
+ 1069              	.LCFI67:
+ 1070              		.cfi_def_cfa 7, 32
+ 1071 0006 7B60     		str	r3, [r7, #4]
+ 1072 0008 0346     		mov	r3, r0	@ movhi
+ 1073 000a FB81     		strh	r3, [r7, #14]	@ movhi
+ 1074 000c 0B46     		mov	r3, r1
+ 1075 000e 7B73     		strb	r3, [r7, #13]
+ 1076 0010 1346     		mov	r3, r2	@ movhi
+ 1077 0012 7B81     		strh	r3, [r7, #10]	@ movhi
+ 245:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   HAL_StatusTypeDef status = HAL_OK;
+ 1078              		.loc 1 245 21
+ 1079 0014 0023     		movs	r3, #0
+ 1080 0016 FB75     		strb	r3, [r7, #23]
+ 246:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   
+ 247:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 1)
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 24
+
+
+ 1081              		.loc 1 247 5
+ 1082 0018 B7F92430 		ldrsh	r3, [r7, #36]
+ 1083 001c 012B     		cmp	r3, #1
+ 1084 001e 10D1     		bne	.L36
+ 248:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 249:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Write(&hi2c1, Addr, (uint16_t)Reg, RegSize, pBuffer, Length, I2cxTimeout);
+ 1085              		.loc 1 249 14
+ 1086 0020 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 1087 0022 9AB2     		uxth	r2, r3
+ 1088 0024 184B     		ldr	r3, .L40
+ 1089 0026 1B68     		ldr	r3, [r3]
+ 1090 0028 7889     		ldrh	r0, [r7, #10]
+ 1091 002a F989     		ldrh	r1, [r7, #14]
+ 1092 002c 0293     		str	r3, [sp, #8]
+ 1093 002e 3B8C     		ldrh	r3, [r7, #32]
+ 1094 0030 0193     		str	r3, [sp, #4]
+ 1095 0032 7B68     		ldr	r3, [r7, #4]
+ 1096 0034 0093     		str	r3, [sp]
+ 1097 0036 0346     		mov	r3, r0
+ 1098 0038 1448     		ldr	r0, .L40+4
+ 1099 003a FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 1100 003e 0346     		mov	r3, r0
+ 1101 0040 FB75     		strb	r3, [r7, #23]
+ 1102              	.L36:
+ 250:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 251:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 252:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 3)
+ 1103              		.loc 1 252 5
+ 1104 0042 B7F92430 		ldrsh	r3, [r7, #36]
+ 1105 0046 032B     		cmp	r3, #3
+ 1106 0048 10D1     		bne	.L37
+ 253:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 254:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Write(&hi2c3, Addr, (uint16_t)Reg, RegSize, pBuffer, Length, I2cxTimeout);
+ 1107              		.loc 1 254 14
+ 1108 004a 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 1109 004c 9AB2     		uxth	r2, r3
+ 1110 004e 0E4B     		ldr	r3, .L40
+ 1111 0050 1B68     		ldr	r3, [r3]
+ 1112 0052 7889     		ldrh	r0, [r7, #10]
+ 1113 0054 F989     		ldrh	r1, [r7, #14]
+ 1114 0056 0293     		str	r3, [sp, #8]
+ 1115 0058 3B8C     		ldrh	r3, [r7, #32]
+ 1116 005a 0193     		str	r3, [sp, #4]
+ 1117 005c 7B68     		ldr	r3, [r7, #4]
+ 1118 005e 0093     		str	r3, [sp]
+ 1119 0060 0346     		mov	r3, r0
+ 1120 0062 0B48     		ldr	r0, .L40+8
+ 1121 0064 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 1122 0068 0346     		mov	r3, r0
+ 1123 006a FB75     		strb	r3, [r7, #23]
+ 1124              	.L37:
+ 255:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 256:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 257:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   
+ 258:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   /* 检测I2C通信状态 */
+ 259:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(status != HAL_OK)
+ 1125              		.loc 1 259 5
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 25
+
+
+ 1126 006c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1127 006e 002B     		cmp	r3, #0
+ 1128 0070 04D0     		beq	.L38
+ 260:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 261:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     /* 调用I2C通信错误处理函数 */
+ 262:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     I2C_MPU6050_Error(iicno);
+ 1129              		.loc 1 262 5
+ 1130 0072 B7F92430 		ldrsh	r3, [r7, #36]
+ 1131 0076 1846     		mov	r0, r3
+ 1132 0078 FFF7FEFF 		bl	I2C_MPU6050_Error
+ 1133              	.L38:
+ 263:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }        
+ 264:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   return status;
+ 1134              		.loc 1 264 10
+ 1135 007c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 265:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1136              		.loc 1 265 1
+ 1137 007e 1846     		mov	r0, r3
+ 1138 0080 1837     		adds	r7, r7, #24
+ 1139              	.LCFI68:
+ 1140              		.cfi_def_cfa_offset 8
+ 1141 0082 BD46     		mov	sp, r7
+ 1142              	.LCFI69:
+ 1143              		.cfi_def_cfa_register 13
+ 1144              		@ sp needed
+ 1145 0084 80BD     		pop	{r7, pc}
+ 1146              	.L41:
+ 1147 0086 00BF     		.align	2
+ 1148              	.L40:
+ 1149 0088 00000000 		.word	I2cxTimeout
+ 1150 008c 00000000 		.word	hi2c1
+ 1151 0090 00000000 		.word	hi2c3
+ 1152              		.cfi_endproc
+ 1153              	.LFE300:
+ 1155              		.section	.text.I2C_MPU6050_ReadData,"ax",%progbits
+ 1156              		.align	1
+ 1157              		.global	I2C_MPU6050_ReadData
+ 1158              		.syntax unified
+ 1159              		.thumb
+ 1160              		.thumb_func
+ 1161              		.fpu fpv4-sp-d16
+ 1163              	I2C_MPU6050_ReadData:
+ 1164              	.LFB301:
+ 266:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 267:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 268:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 269:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 通过I2C读取一个指定寄存器内容
+ 270:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: Addr：I2C设备地址
+ 271:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Reg：目标寄存器
+ 272:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: uint8_t：寄存器内容
+ 273:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 274:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/
+ 275:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** uint8_t I2C_MPU6050_ReadData(uint16_t Addr, uint8_t Reg, short iicno)
+ 276:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 1165              		.loc 1 276 1
+ 1166              		.cfi_startproc
+ 1167              		@ args = 0, pretend = 0, frame = 16
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 26
+
+
+ 1168              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1169 0000 80B5     		push	{r7, lr}
+ 1170              	.LCFI70:
+ 1171              		.cfi_def_cfa_offset 8
+ 1172              		.cfi_offset 7, -8
+ 1173              		.cfi_offset 14, -4
+ 1174 0002 88B0     		sub	sp, sp, #32
+ 1175              	.LCFI71:
+ 1176              		.cfi_def_cfa_offset 40
+ 1177 0004 04AF     		add	r7, sp, #16
+ 1178              	.LCFI72:
+ 1179              		.cfi_def_cfa 7, 24
+ 1180 0006 0346     		mov	r3, r0
+ 1181 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 1182 000a 0B46     		mov	r3, r1
+ 1183 000c 7B71     		strb	r3, [r7, #5]
+ 1184 000e 1346     		mov	r3, r2	@ movhi
+ 1185 0010 7B80     		strh	r3, [r7, #2]	@ movhi
+ 277:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   HAL_StatusTypeDef status = HAL_OK;
+ 1186              		.loc 1 277 21
+ 1187 0012 0023     		movs	r3, #0
+ 1188 0014 FB73     		strb	r3, [r7, #15]
+ 278:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   uint8_t value = 0;
+ 1189              		.loc 1 278 11
+ 1190 0016 0023     		movs	r3, #0
+ 1191 0018 BB73     		strb	r3, [r7, #14]
+ 279:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   
+ 280:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 1)
+ 1192              		.loc 1 280 5
+ 1193 001a B7F90230 		ldrsh	r3, [r7, #2]
+ 1194 001e 012B     		cmp	r3, #1
+ 1195 0020 10D1     		bne	.L43
+ 281:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 282:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Read(&hi2c1, Addr, Reg, I2C_MEMADD_SIZE_8BIT, &value, 1, I2cxTimeout);
+ 1196              		.loc 1 282 14
+ 1197 0022 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 1198 0024 9AB2     		uxth	r2, r3
+ 1199 0026 184B     		ldr	r3, .L47
+ 1200 0028 1B68     		ldr	r3, [r3]
+ 1201 002a F988     		ldrh	r1, [r7, #6]
+ 1202 002c 0293     		str	r3, [sp, #8]
+ 1203 002e 0123     		movs	r3, #1
+ 1204 0030 0193     		str	r3, [sp, #4]
+ 1205 0032 07F10E03 		add	r3, r7, #14
+ 1206 0036 0093     		str	r3, [sp]
+ 1207 0038 0123     		movs	r3, #1
+ 1208 003a 1448     		ldr	r0, .L47+4
+ 1209 003c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 1210 0040 0346     		mov	r3, r0
+ 1211 0042 FB73     		strb	r3, [r7, #15]
+ 1212              	.L43:
+ 283:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 284:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 3)
+ 1213              		.loc 1 284 5
+ 1214 0044 B7F90230 		ldrsh	r3, [r7, #2]
+ 1215 0048 032B     		cmp	r3, #3
+ 1216 004a 10D1     		bne	.L44
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 27
+
+
+ 285:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 286:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Read(&hi2c3, Addr, Reg, I2C_MEMADD_SIZE_8BIT, &value, 1, I2cxTimeout);
+ 1217              		.loc 1 286 14
+ 1218 004c 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 1219 004e 9AB2     		uxth	r2, r3
+ 1220 0050 0D4B     		ldr	r3, .L47
+ 1221 0052 1B68     		ldr	r3, [r3]
+ 1222 0054 F988     		ldrh	r1, [r7, #6]
+ 1223 0056 0293     		str	r3, [sp, #8]
+ 1224 0058 0123     		movs	r3, #1
+ 1225 005a 0193     		str	r3, [sp, #4]
+ 1226 005c 07F10E03 		add	r3, r7, #14
+ 1227 0060 0093     		str	r3, [sp]
+ 1228 0062 0123     		movs	r3, #1
+ 1229 0064 0A48     		ldr	r0, .L47+8
+ 1230 0066 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 1231 006a 0346     		mov	r3, r0
+ 1232 006c FB73     		strb	r3, [r7, #15]
+ 1233              	.L44:
+ 287:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 288:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   
+ 289:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****  
+ 290:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   /* 检测I2C通信状态 */
+ 291:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(status != HAL_OK)
+ 1234              		.loc 1 291 5
+ 1235 006e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1236 0070 002B     		cmp	r3, #0
+ 1237 0072 04D0     		beq	.L45
+ 292:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 293:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     /* 调用I2C通信错误处理函数 */
+ 294:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     I2C_MPU6050_Error(iicno);
+ 1238              		.loc 1 294 5
+ 1239 0074 B7F90230 		ldrsh	r3, [r7, #2]
+ 1240 0078 1846     		mov	r0, r3
+ 1241 007a FFF7FEFF 		bl	I2C_MPU6050_Error
+ 1242              	.L45:
+ 295:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 296:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   return value;
+ 1243              		.loc 1 296 10
+ 1244 007e BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 297:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1245              		.loc 1 297 1
+ 1246 0080 1846     		mov	r0, r3
+ 1247 0082 1037     		adds	r7, r7, #16
+ 1248              	.LCFI73:
+ 1249              		.cfi_def_cfa_offset 8
+ 1250 0084 BD46     		mov	sp, r7
+ 1251              	.LCFI74:
+ 1252              		.cfi_def_cfa_register 13
+ 1253              		@ sp needed
+ 1254 0086 80BD     		pop	{r7, pc}
+ 1255              	.L48:
+ 1256              		.align	2
+ 1257              	.L47:
+ 1258 0088 00000000 		.word	I2cxTimeout
+ 1259 008c 00000000 		.word	hi2c1
+ 1260 0090 00000000 		.word	hi2c3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 28
+
+
+ 1261              		.cfi_endproc
+ 1262              	.LFE301:
+ 1264              		.section	.text.I2C_MPU6050_ReadBuffer,"ax",%progbits
+ 1265              		.align	1
+ 1266              		.global	I2C_MPU6050_ReadBuffer
+ 1267              		.syntax unified
+ 1268              		.thumb
+ 1269              		.thumb_func
+ 1270              		.fpu fpv4-sp-d16
+ 1272              	I2C_MPU6050_ReadBuffer:
+ 1273              	.LFB302:
+ 298:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 299:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 300:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 通过I2C读取一段寄存器内容存放到指定的缓冲区内
+ 301:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: Addr：I2C设备地址
+ 302:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Reg：目标寄存器
+ 303:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           RegSize：寄存器尺寸(8位或者16位)
+ 304:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           pBuffer：缓冲区指针
+ 305:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Length：缓冲区长度
+ 306:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: HAL_StatusTypeDef：操作结果
+ 307:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 308:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/
+ 309:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** HAL_StatusTypeDef I2C_MPU6050_ReadBuffer(uint16_t Addr, uint8_t Reg, uint16_t RegSize, uint8_t *pBu
+ 310:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 1274              		.loc 1 310 1
+ 1275              		.cfi_startproc
+ 1276              		@ args = 8, pretend = 0, frame = 24
+ 1277              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1278 0000 80B5     		push	{r7, lr}
+ 1279              	.LCFI75:
+ 1280              		.cfi_def_cfa_offset 8
+ 1281              		.cfi_offset 7, -8
+ 1282              		.cfi_offset 14, -4
+ 1283 0002 8AB0     		sub	sp, sp, #40
+ 1284              	.LCFI76:
+ 1285              		.cfi_def_cfa_offset 48
+ 1286 0004 04AF     		add	r7, sp, #16
+ 1287              	.LCFI77:
+ 1288              		.cfi_def_cfa 7, 32
+ 1289 0006 7B60     		str	r3, [r7, #4]
+ 1290 0008 0346     		mov	r3, r0	@ movhi
+ 1291 000a FB81     		strh	r3, [r7, #14]	@ movhi
+ 1292 000c 0B46     		mov	r3, r1
+ 1293 000e 7B73     		strb	r3, [r7, #13]
+ 1294 0010 1346     		mov	r3, r2	@ movhi
+ 1295 0012 7B81     		strh	r3, [r7, #10]	@ movhi
+ 311:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   HAL_StatusTypeDef status = HAL_OK;
+ 1296              		.loc 1 311 21
+ 1297 0014 0023     		movs	r3, #0
+ 1298 0016 FB75     		strb	r3, [r7, #23]
+ 312:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 1)
+ 1299              		.loc 1 312 5
+ 1300 0018 B7F92430 		ldrsh	r3, [r7, #36]
+ 1301 001c 012B     		cmp	r3, #1
+ 1302 001e 10D1     		bne	.L50
+ 313:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 314:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Read(&hi2c1, Addr, (uint16_t)Reg, RegSize, pBuffer, Length, I2cxTimeout);
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 29
+
+
+ 1303              		.loc 1 314 14
+ 1304 0020 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 1305 0022 9AB2     		uxth	r2, r3
+ 1306 0024 184B     		ldr	r3, .L54
+ 1307 0026 1B68     		ldr	r3, [r3]
+ 1308 0028 7889     		ldrh	r0, [r7, #10]
+ 1309 002a F989     		ldrh	r1, [r7, #14]
+ 1310 002c 0293     		str	r3, [sp, #8]
+ 1311 002e 3B8C     		ldrh	r3, [r7, #32]
+ 1312 0030 0193     		str	r3, [sp, #4]
+ 1313 0032 7B68     		ldr	r3, [r7, #4]
+ 1314 0034 0093     		str	r3, [sp]
+ 1315 0036 0346     		mov	r3, r0
+ 1316 0038 1448     		ldr	r0, .L54+4
+ 1317 003a FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 1318 003e 0346     		mov	r3, r0
+ 1319 0040 FB75     		strb	r3, [r7, #23]
+ 1320              	.L50:
+ 315:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 316:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 3)
+ 1321              		.loc 1 316 5
+ 1322 0042 B7F92430 		ldrsh	r3, [r7, #36]
+ 1323 0046 032B     		cmp	r3, #3
+ 1324 0048 10D1     		bne	.L51
+ 317:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 318:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     status = HAL_I2C_Mem_Read(&hi2c3, Addr, (uint16_t)Reg, RegSize, pBuffer, Length, I2cxTimeout);
+ 1325              		.loc 1 318 14
+ 1326 004a 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 1327 004c 9AB2     		uxth	r2, r3
+ 1328 004e 0E4B     		ldr	r3, .L54
+ 1329 0050 1B68     		ldr	r3, [r3]
+ 1330 0052 7889     		ldrh	r0, [r7, #10]
+ 1331 0054 F989     		ldrh	r1, [r7, #14]
+ 1332 0056 0293     		str	r3, [sp, #8]
+ 1333 0058 3B8C     		ldrh	r3, [r7, #32]
+ 1334 005a 0193     		str	r3, [sp, #4]
+ 1335 005c 7B68     		ldr	r3, [r7, #4]
+ 1336 005e 0093     		str	r3, [sp]
+ 1337 0060 0346     		mov	r3, r0
+ 1338 0062 0B48     		ldr	r0, .L54+8
+ 1339 0064 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 1340 0068 0346     		mov	r3, r0
+ 1341 006a FB75     		strb	r3, [r7, #23]
+ 1342              	.L51:
+ 319:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 320:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   /* 检测I2C通信状态 */
+ 321:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(status != HAL_OK)
+ 1343              		.loc 1 321 5
+ 1344 006c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1345 006e 002B     		cmp	r3, #0
+ 1346 0070 04D0     		beq	.L52
+ 322:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 323:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     /* 调用I2C通信错误处理函数 */
+ 324:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     I2C_MPU6050_Error(iicno);
+ 1347              		.loc 1 324 5
+ 1348 0072 B7F92430 		ldrsh	r3, [r7, #36]
+ 1349 0076 1846     		mov	r0, r3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 30
+
+
+ 1350 0078 FFF7FEFF 		bl	I2C_MPU6050_Error
+ 1351              	.L52:
+ 325:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }        
+ 326:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   return status;
+ 1352              		.loc 1 326 10
+ 1353 007c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 327:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1354              		.loc 1 327 1
+ 1355 007e 1846     		mov	r0, r3
+ 1356 0080 1837     		adds	r7, r7, #24
+ 1357              	.LCFI78:
+ 1358              		.cfi_def_cfa_offset 8
+ 1359 0082 BD46     		mov	sp, r7
+ 1360              	.LCFI79:
+ 1361              		.cfi_def_cfa_register 13
+ 1362              		@ sp needed
+ 1363 0084 80BD     		pop	{r7, pc}
+ 1364              	.L55:
+ 1365 0086 00BF     		.align	2
+ 1366              	.L54:
+ 1367 0088 00000000 		.word	I2cxTimeout
+ 1368 008c 00000000 		.word	hi2c1
+ 1369 0090 00000000 		.word	hi2c3
+ 1370              		.cfi_endproc
+ 1371              	.LFE302:
+ 1373              		.section	.text.I2C_MPU6050_IsDeviceReady,"ax",%progbits
+ 1374              		.align	1
+ 1375              		.global	I2C_MPU6050_IsDeviceReady
+ 1376              		.syntax unified
+ 1377              		.thumb
+ 1378              		.thumb_func
+ 1379              		.fpu fpv4-sp-d16
+ 1381              	I2C_MPU6050_IsDeviceReady:
+ 1382              	.LFB303:
+ 328:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 329:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 330:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 函数功能: 检测I2C设备是否处于准备好可以通信状态
+ 331:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 输入参数: DevAddress：I2C设备地址
+ 332:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   *           Trials：尝试测试次数
+ 333:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 返 回 值: HAL_StatusTypeDef：操作结果
+ 334:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   * 说    明: 无
+ 335:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   **************************************************************/
+ 336:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** HAL_StatusTypeDef I2C_MPU6050_IsDeviceReady(uint16_t DevAddress, uint32_t Trials, short iicno)
+ 337:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** { 
+ 1383              		.loc 1 337 1
+ 1384              		.cfi_startproc
+ 1385              		@ args = 0, pretend = 0, frame = 8
+ 1386              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1387 0000 80B5     		push	{r7, lr}
+ 1388              	.LCFI80:
+ 1389              		.cfi_def_cfa_offset 8
+ 1390              		.cfi_offset 7, -8
+ 1391              		.cfi_offset 14, -4
+ 1392 0002 82B0     		sub	sp, sp, #8
+ 1393              	.LCFI81:
+ 1394              		.cfi_def_cfa_offset 16
+ 1395 0004 00AF     		add	r7, sp, #0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 31
+
+
+ 1396              	.LCFI82:
+ 1397              		.cfi_def_cfa_register 7
+ 1398 0006 0346     		mov	r3, r0
+ 1399 0008 3960     		str	r1, [r7]
+ 1400 000a FB80     		strh	r3, [r7, #6]	@ movhi
+ 1401 000c 1346     		mov	r3, r2	@ movhi
+ 1402 000e BB80     		strh	r3, [r7, #4]	@ movhi
+ 338:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 1)
+ 1403              		.loc 1 338 5
+ 1404 0010 B7F90430 		ldrsh	r3, [r7, #4]
+ 1405 0014 012B     		cmp	r3, #1
+ 1406 0016 08D1     		bne	.L57
+ 339:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 340:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     return (HAL_I2C_IsDeviceReady(&hi2c1, DevAddress, Trials, I2cxTimeout));
+ 1407              		.loc 1 340 13
+ 1408 0018 0C4B     		ldr	r3, .L60
+ 1409 001a 1B68     		ldr	r3, [r3]
+ 1410 001c F988     		ldrh	r1, [r7, #6]
+ 1411 001e 3A68     		ldr	r2, [r7]
+ 1412 0020 0B48     		ldr	r0, .L60+4
+ 1413 0022 FFF7FEFF 		bl	HAL_I2C_IsDeviceReady
+ 1414 0026 0346     		mov	r3, r0
+ 1415 0028 0CE0     		b	.L56
+ 1416              	.L57:
+ 341:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 342:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   if(iicno == 3)
+ 1417              		.loc 1 342 5
+ 1418 002a B7F90430 		ldrsh	r3, [r7, #4]
+ 1419 002e 032B     		cmp	r3, #3
+ 1420 0030 08D1     		bne	.L59
+ 343:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   {
+ 344:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     return (HAL_I2C_IsDeviceReady(&hi2c3, DevAddress, Trials, I2cxTimeout));
+ 1421              		.loc 1 344 13
+ 1422 0032 064B     		ldr	r3, .L60
+ 1423 0034 1B68     		ldr	r3, [r3]
+ 1424 0036 F988     		ldrh	r1, [r7, #6]
+ 1425 0038 3A68     		ldr	r2, [r7]
+ 1426 003a 0648     		ldr	r0, .L60+8
+ 1427 003c FFF7FEFF 		bl	HAL_I2C_IsDeviceReady
+ 1428 0040 0346     		mov	r3, r0
+ 1429 0042 FFE7     		b	.L56
+ 1430              	.L59:
+ 1431              	.L56:
+ 345:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 346:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 347:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1432              		.loc 1 347 1
+ 1433 0044 1846     		mov	r0, r3
+ 1434 0046 0837     		adds	r7, r7, #8
+ 1435              	.LCFI83:
+ 1436              		.cfi_def_cfa_offset 8
+ 1437 0048 BD46     		mov	sp, r7
+ 1438              	.LCFI84:
+ 1439              		.cfi_def_cfa_register 13
+ 1440              		@ sp needed
+ 1441 004a 80BD     		pop	{r7, pc}
+ 1442              	.L61:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 32
+
+
+ 1443              		.align	2
+ 1444              	.L60:
+ 1445 004c 00000000 		.word	I2cxTimeout
+ 1446 0050 00000000 		.word	hi2c1
+ 1447 0054 00000000 		.word	hi2c3
+ 1448              		.cfi_endproc
+ 1449              	.LFE303:
+ 1451              		.section	.text.Init_E53_SC2,"ax",%progbits
+ 1452              		.align	1
+ 1453              		.global	Init_E53_SC2
+ 1454              		.syntax unified
+ 1455              		.thumb
+ 1456              		.thumb_func
+ 1457              		.fpu fpv4-sp-d16
+ 1459              	Init_E53_SC2:
+ 1460              	.LFB304:
+ 348:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 349:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 350:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 函数名称: Init_E53_SC2
+ 351:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 说    明: 初始化Init_E53_SC2
+ 352:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 参    数: 无
+ 353:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 返 回 值: 无
+ 354:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** ***************************************************************/
+ 355:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void Init_E53_SC2(void)
+ 356:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 1461              		.loc 1 356 1
+ 1462              		.cfi_startproc
+ 1463              		@ args = 0, pretend = 0, frame = 0
+ 1464              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1465 0000 80B5     		push	{r7, lr}
+ 1466              	.LCFI85:
+ 1467              		.cfi_def_cfa_offset 8
+ 1468              		.cfi_offset 7, -8
+ 1469              		.cfi_offset 14, -4
+ 1470 0002 00AF     		add	r7, sp, #0
+ 1471              	.LCFI86:
+ 1472              		.cfi_def_cfa_register 7
+ 357:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MX_I2C1_Init();
+ 1473              		.loc 1 357 5
+ 1474 0004 FFF7FEFF 		bl	MX_I2C1_Init
+ 358:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MX_I2C3_Init();
+ 1475              		.loc 1 358 5
+ 1476 0008 FFF7FEFF 		bl	MX_I2C3_Init
+ 359:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_Init(1);
+ 1477              		.loc 1 359 5
+ 1478 000c 0120     		movs	r0, #1
+ 1479 000e FFF7FEFF 		bl	MPU6050_Init
+ 360:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     MPU6050_Init(3);
+ 1480              		.loc 1 360 5
+ 1481 0012 0320     		movs	r0, #3
+ 1482 0014 FFF7FEFF 		bl	MPU6050_Init
+ 361:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     Init_Light();
+ 1483              		.loc 1 361 5
+ 1484 0018 FFF7FEFF 		bl	Init_Light
+ 362:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1485              		.loc 1 362 1
+ 1486 001c 00BF     		nop
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 33
+
+
+ 1487 001e 80BD     		pop	{r7, pc}
+ 1488              		.cfi_endproc
+ 1489              	.LFE304:
+ 1491              		.global	fRad2Deg
+ 1492              		.section	.data.fRad2Deg,"aw"
+ 1493              		.align	2
+ 1496              	fRad2Deg:
+ 1497 0000 E12E6542 		.word	1113927393
+ 1498              		.global	__aeabi_d2f
+ 1499              		.global	__aeabi_f2d
+ 1500              		.global	__aeabi_dmul
+ 1501              		.section	.text.GetRoll,"ax",%progbits
+ 1502              		.align	1
+ 1503              		.global	GetRoll
+ 1504              		.syntax unified
+ 1505              		.thumb
+ 1506              		.thumb_func
+ 1507              		.fpu fpv4-sp-d16
+ 1509              	GetRoll:
+ 1510              	.LFB305:
+ 363:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 364:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 函数名称: E53_SC2_Read_Data
+ 365:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 说    明: 读取数据
+ 366:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 参    数: 无
+ 367:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 返 回 值: 无
+ 368:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** ***************************************************************/
+ 369:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 370:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** #define cn_app_Manhole_Cover 0x0
+ 371:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 372:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** float fRad2Deg = 57.295779513f;//将弧度转为角度的乘数
+ 373:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 374:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** float GetRoll(short *pRealVals, float fNorm) {
+ 1511              		.loc 1 374 46
+ 1512              		.cfi_startproc
+ 1513              		@ args = 0, pretend = 0, frame = 16
+ 1514              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1515 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1516              	.LCFI87:
+ 1517              		.cfi_def_cfa_offset 16
+ 1518              		.cfi_offset 4, -16
+ 1519              		.cfi_offset 5, -12
+ 1520              		.cfi_offset 7, -8
+ 1521              		.cfi_offset 14, -4
+ 1522 0002 84B0     		sub	sp, sp, #16
+ 1523              	.LCFI88:
+ 1524              		.cfi_def_cfa_offset 32
+ 1525 0004 00AF     		add	r7, sp, #0
+ 1526              	.LCFI89:
+ 1527              		.cfi_def_cfa_register 7
+ 1528 0006 7860     		str	r0, [r7, #4]
+ 1529 0008 87ED000A 		vstr.32	s0, [r7]
+ 375:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   float fNormXZ = sqrt(pRealVals[0] * pRealVals[0] + pRealVals[2] * pRealVals[2]);
+ 1530              		.loc 1 375 33
+ 1531 000c 7B68     		ldr	r3, [r7, #4]
+ 1532 000e B3F90030 		ldrsh	r3, [r3]
+ 1533 0012 1A46     		mov	r2, r3
+ 1534              		.loc 1 375 48
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 34
+
+
+ 1535 0014 7B68     		ldr	r3, [r7, #4]
+ 1536 0016 B3F90030 		ldrsh	r3, [r3]
+ 1537              		.loc 1 375 37
+ 1538 001a 03FB02F2 		mul	r2, r3, r2
+ 1539              		.loc 1 375 63
+ 1540 001e 7B68     		ldr	r3, [r7, #4]
+ 1541 0020 0433     		adds	r3, r3, #4
+ 1542 0022 B3F90030 		ldrsh	r3, [r3]
+ 1543 0026 1946     		mov	r1, r3
+ 1544              		.loc 1 375 78
+ 1545 0028 7B68     		ldr	r3, [r7, #4]
+ 1546 002a 0433     		adds	r3, r3, #4
+ 1547 002c B3F90030 		ldrsh	r3, [r3]
+ 1548              		.loc 1 375 67
+ 1549 0030 03FB01F3 		mul	r3, r3, r1
+ 1550              		.loc 1 375 52
+ 1551 0034 1344     		add	r3, r3, r2
+ 1552              		.loc 1 375 19
+ 1553 0036 1846     		mov	r0, r3
+ 1554 0038 FFF7FEFF 		bl	__aeabi_i2d
+ 1555              	.LVL4:
+ 1556 003c 0246     		mov	r2, r0
+ 1557 003e 0B46     		mov	r3, r1
+ 1558 0040 43EC102B 		vmov	d0, r2, r3
+ 1559 0044 FFF7FEFF 		bl	sqrt
+ 1560 0048 53EC102B 		vmov	r2, r3, d0
+ 1561              		.loc 1 375 9
+ 1562 004c 1046     		mov	r0, r2
+ 1563 004e 1946     		mov	r1, r3
+ 1564 0050 FFF7FEFF 		bl	__aeabi_d2f
+ 1565              	.LVL5:
+ 1566 0054 0346     		mov	r3, r0	@ float
+ 1567 0056 FB60     		str	r3, [r7, #12]	@ float
+ 376:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   float fCos = fNormXZ / fNorm;
+ 1568              		.loc 1 376 9
+ 1569 0058 D7ED036A 		vldr.32	s13, [r7, #12]
+ 1570 005c 97ED007A 		vldr.32	s14, [r7]
+ 1571 0060 C6EE877A 		vdiv.f32	s15, s13, s14
+ 1572 0064 C7ED027A 		vstr.32	s15, [r7, #8]
+ 377:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   return acos(fCos) * fRad2Deg;
+ 1573              		.loc 1 377 10
+ 1574 0068 B868     		ldr	r0, [r7, #8]	@ float
+ 1575 006a FFF7FEFF 		bl	__aeabi_f2d
+ 1576              	.LVL6:
+ 1577 006e 0246     		mov	r2, r0
+ 1578 0070 0B46     		mov	r3, r1
+ 1579 0072 43EC102B 		vmov	d0, r2, r3
+ 1580 0076 FFF7FEFF 		bl	acos
+ 1581 007a 55EC104B 		vmov	r4, r5, d0
+ 1582              		.loc 1 377 21
+ 1583 007e 0C4B     		ldr	r3, .L65
+ 1584 0080 1B68     		ldr	r3, [r3]	@ float
+ 1585 0082 1846     		mov	r0, r3	@ float
+ 1586 0084 FFF7FEFF 		bl	__aeabi_f2d
+ 1587              	.LVL7:
+ 1588 0088 0246     		mov	r2, r0
+ 1589 008a 0B46     		mov	r3, r1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 35
+
+
+ 1590 008c 2046     		mov	r0, r4
+ 1591 008e 2946     		mov	r1, r5
+ 1592 0090 FFF7FEFF 		bl	__aeabi_dmul
+ 1593              	.LVL8:
+ 1594 0094 0246     		mov	r2, r0
+ 1595 0096 0B46     		mov	r3, r1
+ 1596 0098 1046     		mov	r0, r2
+ 1597 009a 1946     		mov	r1, r3
+ 1598 009c FFF7FEFF 		bl	__aeabi_d2f
+ 1599              	.LVL9:
+ 1600 00a0 0346     		mov	r3, r0	@ float
+ 1601 00a2 07EE903A 		vmov	s15, r3
+ 378:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1602              		.loc 1 378 1
+ 1603 00a6 B0EE670A 		vmov.f32	s0, s15
+ 1604 00aa 1037     		adds	r7, r7, #16
+ 1605              	.LCFI90:
+ 1606              		.cfi_def_cfa_offset 16
+ 1607 00ac BD46     		mov	sp, r7
+ 1608              	.LCFI91:
+ 1609              		.cfi_def_cfa_register 13
+ 1610              		@ sp needed
+ 1611 00ae B0BD     		pop	{r4, r5, r7, pc}
+ 1612              	.L66:
+ 1613              		.align	2
+ 1614              	.L65:
+ 1615 00b0 00000000 		.word	fRad2Deg
+ 1616              		.cfi_endproc
+ 1617              	.LFE305:
+ 1619              		.section	.text.GetPitch,"ax",%progbits
+ 1620              		.align	1
+ 1621              		.global	GetPitch
+ 1622              		.syntax unified
+ 1623              		.thumb
+ 1624              		.thumb_func
+ 1625              		.fpu fpv4-sp-d16
+ 1627              	GetPitch:
+ 1628              	.LFB306:
+ 379:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 380:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** float GetPitch(short *pRealVals, float fNorm) {
+ 1629              		.loc 1 380 47
+ 1630              		.cfi_startproc
+ 1631              		@ args = 0, pretend = 0, frame = 16
+ 1632              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1633 0000 B0B5     		push	{r4, r5, r7, lr}
+ 1634              	.LCFI92:
+ 1635              		.cfi_def_cfa_offset 16
+ 1636              		.cfi_offset 4, -16
+ 1637              		.cfi_offset 5, -12
+ 1638              		.cfi_offset 7, -8
+ 1639              		.cfi_offset 14, -4
+ 1640 0002 84B0     		sub	sp, sp, #16
+ 1641              	.LCFI93:
+ 1642              		.cfi_def_cfa_offset 32
+ 1643 0004 00AF     		add	r7, sp, #0
+ 1644              	.LCFI94:
+ 1645              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 36
+
+
+ 1646 0006 7860     		str	r0, [r7, #4]
+ 1647 0008 87ED000A 		vstr.32	s0, [r7]
+ 381:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   float fNormYZ = sqrt(pRealVals[1] * pRealVals[1] + pRealVals[2] * pRealVals[2]);
+ 1648              		.loc 1 381 33
+ 1649 000c 7B68     		ldr	r3, [r7, #4]
+ 1650 000e 0233     		adds	r3, r3, #2
+ 1651 0010 B3F90030 		ldrsh	r3, [r3]
+ 1652 0014 1A46     		mov	r2, r3
+ 1653              		.loc 1 381 48
+ 1654 0016 7B68     		ldr	r3, [r7, #4]
+ 1655 0018 0233     		adds	r3, r3, #2
+ 1656 001a B3F90030 		ldrsh	r3, [r3]
+ 1657              		.loc 1 381 37
+ 1658 001e 03FB02F2 		mul	r2, r3, r2
+ 1659              		.loc 1 381 63
+ 1660 0022 7B68     		ldr	r3, [r7, #4]
+ 1661 0024 0433     		adds	r3, r3, #4
+ 1662 0026 B3F90030 		ldrsh	r3, [r3]
+ 1663 002a 1946     		mov	r1, r3
+ 1664              		.loc 1 381 78
+ 1665 002c 7B68     		ldr	r3, [r7, #4]
+ 1666 002e 0433     		adds	r3, r3, #4
+ 1667 0030 B3F90030 		ldrsh	r3, [r3]
+ 1668              		.loc 1 381 67
+ 1669 0034 03FB01F3 		mul	r3, r3, r1
+ 1670              		.loc 1 381 52
+ 1671 0038 1344     		add	r3, r3, r2
+ 1672              		.loc 1 381 19
+ 1673 003a 1846     		mov	r0, r3
+ 1674 003c FFF7FEFF 		bl	__aeabi_i2d
+ 1675              	.LVL10:
+ 1676 0040 0246     		mov	r2, r0
+ 1677 0042 0B46     		mov	r3, r1
+ 1678 0044 43EC102B 		vmov	d0, r2, r3
+ 1679 0048 FFF7FEFF 		bl	sqrt
+ 1680 004c 53EC102B 		vmov	r2, r3, d0
+ 1681              		.loc 1 381 9
+ 1682 0050 1046     		mov	r0, r2
+ 1683 0052 1946     		mov	r1, r3
+ 1684 0054 FFF7FEFF 		bl	__aeabi_d2f
+ 1685              	.LVL11:
+ 1686 0058 0346     		mov	r3, r0	@ float
+ 1687 005a FB60     		str	r3, [r7, #12]	@ float
+ 382:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   float fCos = fNormYZ / fNorm;
+ 1688              		.loc 1 382 9
+ 1689 005c D7ED036A 		vldr.32	s13, [r7, #12]
+ 1690 0060 97ED007A 		vldr.32	s14, [r7]
+ 1691 0064 C6EE877A 		vdiv.f32	s15, s13, s14
+ 1692 0068 C7ED027A 		vstr.32	s15, [r7, #8]
+ 383:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   return acos(fCos) * fRad2Deg;
+ 1693              		.loc 1 383 10
+ 1694 006c B868     		ldr	r0, [r7, #8]	@ float
+ 1695 006e FFF7FEFF 		bl	__aeabi_f2d
+ 1696              	.LVL12:
+ 1697 0072 0246     		mov	r2, r0
+ 1698 0074 0B46     		mov	r3, r1
+ 1699 0076 43EC102B 		vmov	d0, r2, r3
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 37
+
+
+ 1700 007a FFF7FEFF 		bl	acos
+ 1701 007e 55EC104B 		vmov	r4, r5, d0
+ 1702              		.loc 1 383 21
+ 1703 0082 0C4B     		ldr	r3, .L69
+ 1704 0084 1B68     		ldr	r3, [r3]	@ float
+ 1705 0086 1846     		mov	r0, r3	@ float
+ 1706 0088 FFF7FEFF 		bl	__aeabi_f2d
+ 1707              	.LVL13:
+ 1708 008c 0246     		mov	r2, r0
+ 1709 008e 0B46     		mov	r3, r1
+ 1710 0090 2046     		mov	r0, r4
+ 1711 0092 2946     		mov	r1, r5
+ 1712 0094 FFF7FEFF 		bl	__aeabi_dmul
+ 1713              	.LVL14:
+ 1714 0098 0246     		mov	r2, r0
+ 1715 009a 0B46     		mov	r3, r1
+ 1716 009c 1046     		mov	r0, r2
+ 1717 009e 1946     		mov	r1, r3
+ 1718 00a0 FFF7FEFF 		bl	__aeabi_d2f
+ 1719              	.LVL15:
+ 1720 00a4 0346     		mov	r3, r0	@ float
+ 1721 00a6 07EE903A 		vmov	s15, r3
+ 384:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 1722              		.loc 1 384 1
+ 1723 00aa B0EE670A 		vmov.f32	s0, s15
+ 1724 00ae 1037     		adds	r7, r7, #16
+ 1725              	.LCFI95:
+ 1726              		.cfi_def_cfa_offset 16
+ 1727 00b0 BD46     		mov	sp, r7
+ 1728              	.LCFI96:
+ 1729              		.cfi_def_cfa_register 13
+ 1730              		@ sp needed
+ 1731 00b2 B0BD     		pop	{r4, r5, r7, pc}
+ 1732              	.L70:
+ 1733              		.align	2
+ 1734              	.L69:
+ 1735 00b4 00000000 		.word	fRad2Deg
+ 1736              		.cfi_endproc
+ 1737              	.LFE306:
+ 1739              		.section	.text.E53_SC2_Read_Data,"ax",%progbits
+ 1740              		.align	1
+ 1741              		.global	E53_SC2_Read_Data
+ 1742              		.syntax unified
+ 1743              		.thumb
+ 1744              		.thumb_func
+ 1745              		.fpu fpv4-sp-d16
+ 1747              	E53_SC2_Read_Data:
+ 1748              	.LFB307:
+ 385:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 386:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void E53_SC2_Read_Data(void)
+ 387:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 1749              		.loc 1 387 1
+ 1750              		.cfi_startproc
+ 1751              		@ args = 0, pretend = 0, frame = 72
+ 1752              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1753 0000 80B5     		push	{r7, lr}
+ 1754              	.LCFI97:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 38
+
+
+ 1755              		.cfi_def_cfa_offset 8
+ 1756              		.cfi_offset 7, -8
+ 1757              		.cfi_offset 14, -4
+ 1758 0002 92B0     		sub	sp, sp, #72
+ 1759              	.LCFI98:
+ 1760              		.cfi_def_cfa_offset 80
+ 1761 0004 00AF     		add	r7, sp, #0
+ 1762              	.LCFI99:
+ 1763              		.cfi_def_cfa_register 7
+ 388:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	short  Accel[3];
+ 389:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   short  Gyro[3];
+ 390:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	short  Temp;
+ 391:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   float fNorm;
+ 392:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   short readouts[7];
+ 393:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   short  Accel3[3];
+ 394:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   short  Gyro3[3];
+ 395:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	short  Temp3;
+ 396:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   float fNorm3;
+ 397:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   short readouts3[7];
+ 398:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	if (MPU6050ReadID(1) == 0||MPU6050ReadID(3) == 0)
+ 1764              		.loc 1 398 6
+ 1765 0006 0120     		movs	r0, #1
+ 1766 0008 FFF7FEFF 		bl	MPU6050ReadID
+ 1767 000c 0346     		mov	r3, r0
+ 1768              		.loc 1 398 5
+ 1769 000e 002B     		cmp	r3, #0
+ 1770 0010 05D0     		beq	.L72
+ 1771              		.loc 1 398 29 discriminator 1
+ 1772 0012 0320     		movs	r0, #3
+ 1773 0014 FFF7FEFF 		bl	MPU6050ReadID
+ 1774 0018 0346     		mov	r3, r0
+ 1775              		.loc 1 398 27 discriminator 1
+ 1776 001a 002B     		cmp	r3, #0
+ 1777 001c 00D1     		bne	.L73
+ 1778              	.L72:
+ 399:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	{	
+ 400:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 	  while(1);
+ 1779              		.loc 1 400 9 discriminator 1
+ 1780 001e FEE7     		b	.L72
+ 1781              	.L73:
+ 401:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****   }
+ 402:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       MPU6050ReadAcc(Accel,1);
+ 1782              		.loc 1 402 7
+ 1783 0020 07F13803 		add	r3, r7, #56
+ 1784 0024 0121     		movs	r1, #1
+ 1785 0026 1846     		mov	r0, r3
+ 1786 0028 FFF7FEFF 		bl	MPU6050ReadAcc
+ 403:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       MPU6050ReadGyro(Gyro,1);			
+ 1787              		.loc 1 403 7
+ 1788 002c 07F13003 		add	r3, r7, #48
+ 1789 0030 0121     		movs	r1, #1
+ 1790 0032 1846     		mov	r0, r3
+ 1791 0034 FFF7FEFF 		bl	MPU6050ReadGyro
+ 404:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       MPU6050_ReturnTemp(&Temp,1);
+ 1792              		.loc 1 404 7
+ 1793 0038 07F12E03 		add	r3, r7, #46
+ 1794 003c 0121     		movs	r1, #1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 39
+
+
+ 1795 003e 1846     		mov	r0, r3
+ 1796 0040 FFF7FEFF 		bl	MPU6050_ReturnTemp
+ 405:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.Temperature = Temp;
+ 1797              		.loc 1 405 32
+ 1798 0044 B7F92E20 		ldrsh	r2, [r7, #46]
+ 1799 0048 904B     		ldr	r3, .L74
+ 1800 004a 1A80     		strh	r2, [r3]	@ movhi
+ 406:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.Accel[0] = Accel[0];
+ 1801              		.loc 1 406 36
+ 1802 004c B7F93820 		ldrsh	r2, [r7, #56]
+ 1803              		.loc 1 406 29
+ 1804 0050 8E4B     		ldr	r3, .L74
+ 1805 0052 5A80     		strh	r2, [r3, #2]	@ movhi
+ 407:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.Accel[1] = Accel[1];
+ 1806              		.loc 1 407 36
+ 1807 0054 B7F93A20 		ldrsh	r2, [r7, #58]
+ 1808              		.loc 1 407 29
+ 1809 0058 8C4B     		ldr	r3, .L74
+ 1810 005a 9A80     		strh	r2, [r3, #4]	@ movhi
+ 408:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.Accel[2] = Accel[2];
+ 1811              		.loc 1 408 36
+ 1812 005c B7F93C20 		ldrsh	r2, [r7, #60]
+ 1813              		.loc 1 408 29
+ 1814 0060 8A4B     		ldr	r3, .L74
+ 1815 0062 DA80     		strh	r2, [r3, #6]	@ movhi
+ 409:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.Gyro[0] = Gyro[0];
+ 1816              		.loc 1 409 34
+ 1817 0064 B7F93020 		ldrsh	r2, [r7, #48]
+ 1818              		.loc 1 409 28
+ 1819 0068 884B     		ldr	r3, .L74
+ 1820 006a 1A81     		strh	r2, [r3, #8]	@ movhi
+ 410:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.Gyro[1] = Gyro[1];
+ 1821              		.loc 1 410 34
+ 1822 006c B7F93220 		ldrsh	r2, [r7, #50]
+ 1823              		.loc 1 410 28
+ 1824 0070 864B     		ldr	r3, .L74
+ 1825 0072 5A81     		strh	r2, [r3, #10]	@ movhi
+ 411:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.Gyro[2] = Gyro[2];
+ 1826              		.loc 1 411 34
+ 1827 0074 B7F93420 		ldrsh	r2, [r7, #52]
+ 1828              		.loc 1 411 28
+ 1829 0078 844B     		ldr	r3, .L74
+ 1830 007a 9A81     		strh	r2, [r3, #12]	@ movhi
+ 412:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts[0] = E53_SC2_Data.Accel[0];
+ 1831              		.loc 1 412 39
+ 1832 007c 834B     		ldr	r3, .L74
+ 1833 007e B3F90230 		ldrsh	r3, [r3, #2]
+ 1834              		.loc 1 412 19
+ 1835 0082 3B84     		strh	r3, [r7, #32]	@ movhi
+ 413:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts[1] = E53_SC2_Data.Accel[1];
+ 1836              		.loc 1 413 39
+ 1837 0084 814B     		ldr	r3, .L74
+ 1838 0086 B3F90430 		ldrsh	r3, [r3, #4]
+ 1839              		.loc 1 413 19
+ 1840 008a 7B84     		strh	r3, [r7, #34]	@ movhi
+ 414:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts[2] = E53_SC2_Data.Accel[2];
+ 1841              		.loc 1 414 39
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 40
+
+
+ 1842 008c 7F4B     		ldr	r3, .L74
+ 1843 008e B3F90630 		ldrsh	r3, [r3, #6]
+ 1844              		.loc 1 414 19
+ 1845 0092 BB84     		strh	r3, [r7, #36]	@ movhi
+ 415:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts[3] = E53_SC2_Data.Temperature;
+ 1846              		.loc 1 415 33
+ 1847 0094 7D4B     		ldr	r3, .L74
+ 1848 0096 B3F90030 		ldrsh	r3, [r3]
+ 1849              		.loc 1 415 19
+ 1850 009a FB84     		strh	r3, [r7, #38]	@ movhi
+ 416:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts[4] = E53_SC2_Data.Gyro[0];
+ 1851              		.loc 1 416 38
+ 1852 009c 7B4B     		ldr	r3, .L74
+ 1853 009e B3F90830 		ldrsh	r3, [r3, #8]
+ 1854              		.loc 1 416 19
+ 1855 00a2 3B85     		strh	r3, [r7, #40]	@ movhi
+ 417:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts[5] = E53_SC2_Data.Gyro[1];
+ 1856              		.loc 1 417 38
+ 1857 00a4 794B     		ldr	r3, .L74
+ 1858 00a6 B3F90A30 		ldrsh	r3, [r3, #10]
+ 1859              		.loc 1 417 19
+ 1860 00aa 7B85     		strh	r3, [r7, #42]	@ movhi
+ 418:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts[6] = E53_SC2_Data.Gyro[2];
+ 1861              		.loc 1 418 38
+ 1862 00ac 774B     		ldr	r3, .L74
+ 1863 00ae B3F90C30 		ldrsh	r3, [r3, #12]
+ 1864              		.loc 1 418 19
+ 1865 00b2 BB85     		strh	r3, [r7, #44]	@ movhi
+ 419:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       fNorm = sqrt(E53_SC2_Data.Accel[0] * E53_SC2_Data.Accel[0] + E53_SC2_Data.Accel[1] * E53_SC2_
+ 1866              		.loc 1 419 38
+ 1867 00b4 754B     		ldr	r3, .L74
+ 1868 00b6 B3F90230 		ldrsh	r3, [r3, #2]
+ 1869 00ba 1A46     		mov	r2, r3
+ 1870              		.loc 1 419 62
+ 1871 00bc 734B     		ldr	r3, .L74
+ 1872 00be B3F90230 		ldrsh	r3, [r3, #2]
+ 1873              		.loc 1 419 42
+ 1874 00c2 03FB02F2 		mul	r2, r3, r2
+ 1875              		.loc 1 419 86
+ 1876 00c6 714B     		ldr	r3, .L74
+ 1877 00c8 B3F90430 		ldrsh	r3, [r3, #4]
+ 1878 00cc 1946     		mov	r1, r3
+ 1879              		.loc 1 419 110
+ 1880 00ce 6F4B     		ldr	r3, .L74
+ 1881 00d0 B3F90430 		ldrsh	r3, [r3, #4]
+ 1882              		.loc 1 419 90
+ 1883 00d4 03FB01F3 		mul	r3, r3, r1
+ 1884              		.loc 1 419 66
+ 1885 00d8 1A44     		add	r2, r2, r3
+ 1886              		.loc 1 419 134
+ 1887 00da 6C4B     		ldr	r3, .L74
+ 1888 00dc B3F90630 		ldrsh	r3, [r3, #6]
+ 1889 00e0 1946     		mov	r1, r3
+ 1890              		.loc 1 419 158
+ 1891 00e2 6A4B     		ldr	r3, .L74
+ 1892 00e4 B3F90630 		ldrsh	r3, [r3, #6]
+ 1893              		.loc 1 419 138
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 41
+
+
+ 1894 00e8 03FB01F3 		mul	r3, r3, r1
+ 1895              		.loc 1 419 114
+ 1896 00ec 1344     		add	r3, r3, r2
+ 1897              		.loc 1 419 15
+ 1898 00ee 1846     		mov	r0, r3
+ 1899 00f0 FFF7FEFF 		bl	__aeabi_i2d
+ 1900              	.LVL16:
+ 1901 00f4 0246     		mov	r2, r0
+ 1902 00f6 0B46     		mov	r3, r1
+ 1903 00f8 43EC102B 		vmov	d0, r2, r3
+ 1904 00fc FFF7FEFF 		bl	sqrt
+ 1905 0100 53EC102B 		vmov	r2, r3, d0
+ 1906              		.loc 1 419 13
+ 1907 0104 1046     		mov	r0, r2
+ 1908 0106 1946     		mov	r1, r3
+ 1909 0108 FFF7FEFF 		bl	__aeabi_d2f
+ 1910              	.LVL17:
+ 1911 010c 0346     		mov	r3, r0	@ float
+ 1912 010e 7B64     		str	r3, [r7, #68]	@ float
+ 420:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.roll = (short)GetRoll(readouts, fNorm);
+ 1913              		.loc 1 420 34
+ 1914 0110 07F12003 		add	r3, r7, #32
+ 1915 0114 97ED110A 		vldr.32	s0, [r7, #68]
+ 1916 0118 1846     		mov	r0, r3
+ 1917 011a FFF7FEFF 		bl	GetRoll
+ 1918 011e F0EE407A 		vmov.f32	s15, s0
+ 1919              		.loc 1 420 27
+ 1920 0122 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 1921 0126 17EE903A 		vmov	r3, s15	@ int
+ 1922 012a 1AB2     		sxth	r2, r3
+ 1923              		.loc 1 420 25
+ 1924 012c 574B     		ldr	r3, .L74
+ 1925 012e 1A82     		strh	r2, [r3, #16]	@ movhi
+ 421:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data.pitch =  (short)GetPitch(readouts, fNorm);
+ 1926              		.loc 1 421 36
+ 1927 0130 07F12003 		add	r3, r7, #32
+ 1928 0134 97ED110A 		vldr.32	s0, [r7, #68]
+ 1929 0138 1846     		mov	r0, r3
+ 1930 013a FFF7FEFF 		bl	GetPitch
+ 1931 013e F0EE407A 		vmov.f32	s15, s0
+ 1932              		.loc 1 421 29
+ 1933 0142 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 1934 0146 17EE903A 		vmov	r3, s15	@ int
+ 1935 014a 1AB2     		sxth	r2, r3
+ 1936              		.loc 1 421 26
+ 1937 014c 4F4B     		ldr	r3, .L74
+ 1938 014e DA81     		strh	r2, [r3, #14]	@ movhi
+ 422:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 423:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       MPU6050ReadAcc(Accel3,3);
+ 1939              		.loc 1 423 7
+ 1940 0150 07F11803 		add	r3, r7, #24
+ 1941 0154 0321     		movs	r1, #3
+ 1942 0156 1846     		mov	r0, r3
+ 1943 0158 FFF7FEFF 		bl	MPU6050ReadAcc
+ 424:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       MPU6050ReadGyro(Gyro3,3);			
+ 1944              		.loc 1 424 7
+ 1945 015c 07F11003 		add	r3, r7, #16
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 42
+
+
+ 1946 0160 0321     		movs	r1, #3
+ 1947 0162 1846     		mov	r0, r3
+ 1948 0164 FFF7FEFF 		bl	MPU6050ReadGyro
+ 425:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       MPU6050_ReturnTemp(&Temp3,3);
+ 1949              		.loc 1 425 7
+ 1950 0168 07F10E03 		add	r3, r7, #14
+ 1951 016c 0321     		movs	r1, #3
+ 1952 016e 1846     		mov	r0, r3
+ 1953 0170 FFF7FEFF 		bl	MPU6050_ReturnTemp
+ 426:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.Temperature = Temp3;
+ 1954              		.loc 1 426 33
+ 1955 0174 B7F90E20 		ldrsh	r2, [r7, #14]
+ 1956 0178 454B     		ldr	r3, .L74+4
+ 1957 017a 1A80     		strh	r2, [r3]	@ movhi
+ 427:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.Accel[0] = Accel3[0];
+ 1958              		.loc 1 427 38
+ 1959 017c B7F91820 		ldrsh	r2, [r7, #24]
+ 1960              		.loc 1 427 30
+ 1961 0180 434B     		ldr	r3, .L74+4
+ 1962 0182 5A80     		strh	r2, [r3, #2]	@ movhi
+ 428:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.Accel[1] = Accel3[1];
+ 1963              		.loc 1 428 38
+ 1964 0184 B7F91A20 		ldrsh	r2, [r7, #26]
+ 1965              		.loc 1 428 30
+ 1966 0188 414B     		ldr	r3, .L74+4
+ 1967 018a 9A80     		strh	r2, [r3, #4]	@ movhi
+ 429:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.Accel[2] = Accel3[2];
+ 1968              		.loc 1 429 38
+ 1969 018c B7F91C20 		ldrsh	r2, [r7, #28]
+ 1970              		.loc 1 429 30
+ 1971 0190 3F4B     		ldr	r3, .L74+4
+ 1972 0192 DA80     		strh	r2, [r3, #6]	@ movhi
+ 430:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.Gyro[0] = Gyro3[0];
+ 1973              		.loc 1 430 36
+ 1974 0194 B7F91020 		ldrsh	r2, [r7, #16]
+ 1975              		.loc 1 430 29
+ 1976 0198 3D4B     		ldr	r3, .L74+4
+ 1977 019a 1A81     		strh	r2, [r3, #8]	@ movhi
+ 431:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.Gyro[1] = Gyro3[1];
+ 1978              		.loc 1 431 36
+ 1979 019c B7F91220 		ldrsh	r2, [r7, #18]
+ 1980              		.loc 1 431 29
+ 1981 01a0 3B4B     		ldr	r3, .L74+4
+ 1982 01a2 5A81     		strh	r2, [r3, #10]	@ movhi
+ 432:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.Gyro[2] = Gyro3[2];
+ 1983              		.loc 1 432 36
+ 1984 01a4 B7F91420 		ldrsh	r2, [r7, #20]
+ 1985              		.loc 1 432 29
+ 1986 01a8 394B     		ldr	r3, .L74+4
+ 1987 01aa 9A81     		strh	r2, [r3, #12]	@ movhi
+ 433:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts3[0] = E53_SC2_Data3.Accel[0];
+ 1988              		.loc 1 433 41
+ 1989 01ac 384B     		ldr	r3, .L74+4
+ 1990 01ae B3F90230 		ldrsh	r3, [r3, #2]
+ 1991              		.loc 1 433 20
+ 1992 01b2 3B80     		strh	r3, [r7]	@ movhi
+ 434:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts3[1] = E53_SC2_Data3.Accel[1];
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 43
+
+
+ 1993              		.loc 1 434 41
+ 1994 01b4 364B     		ldr	r3, .L74+4
+ 1995 01b6 B3F90430 		ldrsh	r3, [r3, #4]
+ 1996              		.loc 1 434 20
+ 1997 01ba 7B80     		strh	r3, [r7, #2]	@ movhi
+ 435:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts3[2] = E53_SC2_Data3.Accel[2];
+ 1998              		.loc 1 435 41
+ 1999 01bc 344B     		ldr	r3, .L74+4
+ 2000 01be B3F90630 		ldrsh	r3, [r3, #6]
+ 2001              		.loc 1 435 20
+ 2002 01c2 BB80     		strh	r3, [r7, #4]	@ movhi
+ 436:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts3[3] = E53_SC2_Data3.Temperature;
+ 2003              		.loc 1 436 35
+ 2004 01c4 324B     		ldr	r3, .L74+4
+ 2005 01c6 B3F90030 		ldrsh	r3, [r3]
+ 2006              		.loc 1 436 20
+ 2007 01ca FB80     		strh	r3, [r7, #6]	@ movhi
+ 437:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts3[4] = E53_SC2_Data3.Gyro[0];
+ 2008              		.loc 1 437 40
+ 2009 01cc 304B     		ldr	r3, .L74+4
+ 2010 01ce B3F90830 		ldrsh	r3, [r3, #8]
+ 2011              		.loc 1 437 20
+ 2012 01d2 3B81     		strh	r3, [r7, #8]	@ movhi
+ 438:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts3[5] = E53_SC2_Data3.Gyro[1];
+ 2013              		.loc 1 438 40
+ 2014 01d4 2E4B     		ldr	r3, .L74+4
+ 2015 01d6 B3F90A30 		ldrsh	r3, [r3, #10]
+ 2016              		.loc 1 438 20
+ 2017 01da 7B81     		strh	r3, [r7, #10]	@ movhi
+ 439:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       readouts3[6] = E53_SC2_Data3.Gyro[2];
+ 2018              		.loc 1 439 40
+ 2019 01dc 2C4B     		ldr	r3, .L74+4
+ 2020 01de B3F90C30 		ldrsh	r3, [r3, #12]
+ 2021              		.loc 1 439 20
+ 2022 01e2 BB81     		strh	r3, [r7, #12]	@ movhi
+ 440:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       fNorm3 = sqrt(E53_SC2_Data3.Accel[0] * E53_SC2_Data3.Accel[0] + E53_SC2_Data3.Accel[1] * E53_
+ 2023              		.loc 1 440 40
+ 2024 01e4 2A4B     		ldr	r3, .L74+4
+ 2025 01e6 B3F90230 		ldrsh	r3, [r3, #2]
+ 2026 01ea 1A46     		mov	r2, r3
+ 2027              		.loc 1 440 65
+ 2028 01ec 284B     		ldr	r3, .L74+4
+ 2029 01ee B3F90230 		ldrsh	r3, [r3, #2]
+ 2030              		.loc 1 440 44
+ 2031 01f2 03FB02F2 		mul	r2, r3, r2
+ 2032              		.loc 1 440 90
+ 2033 01f6 264B     		ldr	r3, .L74+4
+ 2034 01f8 B3F90430 		ldrsh	r3, [r3, #4]
+ 2035 01fc 1946     		mov	r1, r3
+ 2036              		.loc 1 440 115
+ 2037 01fe 244B     		ldr	r3, .L74+4
+ 2038 0200 B3F90430 		ldrsh	r3, [r3, #4]
+ 2039              		.loc 1 440 94
+ 2040 0204 03FB01F3 		mul	r3, r3, r1
+ 2041              		.loc 1 440 69
+ 2042 0208 1A44     		add	r2, r2, r3
+ 2043              		.loc 1 440 140
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 44
+
+
+ 2044 020a 214B     		ldr	r3, .L74+4
+ 2045 020c B3F90630 		ldrsh	r3, [r3, #6]
+ 2046 0210 1946     		mov	r1, r3
+ 2047              		.loc 1 440 165
+ 2048 0212 1F4B     		ldr	r3, .L74+4
+ 2049 0214 B3F90630 		ldrsh	r3, [r3, #6]
+ 2050              		.loc 1 440 144
+ 2051 0218 03FB01F3 		mul	r3, r3, r1
+ 2052              		.loc 1 440 119
+ 2053 021c 1344     		add	r3, r3, r2
+ 2054              		.loc 1 440 16
+ 2055 021e 1846     		mov	r0, r3
+ 2056 0220 FFF7FEFF 		bl	__aeabi_i2d
+ 2057              	.LVL18:
+ 2058 0224 0246     		mov	r2, r0
+ 2059 0226 0B46     		mov	r3, r1
+ 2060 0228 43EC102B 		vmov	d0, r2, r3
+ 2061 022c FFF7FEFF 		bl	sqrt
+ 2062 0230 53EC102B 		vmov	r2, r3, d0
+ 2063              		.loc 1 440 14
+ 2064 0234 1046     		mov	r0, r2
+ 2065 0236 1946     		mov	r1, r3
+ 2066 0238 FFF7FEFF 		bl	__aeabi_d2f
+ 2067              	.LVL19:
+ 2068 023c 0346     		mov	r3, r0	@ float
+ 2069 023e 3B64     		str	r3, [r7, #64]	@ float
+ 441:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.roll = (short)GetRoll(readouts3, fNorm3);
+ 2070              		.loc 1 441 35
+ 2071 0240 3B46     		mov	r3, r7
+ 2072 0242 97ED100A 		vldr.32	s0, [r7, #64]
+ 2073 0246 1846     		mov	r0, r3
+ 2074 0248 FFF7FEFF 		bl	GetRoll
+ 2075 024c F0EE407A 		vmov.f32	s15, s0
+ 2076              		.loc 1 441 28
+ 2077 0250 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 2078 0254 17EE903A 		vmov	r3, s15	@ int
+ 2079 0258 1AB2     		sxth	r2, r3
+ 2080              		.loc 1 441 26
+ 2081 025a 0D4B     		ldr	r3, .L74+4
+ 2082 025c 1A82     		strh	r2, [r3, #16]	@ movhi
+ 442:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       E53_SC2_Data3.pitch =  (short)GetPitch(readouts3, fNorm3);
+ 2083              		.loc 1 442 37
+ 2084 025e 3B46     		mov	r3, r7
+ 2085 0260 97ED100A 		vldr.32	s0, [r7, #64]
+ 2086 0264 1846     		mov	r0, r3
+ 2087 0266 FFF7FEFF 		bl	GetPitch
+ 2088 026a F0EE407A 		vmov.f32	s15, s0
+ 2089              		.loc 1 442 30
+ 2090 026e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 2091 0272 17EE903A 		vmov	r3, s15	@ int
+ 2092 0276 1AB2     		sxth	r2, r3
+ 2093              		.loc 1 442 27
+ 2094 0278 054B     		ldr	r3, .L74+4
+ 2095 027a DA81     		strh	r2, [r3, #14]	@ movhi
+ 443:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****       delay10ms(50);
+ 2096              		.loc 1 443 7
+ 2097 027c 3220     		movs	r0, #50
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 45
+
+
+ 2098 027e FFF7FEFF 		bl	delay10ms
+ 444:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 2099              		.loc 1 444 1
+ 2100 0282 00BF     		nop
+ 2101 0284 4837     		adds	r7, r7, #72
+ 2102              	.LCFI100:
+ 2103              		.cfi_def_cfa_offset 8
+ 2104 0286 BD46     		mov	sp, r7
+ 2105              	.LCFI101:
+ 2106              		.cfi_def_cfa_register 13
+ 2107              		@ sp needed
+ 2108 0288 80BD     		pop	{r7, pc}
+ 2109              	.L75:
+ 2110 028a 00BF     		.align	2
+ 2111              	.L74:
+ 2112 028c 00000000 		.word	E53_SC2_Data
+ 2113 0290 00000000 		.word	E53_SC2_Data3
+ 2114              		.cfi_endproc
+ 2115              	.LFE307:
+ 2117              		.section	.text.Init_Light,"ax",%progbits
+ 2118              		.align	1
+ 2119              		.global	Init_Light
+ 2120              		.syntax unified
+ 2121              		.thumb
+ 2122              		.thumb_func
+ 2123              		.fpu fpv4-sp-d16
+ 2125              	Init_Light:
+ 2126              	.LFB308:
+ 445:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 446:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 447:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 448:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 449:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** 
+ 450:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** /***************************************************************
+ 451:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 函数名称: Init_Light
+ 452:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 说    明: 初始化Init_E53_SC2的提示灯
+ 453:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 参    数: 无
+ 454:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** * 返 回 值: 无
+ 455:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** ***************************************************************/
+ 456:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** void Init_Light(void)
+ 457:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** {
+ 2127              		.loc 1 457 1
+ 2128              		.cfi_startproc
+ 2129              		@ args = 0, pretend = 0, frame = 24
+ 2130              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2131 0000 80B5     		push	{r7, lr}
+ 2132              	.LCFI102:
+ 2133              		.cfi_def_cfa_offset 8
+ 2134              		.cfi_offset 7, -8
+ 2135              		.cfi_offset 14, -4
+ 2136 0002 86B0     		sub	sp, sp, #24
+ 2137              	.LCFI103:
+ 2138              		.cfi_def_cfa_offset 32
+ 2139 0004 00AF     		add	r7, sp, #0
+ 2140              	.LCFI104:
+ 2141              		.cfi_def_cfa_register 7
+ 2142              	.LBB2:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 46
+
+
+ 458:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     GPIO_InitTypeDef GPIO_InitStruct;
+ 459:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 2143              		.loc 1 459 5
+ 2144 0006 0F4B     		ldr	r3, .L77
+ 2145 0008 DB6C     		ldr	r3, [r3, #76]
+ 2146 000a 0E4A     		ldr	r2, .L77
+ 2147 000c 43F00203 		orr	r3, r3, #2
+ 2148 0010 D364     		str	r3, [r2, #76]
+ 2149 0012 0C4B     		ldr	r3, .L77
+ 2150 0014 DB6C     		ldr	r3, [r3, #76]
+ 2151 0016 03F00203 		and	r3, r3, #2
+ 2152 001a 3B60     		str	r3, [r7]
+ 2153 001c 3B68     		ldr	r3, [r7]
+ 2154              	.LBE2:
+ 460:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
+ 2155              		.loc 1 460 25
+ 2156 001e 4FF44073 		mov	r3, #768
+ 2157 0022 7B60     		str	r3, [r7, #4]
+ 461:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 2158              		.loc 1 461 26
+ 2159 0024 0123     		movs	r3, #1
+ 2160 0026 BB60     		str	r3, [r7, #8]
+ 462:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 2161              		.loc 1 462 26
+ 2162 0028 0023     		movs	r3, #0
+ 2163 002a FB60     		str	r3, [r7, #12]
+ 463:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 2164              		.loc 1 463 27
+ 2165 002c 0023     		movs	r3, #0
+ 2166 002e 3B61     		str	r3, [r7, #16]
+ 464:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 2167              		.loc 1 464 5
+ 2168 0030 3B1D     		adds	r3, r7, #4
+ 2169 0032 1946     		mov	r1, r3
+ 2170 0034 0448     		ldr	r0, .L77+4
+ 2171 0036 FFF7FEFF 		bl	HAL_GPIO_Init
+ 465:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2\E53_SC2.c **** }
+ 2172              		.loc 1 465 1
+ 2173 003a 00BF     		nop
+ 2174 003c 1837     		adds	r7, r7, #24
+ 2175              	.LCFI105:
+ 2176              		.cfi_def_cfa_offset 8
+ 2177 003e BD46     		mov	sp, r7
+ 2178              	.LCFI106:
+ 2179              		.cfi_def_cfa_register 13
+ 2180              		@ sp needed
+ 2181 0040 80BD     		pop	{r7, pc}
+ 2182              	.L78:
+ 2183 0042 00BF     		.align	2
+ 2184              	.L77:
+ 2185 0044 00100240 		.word	1073876992
+ 2186 0048 00040048 		.word	1207960576
+ 2187              		.cfi_endproc
+ 2188              	.LFE308:
+ 2190              		.text
+ 2191              	.Letext0:
+ 2192              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 47
+
+
+ 2193              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 2194              		.file 4 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 2195              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 2196              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 2197              		.file 7 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_typedef.h"
+ 2198              		.file 8 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 2199              		.file 9 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 2200              		.file 10 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/system_stm32l4xx.h"
+ 2201              		.file 11 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/stm32l431xx.h"
+ 2202              		.file 12 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_config.h"
+ 2203              		.file 13 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_err.h"
+ 2204              		.file 14 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 2205              		.file 15 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def
+ 2206              		.file 16 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpi
+ 2207              		.file 17 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma
+ 2208              		.file 18 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c
+ 2209              		.file 19 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/i2c.h"
+ 2210              		.file 20 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/E53_SC2/E53_SC2.h"
+ 2211              		.file 21 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\math.h"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 E53_SC2.c
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:22     .data.I2cxTimeout:00000000 I2cxTimeout
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:19     .data.I2cxTimeout:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:25     .text.MPU6050_WriteReg:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:33     .text.MPU6050_WriteReg:00000000 MPU6050_WriteReg
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:943    .text.I2C_MPU6050_WriteData:00000000 I2C_MPU6050_WriteData
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:77     .text.MPU6050_ReadData:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:84     .text.MPU6050_ReadData:00000000 MPU6050_ReadData
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1272   .text.I2C_MPU6050_ReadBuffer:00000000 I2C_MPU6050_ReadBuffer
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:135    .text.MPU6050_Init:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:142    .text.MPU6050_Init:00000000 MPU6050_Init
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:770    .text.Motion_Interrupt:00000000 Motion_Interrupt
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:284    .rodata:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:288    .text.MPU6050ReadID:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:295    .text.MPU6050ReadID:00000000 MPU6050ReadID
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:351    .text.MPU6050ReadID:00000038 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:356    .text.MPU6050ReadAcc:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:363    .text.MPU6050ReadAcc:00000000 MPU6050ReadAcc
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:452    .text.MPU6050ReadGyro:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:459    .text.MPU6050ReadGyro:00000000 MPU6050ReadGyro
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:548    .text.MPU6050ReadTemp:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:555    .text.MPU6050ReadTemp:00000000 MPU6050ReadTemp
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:614    .text.MPU6050_ReturnTemp:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:621    .text.MPU6050_ReturnTemp:00000000 MPU6050_ReturnTemp
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:705    .text.MPU6050_ReturnTemp:00000074 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:711    .text.Free_Fall_Interrupt:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:718    .text.Free_Fall_Interrupt:00000000 Free_Fall_Interrupt
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:763    .text.Motion_Interrupt:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:815    .text.Zero_Motion_Interrupt:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:822    .text.Zero_Motion_Interrupt:00000000 Zero_Motion_Interrupt
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:872    .text.I2C_MPU6050_Error:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:878    .text.I2C_MPU6050_Error:00000000 I2C_MPU6050_Error
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:929    .text.I2C_MPU6050_Error:00000034 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:936    .text.I2C_MPU6050_WriteData:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1040   .text.I2C_MPU6050_WriteData:0000008c $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1047   .text.I2C_MPU6050_WriteBuffer:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1054   .text.I2C_MPU6050_WriteBuffer:00000000 I2C_MPU6050_WriteBuffer
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1149   .text.I2C_MPU6050_WriteBuffer:00000088 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1156   .text.I2C_MPU6050_ReadData:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1163   .text.I2C_MPU6050_ReadData:00000000 I2C_MPU6050_ReadData
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1258   .text.I2C_MPU6050_ReadData:00000088 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1265   .text.I2C_MPU6050_ReadBuffer:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1367   .text.I2C_MPU6050_ReadBuffer:00000088 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1374   .text.I2C_MPU6050_IsDeviceReady:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1381   .text.I2C_MPU6050_IsDeviceReady:00000000 I2C_MPU6050_IsDeviceReady
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1445   .text.I2C_MPU6050_IsDeviceReady:0000004c $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1452   .text.Init_E53_SC2:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1459   .text.Init_E53_SC2:00000000 Init_E53_SC2
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:2125   .text.Init_Light:00000000 Init_Light
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1496   .data.fRad2Deg:00000000 fRad2Deg
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1493   .data.fRad2Deg:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1502   .text.GetRoll:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1509   .text.GetRoll:00000000 GetRoll
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1615   .text.GetRoll:000000b0 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1620   .text.GetPitch:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1627   .text.GetPitch:00000000 GetPitch
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s 			page 49
+
+
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1735   .text.GetPitch:000000b4 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1740   .text.E53_SC2_Read_Data:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:1747   .text.E53_SC2_Read_Data:00000000 E53_SC2_Read_Data
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:2112   .text.E53_SC2_Read_Data:0000028c $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:2118   .text.Init_Light:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc894Hic.s:2185   .text.Init_Light:00000044 $d
+
+UNDEFINED SYMBOLS
+delay10ms
+puts
+__aeabi_i2d
+__aeabi_ddiv
+__aeabi_dsub
+__aeabi_d2iz
+HAL_I2C_DeInit
+hi2c1
+hi2c3
+HAL_I2C_Mem_Write
+HAL_I2C_Mem_Read
+HAL_I2C_IsDeviceReady
+MX_I2C1_Init
+MX_I2C3_Init
+__aeabi_d2f
+__aeabi_f2d
+__aeabi_dmul
+sqrt
+acos
+E53_SC2_Data
+E53_SC2_Data3
+HAL_GPIO_Init
