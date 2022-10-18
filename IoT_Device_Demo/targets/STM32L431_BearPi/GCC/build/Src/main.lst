@@ -1,0 +1,542 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	system_phys_mem
+  18              		.section	.rodata.system_phys_mem,"a"
+  19              		.align	2
+  22              	system_phys_mem:
+  23 0000 00000000 		.word	__los_heap_addr_start__
+  24 0004 00000000 		.word	__los_heap_addr_end__
+  25 0008 00000000 		.word	0
+  26 000c 00000000 		.word	0
+  27              		.section	.rodata
+  28              		.align	2
+  29              	.LC0:
+  30 0000 57656C63 		.ascii	"Welcome to BearPi!\000"
+  30      6F6D6520 
+  30      746F2042 
+  30      65617250 
+  30      692100
+  31 0013 00       		.align	2
+  32              	.LC1:
+  33 0014 42656172 		.ascii	"BearPi-IoT Develop Board\000"
+  33      50692D49 
+  33      6F542044 
+  33      6576656C 
+  33      6F702042 
+  34 002d 000000   		.align	2
+  35              	.LC2:
+  36 0030 506F7765 		.ascii	"Powerd by Huawei LiteOS!\000"
+  36      72642062 
+  36      79204875 
+  36      61776569 
+  36      204C6974 
+  37 0049 000000   		.align	2
+  38              	.LC3:
+  39 004c 436F6E6E 		.ascii	"Connecting NET......\000"
+  39      65637469 
+  39      6E67204E 
+  39      45542E2E 
+  39      2E2E2E2E 
+  40              		.section	.text.HardWare_Init,"ax",%progbits
+  41              		.align	1
+  42              		.global	HardWare_Init
+  43              		.arch armv7e-m
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 2
+
+
+  44              		.syntax unified
+  45              		.thumb
+  46              		.thumb_func
+  47              		.fpu fpv4-sp-d16
+  49              	HardWare_Init:
+  50              	.LFB314:
+  51              		.file 1 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src/main.c"
+   1:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** /*----------------------------------------------------------------------------
+   2:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * All rights reserved.
+   4:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * are permitted provided that the following conditions are met:
+   6:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * conditions and the following disclaimer.
+   8:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * provided with the distribution.
+  11:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * permission.
+  14:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  *---------------------------------------------------------------------------*/
+  26:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** /*----------------------------------------------------------------------------
+  27:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * Notice of Export Control Law
+  28:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * ===============================================
+  29:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  * applicable export control laws and regulations.
+  33:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****  *---------------------------------------------------------------------------*/
+  34:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #include "main.h"
+  35:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #include "sys_init.h"
+  36:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #include "mem.h"
+  37:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+  38:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #include "los_base.h"
+  39:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #include "los_task.ph"
+  40:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #include "los_typedef.h"
+  41:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #include "los_sys.h"
+  42:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+  43:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+  44:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #if defined (__CC_ARM)
+  45:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** extern char Image$$RW_IRAM1$$ZI$$Limit [];
+  46:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** extern char Image$$ARM_LIB_STACKHEAP$$Base [];
+  47:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #elif defined (__GNUC__)
+  48:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** extern char __los_heap_addr_start__ [];
+  49:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** extern char __los_heap_addr_end__ [];
+  50:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #else
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 3
+
+
+  51:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #error "fix me"
+  52:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #endif
+  53:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+  54:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** const struct phys_mem system_phys_mem [] =
+  55:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     {
+  56:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #if defined (__CC_ARM)
+  57:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****         { Image$$RW_IRAM1$$ZI$$Limit, Image$$ARM_LIB_STACKHEAP$$Base },
+  58:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #elif defined (__GNUC__)
+  59:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****         {(unsigned long) __los_heap_addr_start__,(unsigned long) __los_heap_addr_end__ },
+  60:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #else
+  61:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #error "fix me"
+  62:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** #endif
+  63:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****         { 0, 0 }
+  64:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     };
+  65:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+  66:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** VOID HardWare_Init(VOID)
+  67:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** {
+  52              		.loc 1 67 1
+  53              		.cfi_startproc
+  54              		@ args = 0, pretend = 0, frame = 0
+  55              		@ frame_needed = 1, uses_anonymous_args = 0
+  56 0000 80B5     		push	{r7, lr}
+  57              	.LCFI0:
+  58              		.cfi_def_cfa_offset 8
+  59              		.cfi_offset 7, -8
+  60              		.cfi_offset 14, -4
+  61 0002 82B0     		sub	sp, sp, #8
+  62              	.LCFI1:
+  63              		.cfi_def_cfa_offset 16
+  64 0004 02AF     		add	r7, sp, #8
+  65              	.LCFI2:
+  66              		.cfi_def_cfa 7, 8
+  68:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	HAL_Init();
+  67              		.loc 1 68 2
+  68 0006 FFF7FEFF 		bl	HAL_Init
+  69:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	/* Configure the system clock */
+  70:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	SystemClock_Config();
+  69              		.loc 1 70 2
+  70 000a FFF7FEFF 		bl	SystemClock_Config
+  71:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	MX_GPIO_Init();
+  71              		.loc 1 71 2
+  72 000e FFF7FEFF 		bl	MX_GPIO_Init
+  72:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	MX_I2C1_Init();
+  73              		.loc 1 72 2
+  74 0012 FFF7FEFF 		bl	MX_I2C1_Init
+  73:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     MX_I2C3_Init();
+  75              		.loc 1 73 5
+  76 0016 FFF7FEFF 		bl	MX_I2C3_Init
+  74:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	MX_SPI2_Init();
+  77              		.loc 1 74 2
+  78 001a FFF7FEFF 		bl	MX_SPI2_Init
+  75:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	dwt_delay_init(SystemCoreClock);
+  79              		.loc 1 75 2
+  80 001e 1C4B     		ldr	r3, .L2
+  81 0020 1B68     		ldr	r3, [r3]
+  82 0022 1846     		mov	r0, r3
+  83 0024 FFF7FEFF 		bl	dwt_delay_init
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 4
+
+
+  76:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	LCD_Init();					
+  84              		.loc 1 76 2
+  85 0028 FFF7FEFF 		bl	LCD_Init
+  77:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	LCD_Clear(BLACK);
+  86              		.loc 1 77 2
+  87 002c 0020     		movs	r0, #0
+  88 002e FFF7FEFF 		bl	LCD_Clear
+  78:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	POINT_COLOR = GREEN;
+  89              		.loc 1 78 14
+  90 0032 184B     		ldr	r3, .L2+4
+  91 0034 4FF4FC62 		mov	r2, #2016
+  92 0038 1A80     		strh	r2, [r3]	@ movhi
+  79:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	LCD_ShowString(10, 50, 240, 24, 24, "Welcome to BearPi!");
+  93              		.loc 1 79 2
+  94 003a 174B     		ldr	r3, .L2+8
+  95 003c 0193     		str	r3, [sp, #4]
+  96 003e 1823     		movs	r3, #24
+  97 0040 0093     		str	r3, [sp]
+  98 0042 1823     		movs	r3, #24
+  99 0044 F022     		movs	r2, #240
+ 100 0046 3221     		movs	r1, #50
+ 101 0048 0A20     		movs	r0, #10
+ 102 004a FFF7FEFF 		bl	LCD_ShowString
+  80:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	LCD_ShowString(20, 90, 240, 16, 16, "BearPi-IoT Develop Board");
+ 103              		.loc 1 80 2
+ 104 004e 134B     		ldr	r3, .L2+12
+ 105 0050 0193     		str	r3, [sp, #4]
+ 106 0052 1023     		movs	r3, #16
+ 107 0054 0093     		str	r3, [sp]
+ 108 0056 1023     		movs	r3, #16
+ 109 0058 F022     		movs	r2, #240
+ 110 005a 5A21     		movs	r1, #90
+ 111 005c 1420     		movs	r0, #20
+ 112 005e FFF7FEFF 		bl	LCD_ShowString
+  81:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	LCD_ShowString(20, 130, 240, 16, 16, "Powerd by Huawei LiteOS!");
+ 113              		.loc 1 81 2
+ 114 0062 0F4B     		ldr	r3, .L2+16
+ 115 0064 0193     		str	r3, [sp, #4]
+ 116 0066 1023     		movs	r3, #16
+ 117 0068 0093     		str	r3, [sp]
+ 118 006a 1023     		movs	r3, #16
+ 119 006c F022     		movs	r2, #240
+ 120 006e 8221     		movs	r1, #130
+ 121 0070 1420     		movs	r0, #20
+ 122 0072 FFF7FEFF 		bl	LCD_ShowString
+  82:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	LCD_ShowString(30, 170, 240, 16, 16, "Connecting NET......");
+ 123              		.loc 1 82 2
+ 124 0076 0B4B     		ldr	r3, .L2+20
+ 125 0078 0193     		str	r3, [sp, #4]
+ 126 007a 1023     		movs	r3, #16
+ 127 007c 0093     		str	r3, [sp]
+ 128 007e 1023     		movs	r3, #16
+ 129 0080 F022     		movs	r2, #240
+ 130 0082 AA21     		movs	r1, #170
+ 131 0084 1E20     		movs	r0, #30
+ 132 0086 FFF7FEFF 		bl	LCD_ShowString
+  83:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 	
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 5
+
+
+  84:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** }
+ 133              		.loc 1 84 1
+ 134 008a 00BF     		nop
+ 135 008c BD46     		mov	sp, r7
+ 136              	.LCFI3:
+ 137              		.cfi_def_cfa_register 13
+ 138              		@ sp needed
+ 139 008e 80BD     		pop	{r7, pc}
+ 140              	.L3:
+ 141              		.align	2
+ 142              	.L2:
+ 143 0090 00000000 		.word	SystemCoreClock
+ 144 0094 00000000 		.word	POINT_COLOR
+ 145 0098 00000000 		.word	.LC0
+ 146 009c 14000000 		.word	.LC1
+ 147 00a0 30000000 		.word	.LC2
+ 148 00a4 4C000000 		.word	.LC3
+ 149              		.cfi_endproc
+ 150              	.LFE314:
+ 152              		.section	.rodata
+ 153 0061 000000   		.align	2
+ 154              	.LC4:
+ 155 0064 6C696E6B 		.ascii	"link_main\000"
+ 155      5F6D6169 
+ 155      6E00
+ 156              		.section	.text.link_test,"ax",%progbits
+ 157              		.align	1
+ 158              		.syntax unified
+ 159              		.thumb
+ 160              		.thumb_func
+ 161              		.fpu fpv4-sp-d16
+ 163              	link_test:
+ 164              	.LFB315:
+  85:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+  86:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** extern int link_main(void *args);
+  87:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** static int link_test()
+  88:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** {
+ 165              		.loc 1 88 1
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 40
+ 168              		@ frame_needed = 1, uses_anonymous_args = 0
+ 169 0000 80B5     		push	{r7, lr}
+ 170              	.LCFI4:
+ 171              		.cfi_def_cfa_offset 8
+ 172              		.cfi_offset 7, -8
+ 173              		.cfi_offset 14, -4
+ 174 0002 8AB0     		sub	sp, sp, #40
+ 175              	.LCFI5:
+ 176              		.cfi_def_cfa_offset 48
+ 177 0004 00AF     		add	r7, sp, #0
+ 178              	.LCFI6:
+ 179              		.cfi_def_cfa_register 7
+  89:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     int ret = -1;
+ 180              		.loc 1 89 9
+ 181 0006 4FF0FF33 		mov	r3, #-1
+ 182 000a 7B62     		str	r3, [r7, #36]
+  90:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     UINT32 uwRet = LOS_OK;
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 6
+
+
+ 183              		.loc 1 90 12
+ 184 000c 0023     		movs	r3, #0
+ 185 000e 3B62     		str	r3, [r7, #32]
+  91:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     UINT32  handle;
+  92:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     TSK_INIT_PARAM_S task_init_param;
+  93:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+  94:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     memset (&task_init_param, 0, sizeof (TSK_INIT_PARAM_S));
+ 186              		.loc 1 94 5
+ 187 0010 3B1D     		adds	r3, r7, #4
+ 188 0012 1822     		movs	r2, #24
+ 189 0014 0021     		movs	r1, #0
+ 190 0016 1846     		mov	r0, r3
+ 191 0018 FFF7FEFF 		bl	memset
+  95:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     task_init_param.uwArg = (unsigned int)NULL;
+ 192              		.loc 1 95 27
+ 193 001c 0023     		movs	r3, #0
+ 194 001e FB60     		str	r3, [r7, #12]
+  96:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     task_init_param.usTaskPrio = 2;
+ 195              		.loc 1 96 32
+ 196 0020 0223     		movs	r3, #2
+ 197 0022 3B81     		strh	r3, [r7, #8]	@ movhi
+  97:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     task_init_param.pcName =(char *) "link_main";
+ 198              		.loc 1 97 28
+ 199 0024 0C4B     		ldr	r3, .L7
+ 200 0026 7B61     		str	r3, [r7, #20]
+  98:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     task_init_param.pfnTaskEntry = (TSK_ENTRY_FUNC)link_main;
+ 201              		.loc 1 98 34
+ 202 0028 0C4B     		ldr	r3, .L7+4
+ 203 002a 7B60     		str	r3, [r7, #4]
+  99:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     task_init_param.uwStackSize = 0x1000;
+ 204              		.loc 1 99 33
+ 205 002c 4FF48053 		mov	r3, #4096
+ 206 0030 3B61     		str	r3, [r7, #16]
+ 100:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     uwRet = LOS_TaskCreate(&handle, &task_init_param);
+ 207              		.loc 1 100 13
+ 208 0032 3A1D     		adds	r2, r7, #4
+ 209 0034 07F11C03 		add	r3, r7, #28
+ 210 0038 1146     		mov	r1, r2
+ 211 003a 1846     		mov	r0, r3
+ 212 003c FFF7FEFF 		bl	LOS_TaskCreate
+ 213 0040 3862     		str	r0, [r7, #32]
+ 101:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     if(LOS_OK == uwRet){
+ 214              		.loc 1 101 7
+ 215 0042 3B6A     		ldr	r3, [r7, #32]
+ 216 0044 002B     		cmp	r3, #0
+ 217 0046 01D1     		bne	.L5
+ 102:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****         ret = 0;
+ 218              		.loc 1 102 13
+ 219 0048 0023     		movs	r3, #0
+ 220 004a 7B62     		str	r3, [r7, #36]
+ 221              	.L5:
+ 103:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     }
+ 104:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     return ret;
+ 222              		.loc 1 104 12
+ 223 004c 7B6A     		ldr	r3, [r7, #36]
+ 105:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** }
+ 224              		.loc 1 105 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 7
+
+
+ 225 004e 1846     		mov	r0, r3
+ 226 0050 2837     		adds	r7, r7, #40
+ 227              	.LCFI7:
+ 228              		.cfi_def_cfa_offset 8
+ 229 0052 BD46     		mov	sp, r7
+ 230              	.LCFI8:
+ 231              		.cfi_def_cfa_register 13
+ 232              		@ sp needed
+ 233 0054 80BD     		pop	{r7, pc}
+ 234              	.L8:
+ 235 0056 00BF     		.align	2
+ 236              	.L7:
+ 237 0058 64000000 		.word	.LC4
+ 238 005c 00000000 		.word	link_main
+ 239              		.cfi_endproc
+ 240              	.LFE315:
+ 242              		.section	.text.main,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	main
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.fpu fpv4-sp-d16
+ 250              	main:
+ 251              	.LFB316:
+ 106:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+ 107:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** int main(void)
+ 108:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** {
+ 252              		.loc 1 108 1
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 8
+ 255              		@ frame_needed = 1, uses_anonymous_args = 0
+ 256 0000 80B5     		push	{r7, lr}
+ 257              	.LCFI9:
+ 258              		.cfi_def_cfa_offset 8
+ 259              		.cfi_offset 7, -8
+ 260              		.cfi_offset 14, -4
+ 261 0002 82B0     		sub	sp, sp, #8
+ 262              	.LCFI10:
+ 263              		.cfi_def_cfa_offset 16
+ 264 0004 00AF     		add	r7, sp, #0
+ 265              	.LCFI11:
+ 266              		.cfi_def_cfa_register 7
+ 109:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     UINT32 uwRet = LOS_OK;
+ 267              		.loc 1 109 12
+ 268 0006 0023     		movs	r3, #0
+ 269 0008 7B60     		str	r3, [r7, #4]
+ 110:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     HardWare_Init();
+ 270              		.loc 1 110 5
+ 271 000a FFF7FEFF 		bl	HardWare_Init
+ 111:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     uwRet = LOS_KernelInit();
+ 272              		.loc 1 111 13
+ 273 000e FFF7FEFF 		bl	LOS_KernelInit
+ 274 0012 7860     		str	r0, [r7, #4]
+ 112:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     if (uwRet != LOS_OK)
+ 275              		.loc 1 112 8
+ 276 0014 7B68     		ldr	r3, [r7, #4]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 8
+
+
+ 277 0016 002B     		cmp	r3, #0
+ 278 0018 01D0     		beq	.L10
+ 113:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     {
+ 114:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****         return LOS_NOK;
+ 279              		.loc 1 114 16
+ 280 001a 0123     		movs	r3, #1
+ 281 001c 08E0     		b	.L11
+ 282              	.L10:
+ 115:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     }
+ 116:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+ 117:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     extern void shell_uart_init(int baud);
+ 118:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     shell_uart_init(115200);
+ 283              		.loc 1 118 5
+ 284 001e 4FF4E130 		mov	r0, #115200
+ 285 0022 FFF7FEFF 		bl	shell_uart_init
+ 119:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+ 120:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     link_test();
+ 286              		.loc 1 120 5
+ 287 0026 FFF7FEFF 		bl	link_test
+ 121:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** 
+ 122:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     (void)LOS_Start();
+ 288              		.loc 1 122 11
+ 289 002a FFF7FEFF 		bl	LOS_Start
+ 123:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c ****     return 0;
+ 290              		.loc 1 123 12
+ 291 002e 0023     		movs	r3, #0
+ 292              	.L11:
+ 124:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\main.c **** }
+ 293              		.loc 1 124 1
+ 294 0030 1846     		mov	r0, r3
+ 295 0032 0837     		adds	r7, r7, #8
+ 296              	.LCFI12:
+ 297              		.cfi_def_cfa_offset 8
+ 298 0034 BD46     		mov	sp, r7
+ 299              	.LCFI13:
+ 300              		.cfi_def_cfa_register 13
+ 301              		@ sp needed
+ 302 0036 80BD     		pop	{r7, pc}
+ 303              		.cfi_endproc
+ 304              	.LFE316:
+ 306              		.text
+ 307              	.Letext0:
+ 308              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 309              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 310              		.file 4 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 311              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 312              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 313              		.file 7 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_typedef.h"
+ 314              		.file 8 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 315              		.file 9 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 316              		.file 10 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/system_stm32l4xx.h"
+ 317              		.file 11 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/stm32l431xx.h"
+ 318              		.file 12 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def
+ 319              		.file 13 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma
+ 320              		.file 14 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c
+ 321              		.file 15 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi
+ 322              		.file 16 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uar
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 9
+
+
+ 323              		.file 17 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_config.h"
+ 324              		.file 18 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_list.h"
+ 325              		.file 19 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_err.h"
+ 326              		.file 20 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 327              		.file 21 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_event.h"
+ 328              		.file 22 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_tick.h"
+ 329              		.file 23 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_task.h"
+ 330              		.file 24 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/base/include/los_task.ph"
+ 331              		.file 25 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/base/include/los_slab.ph"
+ 332              		.file 26 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_memory.h"
+ 333              		.file 27 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/base/include/los_queue.ph"
+ 334              		.file 28 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\stdlib.h"
+ 335              		.file 29 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/usart.h"
+ 336              		.file 30 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/i2c.h"
+ 337              		.file 31 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/spi.h"
+ 338              		.file 32 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Hardware/LCD/lcd.h"
+ 339              		.file 33 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/list.h"
+ 340              		.file 34 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/base/include/chunk.h"
+ 341              		.file 35 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/base/include/cm-tlsf.h"
+ 342              		.file 36 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/base/include/heap.h"
+ 343              		.file 37 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/base/include/mem.h"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:22     .rodata.system_phys_mem:00000000 system_phys_mem
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:19     .rodata.system_phys_mem:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:28     .rodata:00000000 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:41     .text.HardWare_Init:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:49     .text.HardWare_Init:00000000 HardWare_Init
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:143    .text.HardWare_Init:00000090 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:157    .text.link_test:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:163    .text.link_test:00000000 link_test
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:237    .text.link_test:00000058 $d
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:243    .text.main:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cckls0u6.s:250    .text.main:00000000 main
+
+UNDEFINED SYMBOLS
+__los_heap_addr_start__
+__los_heap_addr_end__
+HAL_Init
+SystemClock_Config
+MX_GPIO_Init
+MX_I2C1_Init
+MX_I2C3_Init
+MX_SPI2_Init
+dwt_delay_init
+LCD_Init
+LCD_Clear
+LCD_ShowString
+SystemCoreClock
+POINT_COLOR
+memset
+LOS_TaskCreate
+link_main
+LOS_KernelInit
+shell_uart_init
+LOS_Start

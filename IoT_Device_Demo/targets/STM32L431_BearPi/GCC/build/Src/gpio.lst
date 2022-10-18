@@ -1,0 +1,254 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gpio.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MX_GPIO_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	MX_GPIO_Init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	MX_GPIO_Init:
+  27              	.LFB287:
+  28              		.file 1 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src/gpio.c"
+   1:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /**
+   2:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   ******************************************************************************
+   3:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * File Name          : gpio.c
+   4:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * Description        : This file provides code for the configuration
+   5:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *                      of all used GPIO pins.
+   6:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   ******************************************************************************
+   7:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   ** This notice applies to any and all portions of this file
+   8:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * that are not between comment pairs USER CODE BEGIN and
+   9:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * USER CODE END. Other portions of this file, whether 
+  10:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * inserted by the user or by software development tools
+  11:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * are owned by their respective copyright owners.
+  12:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *
+  13:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * COPYRIGHT(c) 2018 STMicroelectronics
+  14:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *
+  15:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * Redistribution and use in source and binary forms, with or without modification,
+  16:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * are permitted provided that the following conditions are met:
+  17:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *   1. Redistributions of source code must retain the above copyright notice,
+  18:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *      this list of conditions and the following disclaimer.
+  19:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  20:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *      this list of conditions and the following disclaimer in the documentation
+  21:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *      and/or other materials provided with the distribution.
+  22:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  23:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *      may be used to endorse or promote products derived from this software
+  24:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *      without specific prior written permission.
+  25:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *
+  26:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  27:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  28:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  29:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  30:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s 			page 2
+
+
+  31:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  32:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  33:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  34:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  35:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  36:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   *
+  37:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   ******************************************************************************
+  38:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   */
+  39:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  40:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /* Includes ------------------------------------------------------------------*/
+  41:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** #include "gpio.h"
+  42:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /* USER CODE BEGIN 0 */
+  43:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  44:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /* USER CODE END 0 */
+  45:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  46:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /*----------------------------------------------------------------------------*/
+  47:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /* Configure GPIO                                                             */
+  48:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /*----------------------------------------------------------------------------*/
+  49:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /* USER CODE BEGIN 1 */
+  50:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  51:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /* USER CODE END 1 */
+  52:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  53:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** /** Configure pins as 
+  54:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****         * Analog 
+  55:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****         * Input 
+  56:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****         * Output
+  57:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****         * EVENT_OUT
+  58:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****         * EXTI
+  59:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** */
+  60:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** void MX_GPIO_Init(void)
+  61:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** {
+  29              		.loc 1 61 1
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 40
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 7, -8
+  37              		.cfi_offset 14, -4
+  38 0002 8AB0     		sub	sp, sp, #40
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 48
+  41 0004 00AF     		add	r7, sp, #0
+  42              	.LCFI2:
+  43              		.cfi_def_cfa_register 7
+  44              	.LBB2:
+  62:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  63:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   GPIO_InitTypeDef GPIO_InitStruct;
+  64:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  65:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   /* GPIO Ports Clock Enable */
+  66:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   __HAL_RCC_GPIOC_CLK_ENABLE();
+  45              		.loc 1 66 3
+  46 0006 204B     		ldr	r3, .L2
+  47 0008 DB6C     		ldr	r3, [r3, #76]
+  48 000a 1F4A     		ldr	r2, .L2
+  49 000c 43F00403 		orr	r3, r3, #4
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s 			page 3
+
+
+  50 0010 D364     		str	r3, [r2, #76]
+  51 0012 1D4B     		ldr	r3, .L2
+  52 0014 DB6C     		ldr	r3, [r3, #76]
+  53 0016 03F00403 		and	r3, r3, #4
+  54 001a 3B61     		str	r3, [r7, #16]
+  55 001c 3B69     		ldr	r3, [r7, #16]
+  56              	.LBE2:
+  57              	.LBB3:
+  67:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   __HAL_RCC_GPIOH_CLK_ENABLE();
+  58              		.loc 1 67 3
+  59 001e 1A4B     		ldr	r3, .L2
+  60 0020 DB6C     		ldr	r3, [r3, #76]
+  61 0022 194A     		ldr	r2, .L2
+  62 0024 43F08003 		orr	r3, r3, #128
+  63 0028 D364     		str	r3, [r2, #76]
+  64 002a 174B     		ldr	r3, .L2
+  65 002c DB6C     		ldr	r3, [r3, #76]
+  66 002e 03F08003 		and	r3, r3, #128
+  67 0032 FB60     		str	r3, [r7, #12]
+  68 0034 FB68     		ldr	r3, [r7, #12]
+  69              	.LBE3:
+  70              	.LBB4:
+  68:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   __HAL_RCC_GPIOA_CLK_ENABLE();
+  71              		.loc 1 68 3
+  72 0036 144B     		ldr	r3, .L2
+  73 0038 DB6C     		ldr	r3, [r3, #76]
+  74 003a 134A     		ldr	r2, .L2
+  75 003c 43F00103 		orr	r3, r3, #1
+  76 0040 D364     		str	r3, [r2, #76]
+  77 0042 114B     		ldr	r3, .L2
+  78 0044 DB6C     		ldr	r3, [r3, #76]
+  79 0046 03F00103 		and	r3, r3, #1
+  80 004a BB60     		str	r3, [r7, #8]
+  81 004c BB68     		ldr	r3, [r7, #8]
+  82              	.LBE4:
+  83              	.LBB5:
+  69:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   __HAL_RCC_GPIOB_CLK_ENABLE();
+  84              		.loc 1 69 3
+  85 004e 0E4B     		ldr	r3, .L2
+  86 0050 DB6C     		ldr	r3, [r3, #76]
+  87 0052 0D4A     		ldr	r2, .L2
+  88 0054 43F00203 		orr	r3, r3, #2
+  89 0058 D364     		str	r3, [r2, #76]
+  90 005a 0B4B     		ldr	r3, .L2
+  91 005c DB6C     		ldr	r3, [r3, #76]
+  92 005e 03F00203 		and	r3, r3, #2
+  93 0062 7B60     		str	r3, [r7, #4]
+  94 0064 7B68     		ldr	r3, [r7, #4]
+  95              	.LBE5:
+  70:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 
+  71:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //	/*Configure GPIO pin Output Level */
+  72:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //  HAL_GPIO_WritePin(Light_GPIO_Port, Light_Pin, GPIO_PIN_RESET);
+  73:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //
+  74:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //	/*Configure GPIO pin : PtPin */
+  75:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //  GPIO_InitStruct.Pin = Light_Pin;
+  76:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  77:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //  GPIO_InitStruct.Pull = GPIO_NOPULL;
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s 			page 4
+
+
+  78:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  79:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** //  HAL_GPIO_Init(Light_GPIO_Port, &GPIO_InitStruct);
+  80:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 	
+  81:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 	GPIO_InitStruct.Pin = KEY1_Pin|KEY2_Pin;
+  96              		.loc 1 81 22
+  97 0066 0C23     		movs	r3, #12
+  98 0068 7B61     		str	r3, [r7, #20]
+  82:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  99              		.loc 1 82 24
+ 100 006a 084B     		ldr	r3, .L2+4
+ 101 006c BB61     		str	r3, [r7, #24]
+  83:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   GPIO_InitStruct.Pull = GPIO_PULLUP;
+ 102              		.loc 1 83 24
+ 103 006e 0123     		movs	r3, #1
+ 104 0070 FB61     		str	r3, [r7, #28]
+  84:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c ****   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 105              		.loc 1 84 3
+ 106 0072 07F11403 		add	r3, r7, #20
+ 107 0076 1946     		mov	r1, r3
+ 108 0078 0548     		ldr	r0, .L2+8
+ 109 007a FFF7FEFF 		bl	HAL_GPIO_Init
+  85:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** 	
+  86:g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Src\gpio.c **** }
+ 110              		.loc 1 86 1
+ 111 007e 00BF     		nop
+ 112 0080 2837     		adds	r7, r7, #40
+ 113              	.LCFI3:
+ 114              		.cfi_def_cfa_offset 8
+ 115 0082 BD46     		mov	sp, r7
+ 116              	.LCFI4:
+ 117              		.cfi_def_cfa_register 13
+ 118              		@ sp needed
+ 119 0084 80BD     		pop	{r7, pc}
+ 120              	.L3:
+ 121 0086 00BF     		.align	2
+ 122              	.L2:
+ 123 0088 00100240 		.word	1073876992
+ 124 008c 00002110 		.word	270598144
+ 125 0090 00040048 		.word	1207960576
+ 126              		.cfi_endproc
+ 127              	.LFE287:
+ 129              		.text
+ 130              	.Letext0:
+ 131              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 132              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 133              		.file 4 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 134              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 135              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 136              		.file 7 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_typedef.h"
+ 137              		.file 8 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 138              		.file 9 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 139              		.file 10 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/system_stm32l4xx.h"
+ 140              		.file 11 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/stm32l431xx.h"
+ 141              		.file 12 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_config.h"
+ 142              		.file 13 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_err.h"
+ 143              		.file 14 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 144              		.file 15 "g:/iot/IoT_Device_Demo/drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpi
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s 			page 5
+
+
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 gpio.c
+C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s:18     .text.MX_GPIO_Init:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s:26     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+C:\Users\ADMINI~1\AppData\Local\Temp\cc9e7o24.s:123    .text.MX_GPIO_Init:00000088 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_Init
