@@ -1,0 +1,543 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"object_firmware.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.get_object_firmware,"ax",%progbits
+  18              		.align	1
+  19              		.global	get_object_firmware
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	get_object_firmware:
+  27              	.LFB4:
+  28              		.file 1 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port/object_firmware.c"
+   1:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** /*----------------------------------------------------------------------------
+   2:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * All rights reserved.
+   4:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * are permitted provided that the following conditions are met:
+   6:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * conditions and the following disclaimer.
+   8:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * provided with the distribution.
+  11:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * permission.
+  14:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *---------------------------------------------------------------------------*/
+  26:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** /*----------------------------------------------------------------------------
+  27:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Notice of Export Control Law
+  28:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * ===============================================
+  29:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 2
+
+
+  31:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * applicable export control laws and regulations.
+  33:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *---------------------------------------------------------------------------*/
+  34:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  35:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** /*******************************************************************************
+  36:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *
+  37:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Copyright (c) 2013, 2014 Intel Corporation and others.
+  38:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * All rights reserved. This program and the accompanying materials
+  39:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * are made available under the terms of the Eclipse Public License v1.0
+  40:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * and Eclipse Distribution License v1.0 which accompany this distribution.
+  41:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *
+  42:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * The Eclipse Public License is available at
+  43:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *    http://www.eclipse.org/legal/epl-v10.html
+  44:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * The Eclipse Distribution License is available at
+  45:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *    http://www.eclipse.org/org/documents/edl-v10.php.
+  46:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *
+  47:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Contributors:
+  48:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *    Julien Vermillard - initial implementation
+  49:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *    Fabien Fleutot - Please refer to git log
+  50:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *    David Navarro, Intel Corporation - Please refer to git log
+  51:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *    Bosch Software Innovations GmbH - Please refer to git log
+  52:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *    Pascal Rieux - Please refer to git log
+  53:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *
+  54:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  *******************************************************************************/
+  55:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  56:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** /*
+  57:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * This object is single instance only, and provide firmware upgrade functionality.
+  58:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * Object ID is 5.
+  59:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  */
+  60:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  61:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** /*
+  62:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * resources:
+  63:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 0 package                   write
+  64:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 1 package url               write
+  65:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 2 update                    exec
+  66:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 3 state                     read
+  67:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 4 update supported objects  read/write
+  68:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  * 5 update result             read
+  69:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****  */
+  70:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  71:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #include <atiny_log.h>
+  72:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #include "internals.h"
+  73:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #include "lwm2m_common.h"
+  74:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  75:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+  76:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #include "lwm2m_fota_manager.h"
+  77:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  78:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  79:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** // ---- private object "Firmware" specific defines ----
+  80:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** // Resource Id's:
+  81:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_M_PACKAGE                   0
+  82:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_M_PACKAGE_URI               1
+  83:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_M_UPDATE                    2
+  84:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_M_STATE                     3
+  85:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_O_UPDATE_SUPPORTED_OBJECTS  4
+  86:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_M_UPDATE_RESULT             5
+  87:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_O_PKG_NAME                  6
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 3
+
+
+  88:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_O_PKG_VERSION               7
+  89:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #define RES_O_FIRMWARE_UPDATE_DELIVER_METHOD               8
+  90:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  91:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+  92:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** static uint8_t prv_firmware_read(uint16_t instanceId,
+  93:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                  int *numDataP,
+  94:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                  lwm2m_data_t **dataArrayP,
+  95:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                  lwm2m_data_cfg_t *dataCfg,
+  96:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                  lwm2m_object_t *objectP)
+  97:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+  98:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     uint32_t i;
+  99:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     uint8_t result;
+ 100:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 101:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     // this is a single instance object
+ 102:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (0 != instanceId)
+ 103:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 104:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         return COAP_404_NOT_FOUND;
+ 105:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 106:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 107:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     // is the server asking for the full object ?
+ 108:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (0 == *numDataP)
+ 109:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 110:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         uint16_t resources[] = {RES_M_PACKAGE_URI, RES_M_STATE,
+ 111:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                 RES_M_UPDATE_RESULT, RES_O_FIRMWARE_UPDATE_DELIVER_METHOD
+ 112:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                };
+ 113:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         *dataArrayP = lwm2m_data_new(array_size(resources));
+ 114:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 115:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         if (NULL == *dataArrayP) return COAP_500_INTERNAL_SERVER_ERROR;
+ 116:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 117:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         *numDataP = array_size(resources);
+ 118:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 119:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         for (i = 0 ; i < array_size(resources); ++i)
+ 120:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         {
+ 121:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             (*dataArrayP)[i].id = resources[i];
+ 122:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         }
+ 123:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 124:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 125:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     i = 0;
+ 126:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 127:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     do
+ 128:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 129:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         switch ((*dataArrayP)[i].id)
+ 130:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         {
+ 131:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             case RES_M_PACKAGE:
+ 132:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_405_METHOD_NOT_ALLOWED;
+ 133:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 break;
+ 134:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 135:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             case RES_M_PACKAGE_URI:
+ 136:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             {
+ 137:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 138:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 const char *pkg_uri;
+ 139:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 pkg_uri = lwm2m_fota_manager_get_pkg_uri(lwm2m_fota_manager_get_instance());
+ 140:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 141:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 if (NULL == pkg_uri)
+ 142:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 {
+ 143:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                     pkg_uri = "";
+ 144:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 }
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 4
+
+
+ 145:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 146:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 lwm2m_data_encode_nstring(pkg_uri, strlen(pkg_uri) + 1, *dataArrayP + i);
+ 147:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_205_CONTENT;
+ 148:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 149:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_405_METHOD_NOT_ALLOWED;
+ 150:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 151:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 break;
+ 152:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             }
+ 153:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 154:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             case RES_M_UPDATE:
+ 155:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_405_METHOD_NOT_ALLOWED;
+ 156:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 break;
+ 157:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 158:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             case RES_M_STATE:
+ 159:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 // firmware update state (int)
+ 160:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             {
+ 161:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 162:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 int state = lwm2m_fota_manager_get_rpt_state(lwm2m_fota_manager_get_instance());
+ 163:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 lwm2m_data_encode_int(state, *dataArrayP + i);
+ 164:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_205_CONTENT;
+ 165:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 166:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_405_METHOD_NOT_ALLOWED;
+ 167:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 168:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 break;
+ 169:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             }
+ 170:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 171:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             case RES_M_UPDATE_RESULT:
+ 172:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             {
+ 173:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 174:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 int updateresult = lwm2m_fota_manager_get_update_result(lwm2m_fota_manager_get_inst
+ 175:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 lwm2m_data_encode_int(updateresult, *dataArrayP + i);
+ 176:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_205_CONTENT;
+ 177:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 178:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_405_METHOD_NOT_ALLOWED;
+ 179:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 180:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 break;
+ 181:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             }
+ 182:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 183:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             case RES_O_FIRMWARE_UPDATE_DELIVER_METHOD:
+ 184:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             {
+ 185:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 186:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 int method = lwm2m_fota_manager_get_deliver_method(lwm2m_fota_manager_get_instance(
+ 187:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 lwm2m_data_encode_int(method, *dataArrayP + i);
+ 188:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_205_CONTENT;
+ 189:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 190:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_405_METHOD_NOT_ALLOWED;
+ 191:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 192:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             }
+ 193:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             break;
+ 194:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 195:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             default:
+ 196:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_404_NOT_FOUND;
+ 197:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         }
+ 198:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 199:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         i++;
+ 200:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 201:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     while ((i < *numDataP) && (COAP_205_CONTENT == result));
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 5
+
+
+ 202:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 203:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 204:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 205:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (dataCfg && (1 == *numDataP) && (RES_M_STATE == (*dataArrayP)[0].id))
+ 206:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 207:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         lwm2m_fota_manager_get_data_cfg(lwm2m_fota_manager_get_instance(), dataCfg);
+ 208:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 209:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 210:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 211:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     return result;
+ 212:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+ 213:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 214:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** static uint8_t prv_firmware_write(uint16_t instanceId,
+ 215:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                   int numData,
+ 216:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                   lwm2m_data_t *dataArray,
+ 217:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                   lwm2m_object_t *objectP)
+ 218:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+ 219:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     int i;
+ 220:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     uint8_t result;
+ 221:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 222:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     // this is a single instance object
+ 223:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (0 != instanceId)
+ 224:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 225:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         return COAP_404_NOT_FOUND;
+ 226:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 227:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 228:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     i = 0;
+ 229:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 230:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     do
+ 231:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 232:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         switch (dataArray[i].id)
+ 233:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         {
+ 234:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             case RES_M_PACKAGE_URI:
+ 235:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 // URL for download the firmware
+ 236:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             {
+ 237:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 int ret;
+ 238:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 239:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 if ((LWM2M_TYPE_STRING != dataArray[i].type) || (NULL == dataArray[i].value.asBuffe
+ 240:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 {
+ 241:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                     ATINY_LOG(LOG_ERR, "type ERR %d", (int)dataArray[i].type);
+ 242:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                     result = COAP_400_BAD_REQUEST;
+ 243:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                     break;
+ 244:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 }
+ 245:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 246:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 247:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 ret = lwm2m_fota_manager_start_download(lwm2m_fota_manager_get_instance(), \
+ 248:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                                         (const char *)(dataArray[i].value.asBuffer.
+ 249:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 250:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 ret = LWM2M_ERR;
+ 251:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 252:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = (LWM2M_OK == ret ? COAP_204_CHANGED : COAP_405_METHOD_NOT_ALLOWED);
+ 253:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 break;
+ 254:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             }
+ 255:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 256:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             default:
+ 257:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 result = COAP_405_METHOD_NOT_ALLOWED;
+ 258:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         }
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 6
+
+
+ 259:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 260:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         i++;
+ 261:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 262:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     while ((i < numData) && (COAP_204_CHANGED == result));
+ 263:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 264:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     return result;
+ 265:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+ 266:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 267:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** static uint8_t prv_firmware_execute(uint16_t instanceId,
+ 268:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                     uint16_t resourceId,
+ 269:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                     uint8_t *buffer,
+ 270:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                     int length,
+ 271:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                                     lwm2m_object_t *objectP)
+ 272:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+ 273:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     // this is a single instance object
+ 274:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (0 != instanceId)
+ 275:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 276:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         return COAP_404_NOT_FOUND;
+ 277:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 278:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 279:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (0 != length) return COAP_400_BAD_REQUEST;
+ 280:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 281:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     // for execute callback, resId is always set.
+ 282:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     switch (resourceId)
+ 283:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 284:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         case RES_M_UPDATE:
+ 285:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         {
+ 286:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 287:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             int ret = lwm2m_fota_manager_execute_update(lwm2m_fota_manager_get_instance());
+ 288:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 289:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             int ret = LWM2M_ERR;
+ 290:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 291:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 292:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             if (LWM2M_OK == ret)
+ 293:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             {
+ 294:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 return COAP_204_CHANGED;
+ 295:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             }
+ 296:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             else
+ 297:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             {
+ 298:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 // firmware update already running
+ 299:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #ifdef CONFIG_FEATURE_FOTA
+ 300:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 return COAP_400_BAD_REQUEST;
+ 301:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 302:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****                 return COAP_405_METHOD_NOT_ALLOWED;
+ 303:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #endif
+ 304:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             }
+ 305:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         }
+ 306:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 307:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         default:
+ 308:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****             return COAP_405_METHOD_NOT_ALLOWED;
+ 309:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 310:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+ 311:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 312:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 313:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** int add_firmware_update_object_instance(lwm2m_object_t *obj, int object_instance_id)
+ 314:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+ 315:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (NULL == obj)
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 7
+
+
+ 316:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 317:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         return LWM2M_ARG_INVALID;
+ 318:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 319:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 320:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     /*
+ 321:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      * and its unique instance
+ 322:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      *
+ 323:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      */
+ 324:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     obj->instanceList = (lwm2m_list_t *)lwm2m_malloc(sizeof(lwm2m_list_t));
+ 325:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 326:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (NULL == obj->instanceList)
+ 327:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 328:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         return LWM2M_MALLOC_FAILED;
+ 329:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 330:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 331:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     (void) memset(obj->instanceList, 0, sizeof(lwm2m_list_t));
+ 332:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     obj->instanceList->id = object_instance_id;
+ 333:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     return LWM2M_OK;
+ 334:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+ 335:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 336:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** int config_firmware_update_object(lwm2m_object_t *obj, void *param)
+ 337:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+ 338:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (NULL == obj)
+ 339:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 340:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         return LWM2M_ARG_INVALID;
+ 341:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 342:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 343:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     /*
+ 344:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      * And the private function that will access the object.
+ 345:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      * Those function will be called when a read/write/execute query is made by the server. In fact
+ 346:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      * know the resources of the object, only the server does.
+ 347:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      */
+ 348:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     obj->readFunc    = prv_firmware_read;
+ 349:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     obj->writeFunc   = prv_firmware_write;
+ 350:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     obj->executeFunc = prv_firmware_execute;
+ 351:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     obj->userData    = NULL;
+ 352:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     /*
+ 353:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      * Also some user data can be stored in the object with a private structure containing the need
+ 354:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****      */
+ 355:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     return LWM2M_OK;
+ 356:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+ 357:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 358:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** void free_object_firmware(lwm2m_object_t *objectP)
+ 359:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+ 360:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (NULL != objectP->userData)
+ 361:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 362:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         lwm2m_free(objectP->userData);
+ 363:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         objectP->userData = NULL;
+ 364:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 365:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 366:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     if (NULL != objectP->instanceList)
+ 367:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     {
+ 368:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         lwm2m_free(objectP->instanceList);
+ 369:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****         objectP->instanceList = NULL;
+ 370:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     }
+ 371:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 372:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     lwm2m_free(objectP);
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 8
+
+
+ 373:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+ 374:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 375:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** #else
+ 376:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 377:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 378:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** lwm2m_object_t *get_object_firmware(lwm2m_param_t *lwm2m_params)
+ 379:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+  29              		.loc 1 379 1
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 80B4     		push	{r7}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 7, -4
+  38 0002 83B0     		sub	sp, sp, #12
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+  41 0004 00AF     		add	r7, sp, #0
+  42              	.LCFI2:
+  43              		.cfi_def_cfa_register 7
+  44 0006 7860     		str	r0, [r7, #4]
+ 380:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     (void)lwm2m_params;
+ 381:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     return NULL;
+  45              		.loc 1 381 12
+  46 0008 0023     		movs	r3, #0
+ 382:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+  47              		.loc 1 382 1
+  48 000a 1846     		mov	r0, r3
+  49 000c 0C37     		adds	r7, r7, #12
+  50              	.LCFI3:
+  51              		.cfi_def_cfa_offset 4
+  52 000e BD46     		mov	sp, r7
+  53              	.LCFI4:
+  54              		.cfi_def_cfa_register 13
+  55              		@ sp needed
+  56 0010 5DF8047B 		ldr	r7, [sp], #4
+  57              	.LCFI5:
+  58              		.cfi_restore 7
+  59              		.cfi_def_cfa_offset 0
+  60 0014 7047     		bx	lr
+  61              		.cfi_endproc
+  62              	.LFE4:
+  64              		.section	.text.free_object_firmware,"ax",%progbits
+  65              		.align	1
+  66              		.global	free_object_firmware
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  70              		.fpu fpv4-sp-d16
+  72              	free_object_firmware:
+  73              	.LFB5:
+ 383:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 384:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** 
+ 385:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** void free_object_firmware(lwm2m_object_t *objectP)
+ 386:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** {
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 9
+
+
+  74              		.loc 1 386 1
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 8
+  77              		@ frame_needed = 1, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+  79 0000 80B4     		push	{r7}
+  80              	.LCFI6:
+  81              		.cfi_def_cfa_offset 4
+  82              		.cfi_offset 7, -4
+  83 0002 83B0     		sub	sp, sp, #12
+  84              	.LCFI7:
+  85              		.cfi_def_cfa_offset 16
+  86 0004 00AF     		add	r7, sp, #0
+  87              	.LCFI8:
+  88              		.cfi_def_cfa_register 7
+  89 0006 7860     		str	r0, [r7, #4]
+ 387:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c ****     (void)objectP;
+ 388:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\object_firmware.c **** }
+  90              		.loc 1 388 1
+  91 0008 00BF     		nop
+  92 000a 0C37     		adds	r7, r7, #12
+  93              	.LCFI9:
+  94              		.cfi_def_cfa_offset 4
+  95 000c BD46     		mov	sp, r7
+  96              	.LCFI10:
+  97              		.cfi_def_cfa_register 13
+  98              		@ sp needed
+  99 000e 5DF8047B 		ldr	r7, [sp], #4
+ 100              	.LCFI11:
+ 101              		.cfi_restore 7
+ 102              		.cfi_def_cfa_offset 0
+ 103 0012 7047     		bx	lr
+ 104              		.cfi_endproc
+ 105              	.LFE5:
+ 107              		.text
+ 108              	.Letext0:
+ 109              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 110              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 111              		.file 4 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 112              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 113              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 114              		.file 7 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 115              		.file 8 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/liblwm2m_
+ 116              		.file 9 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\time.h"
+ 117              		.file 10 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/er-coap-
+ 118              		.file 11 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/wakaama-master/core/liblwm2m
+ 119              		.file 12 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\stdlib.h"
+ 120              		.file 13 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\ctype.h"
+ 121              		.file 14 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port/lwm2m_common.h"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 object_firmware.c
+C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s:18     .text.get_object_firmware:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s:26     .text.get_object_firmware:00000000 get_object_firmware
+C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s:65     .text.free_object_firmware:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cc6rLQHV.s:72     .text.free_object_firmware:00000000 free_object_firmware
+
+NO UNDEFINED SYMBOLS

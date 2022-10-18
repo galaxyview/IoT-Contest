@@ -1,0 +1,470 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"platform_adapter.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.lwm2m_malloc,"ax",%progbits
+  18              		.align	1
+  19              		.global	lwm2m_malloc
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	lwm2m_malloc:
+  27              	.LFB3:
+  28              		.file 1 "g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port/platform_adapter.c"
+   1:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** /*----------------------------------------------------------------------------
+   2:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * All rights reserved.
+   4:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * are permitted provided that the following conditions are met:
+   6:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * conditions and the following disclaimer.
+   8:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * provided with the distribution.
+  11:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * permission.
+  14:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *---------------------------------------------------------------------------*/
+  26:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** /*----------------------------------------------------------------------------
+  27:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * Notice of Export Control Law
+  28:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * ===============================================
+  29:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 2
+
+
+  31:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * applicable export control laws and regulations.
+  33:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *---------------------------------------------------------------------------*/
+  34:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  35:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** /*******************************************************************************
+  36:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *
+  37:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * Copyright (c) 2013, 2014, 2015 Intel Corporation and others.
+  38:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * All rights reserved. This program and the accompanying materials
+  39:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * are made available under the terms of the Eclipse Public License v1.0
+  40:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * and Eclipse Distribution License v1.0 which accompany this distribution.
+  41:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *
+  42:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * The Eclipse Public License is available at
+  43:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *    http://www.eclipse.org/legal/epl-v10.html
+  44:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * The Eclipse Distribution License is available at
+  45:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *    http://www.eclipse.org/org/documents/edl-v10.php.
+  46:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *
+  47:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  * Contributors:
+  48:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *    David Navarro, Intel Corporation - initial API and implementation
+  49:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****  *******************************************************************************/
+  50:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  51:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  52:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** #include <stdint.h>
+  53:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** #include <stddef.h>
+  54:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** #include <string.h>
+  55:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  56:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** #include <osal.h>
+  57:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  58:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  59:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** #ifndef LWM2M_MEMORY_TRACE
+  60:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  61:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** void *lwm2m_malloc(size_t s)
+  62:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** {
+  29              		.loc 1 62 1
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 7, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+  41 0004 00AF     		add	r7, sp, #0
+  42              	.LCFI2:
+  43              		.cfi_def_cfa_register 7
+  44 0006 7860     		str	r0, [r7, #4]
+  63:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****     return osal_malloc(s);
+  45              		.loc 1 63 12
+  46 0008 7868     		ldr	r0, [r7, #4]
+  47 000a FFF7FEFF 		bl	osal_malloc
+  48 000e 0346     		mov	r3, r0
+  64:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** }
+  49              		.loc 1 64 1
+  50 0010 1846     		mov	r0, r3
+  51 0012 0837     		adds	r7, r7, #8
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 3
+
+
+  52              	.LCFI3:
+  53              		.cfi_def_cfa_offset 8
+  54 0014 BD46     		mov	sp, r7
+  55              	.LCFI4:
+  56              		.cfi_def_cfa_register 13
+  57              		@ sp needed
+  58 0016 80BD     		pop	{r7, pc}
+  59              		.cfi_endproc
+  60              	.LFE3:
+  62              		.section	.text.lwm2m_free,"ax",%progbits
+  63              		.align	1
+  64              		.global	lwm2m_free
+  65              		.syntax unified
+  66              		.thumb
+  67              		.thumb_func
+  68              		.fpu fpv4-sp-d16
+  70              	lwm2m_free:
+  71              	.LFB4:
+  65:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  66:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** void lwm2m_free(void *p)
+  67:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** {
+  72              		.loc 1 67 1
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 8
+  75              		@ frame_needed = 1, uses_anonymous_args = 0
+  76 0000 80B5     		push	{r7, lr}
+  77              	.LCFI5:
+  78              		.cfi_def_cfa_offset 8
+  79              		.cfi_offset 7, -8
+  80              		.cfi_offset 14, -4
+  81 0002 82B0     		sub	sp, sp, #8
+  82              	.LCFI6:
+  83              		.cfi_def_cfa_offset 16
+  84 0004 00AF     		add	r7, sp, #0
+  85              	.LCFI7:
+  86              		.cfi_def_cfa_register 7
+  87 0006 7860     		str	r0, [r7, #4]
+  68:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****     osal_free(p);
+  88              		.loc 1 68 5
+  89 0008 7868     		ldr	r0, [r7, #4]
+  90 000a FFF7FEFF 		bl	osal_free
+  69:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** }
+  91              		.loc 1 69 1
+  92 000e 00BF     		nop
+  93 0010 0837     		adds	r7, r7, #8
+  94              	.LCFI8:
+  95              		.cfi_def_cfa_offset 8
+  96 0012 BD46     		mov	sp, r7
+  97              	.LCFI9:
+  98              		.cfi_def_cfa_register 13
+  99              		@ sp needed
+ 100 0014 80BD     		pop	{r7, pc}
+ 101              		.cfi_endproc
+ 102              	.LFE4:
+ 104              		.section	.text.lwm2m_strdup,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	lwm2m_strdup
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 4
+
+
+ 107              		.syntax unified
+ 108              		.thumb
+ 109              		.thumb_func
+ 110              		.fpu fpv4-sp-d16
+ 112              	lwm2m_strdup:
+ 113              	.LFB5:
+  70:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  71:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** char *lwm2m_strdup(const char *str)
+  72:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** {
+ 114              		.loc 1 72 1
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 8
+ 117              		@ frame_needed = 1, uses_anonymous_args = 0
+ 118 0000 80B5     		push	{r7, lr}
+ 119              	.LCFI10:
+ 120              		.cfi_def_cfa_offset 8
+ 121              		.cfi_offset 7, -8
+ 122              		.cfi_offset 14, -4
+ 123 0002 82B0     		sub	sp, sp, #8
+ 124              	.LCFI11:
+ 125              		.cfi_def_cfa_offset 16
+ 126 0004 00AF     		add	r7, sp, #0
+ 127              	.LCFI12:
+ 128              		.cfi_def_cfa_register 7
+ 129 0006 7860     		str	r0, [r7, #4]
+  73:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****     return osal_strdup(str);
+ 130              		.loc 1 73 12
+ 131 0008 7868     		ldr	r0, [r7, #4]
+ 132 000a FFF7FEFF 		bl	osal_strdup
+ 133 000e 0346     		mov	r3, r0
+  74:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** }
+ 134              		.loc 1 74 1
+ 135 0010 1846     		mov	r0, r3
+ 136 0012 0837     		adds	r7, r7, #8
+ 137              	.LCFI13:
+ 138              		.cfi_def_cfa_offset 8
+ 139 0014 BD46     		mov	sp, r7
+ 140              	.LCFI14:
+ 141              		.cfi_def_cfa_register 13
+ 142              		@ sp needed
+ 143 0016 80BD     		pop	{r7, pc}
+ 144              		.cfi_endproc
+ 145              	.LFE5:
+ 147              		.section	.text.lwm2m_strncmp,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	lwm2m_strncmp
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 153              		.fpu fpv4-sp-d16
+ 155              	lwm2m_strncmp:
+ 156              	.LFB6:
+  75:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  76:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** #endif
+  77:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  78:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** int lwm2m_strncmp(const char *s1,
+  79:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****                   const char *s2,
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 5
+
+
+  80:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****                   size_t n)
+  81:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** {
+ 157              		.loc 1 81 1
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 16
+ 160              		@ frame_needed = 1, uses_anonymous_args = 0
+ 161 0000 80B5     		push	{r7, lr}
+ 162              	.LCFI15:
+ 163              		.cfi_def_cfa_offset 8
+ 164              		.cfi_offset 7, -8
+ 165              		.cfi_offset 14, -4
+ 166 0002 84B0     		sub	sp, sp, #16
+ 167              	.LCFI16:
+ 168              		.cfi_def_cfa_offset 24
+ 169 0004 00AF     		add	r7, sp, #0
+ 170              	.LCFI17:
+ 171              		.cfi_def_cfa_register 7
+ 172 0006 F860     		str	r0, [r7, #12]
+ 173 0008 B960     		str	r1, [r7, #8]
+ 174 000a 7A60     		str	r2, [r7, #4]
+  82:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****     return strncmp(s1, s2, n);
+ 175              		.loc 1 82 12
+ 176 000c 7A68     		ldr	r2, [r7, #4]
+ 177 000e B968     		ldr	r1, [r7, #8]
+ 178 0010 F868     		ldr	r0, [r7, #12]
+ 179 0012 FFF7FEFF 		bl	strncmp
+ 180 0016 0346     		mov	r3, r0
+  83:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** }
+ 181              		.loc 1 83 1
+ 182 0018 1846     		mov	r0, r3
+ 183 001a 1037     		adds	r7, r7, #16
+ 184              	.LCFI18:
+ 185              		.cfi_def_cfa_offset 8
+ 186 001c BD46     		mov	sp, r7
+ 187              	.LCFI19:
+ 188              		.cfi_def_cfa_register 13
+ 189              		@ sp needed
+ 190 001e 80BD     		pop	{r7, pc}
+ 191              		.cfi_endproc
+ 192              	.LFE6:
+ 194              		.global	__aeabi_uldivmod
+ 195              		.section	.text.lwm2m_gettime,"ax",%progbits
+ 196              		.align	1
+ 197              		.global	lwm2m_gettime
+ 198              		.syntax unified
+ 199              		.thumb
+ 200              		.thumb_func
+ 201              		.fpu fpv4-sp-d16
+ 203              	lwm2m_gettime:
+ 204              	.LFB7:
+  84:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  85:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** unsigned int lwm2m_gettime(void)
+  86:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** {
+ 205              		.loc 1 86 1
+ 206              		.cfi_startproc
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 6
+
+
+ 209 0000 80B5     		push	{r7, lr}
+ 210              	.LCFI20:
+ 211              		.cfi_def_cfa_offset 8
+ 212              		.cfi_offset 7, -8
+ 213              		.cfi_offset 14, -4
+ 214 0002 00AF     		add	r7, sp, #0
+ 215              	.LCFI21:
+ 216              		.cfi_def_cfa_register 7
+  87:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****     return (uint32_t)(osal_sys_time() / 1000);
+ 217              		.loc 1 87 23
+ 218 0004 FFF7FEFF 		bl	osal_sys_time
+ 219              		.loc 1 87 39
+ 220 0008 4FF47A72 		mov	r2, #1000
+ 221 000c 4FF00003 		mov	r3, #0
+ 222 0010 FFF7FEFF 		bl	__aeabi_uldivmod
+ 223              	.LVL0:
+ 224 0014 0246     		mov	r2, r0
+ 225 0016 0B46     		mov	r3, r1
+ 226              		.loc 1 87 12
+ 227 0018 1346     		mov	r3, r2
+  88:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** }
+ 228              		.loc 1 88 1
+ 229 001a 1846     		mov	r0, r3
+ 230 001c 80BD     		pop	{r7, pc}
+ 231              		.cfi_endproc
+ 232              	.LFE7:
+ 234              		.section	.text.lwm2m_rand,"ax",%progbits
+ 235              		.align	1
+ 236              		.global	lwm2m_rand
+ 237              		.syntax unified
+ 238              		.thumb
+ 239              		.thumb_func
+ 240              		.fpu fpv4-sp-d16
+ 242              	lwm2m_rand:
+ 243              	.LFB8:
+  89:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  90:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** int lwm2m_rand(void *output, size_t len)
+  91:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** {
+ 244              		.loc 1 91 1
+ 245              		.cfi_startproc
+ 246              		@ args = 0, pretend = 0, frame = 8
+ 247              		@ frame_needed = 1, uses_anonymous_args = 0
+ 248 0000 80B5     		push	{r7, lr}
+ 249              	.LCFI22:
+ 250              		.cfi_def_cfa_offset 8
+ 251              		.cfi_offset 7, -8
+ 252              		.cfi_offset 14, -4
+ 253 0002 82B0     		sub	sp, sp, #8
+ 254              	.LCFI23:
+ 255              		.cfi_def_cfa_offset 16
+ 256 0004 00AF     		add	r7, sp, #0
+ 257              	.LCFI24:
+ 258              		.cfi_def_cfa_register 7
+ 259 0006 7860     		str	r0, [r7, #4]
+ 260 0008 3960     		str	r1, [r7]
+  92:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****     return link_random(output, len);
+ 261              		.loc 1 92 12
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 7
+
+
+ 262 000a 3B68     		ldr	r3, [r7]
+ 263 000c 1946     		mov	r1, r3
+ 264 000e 7868     		ldr	r0, [r7, #4]
+ 265 0010 FFF7FEFF 		bl	link_random
+ 266 0014 0346     		mov	r3, r0
+  93:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** }
+ 267              		.loc 1 93 1
+ 268 0016 1846     		mov	r0, r3
+ 269 0018 0837     		adds	r7, r7, #8
+ 270              	.LCFI25:
+ 271              		.cfi_def_cfa_offset 8
+ 272 001a BD46     		mov	sp, r7
+ 273              	.LCFI26:
+ 274              		.cfi_def_cfa_register 13
+ 275              		@ sp needed
+ 276 001c 80BD     		pop	{r7, pc}
+ 277              		.cfi_endproc
+ 278              	.LFE8:
+ 280              		.section	.text.lwm2m_delay,"ax",%progbits
+ 281              		.align	1
+ 282              		.global	lwm2m_delay
+ 283              		.syntax unified
+ 284              		.thumb
+ 285              		.thumb_func
+ 286              		.fpu fpv4-sp-d16
+ 288              	lwm2m_delay:
+ 289              	.LFB9:
+  94:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** 
+  95:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** void lwm2m_delay(uint32_t second)
+  96:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** {
+ 290              		.loc 1 96 1
+ 291              		.cfi_startproc
+ 292              		@ args = 0, pretend = 0, frame = 8
+ 293              		@ frame_needed = 1, uses_anonymous_args = 0
+ 294 0000 80B5     		push	{r7, lr}
+ 295              	.LCFI27:
+ 296              		.cfi_def_cfa_offset 8
+ 297              		.cfi_offset 7, -8
+ 298              		.cfi_offset 14, -4
+ 299 0002 82B0     		sub	sp, sp, #8
+ 300              	.LCFI28:
+ 301              		.cfi_def_cfa_offset 16
+ 302 0004 00AF     		add	r7, sp, #0
+ 303              	.LCFI29:
+ 304              		.cfi_def_cfa_register 7
+ 305 0006 7860     		str	r0, [r7, #4]
+  97:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c ****     osal_task_sleep(second * 1000);
+ 306              		.loc 1 97 28
+ 307 0008 7B68     		ldr	r3, [r7, #4]
+ 308 000a 4FF47A72 		mov	r2, #1000
+ 309 000e 02FB03F3 		mul	r3, r2, r3
+ 310              		.loc 1 97 5
+ 311 0012 1846     		mov	r0, r3
+ 312 0014 FFF7FEFF 		bl	osal_task_sleep
+  98:g:/iot/IoT_Device_Demo/iot_link/network/lwm2m/wakaama_lwm2m/port\platform_adapter.c **** }
+ 313              		.loc 1 98 1
+ 314 0018 00BF     		nop
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 8
+
+
+ 315 001a 0837     		adds	r7, r7, #8
+ 316              	.LCFI30:
+ 317              		.cfi_def_cfa_offset 8
+ 318 001c BD46     		mov	sp, r7
+ 319              	.LCFI31:
+ 320              		.cfi_def_cfa_register 13
+ 321              		@ sp needed
+ 322 001e 80BD     		pop	{r7, pc}
+ 323              		.cfi_endproc
+ 324              	.LFE9:
+ 326              		.text
+ 327              	.Letext0:
+ 328              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 329              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 330              		.file 4 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 331              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ 332              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 333              		.file 7 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 platform_adapter.c
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:18     .text.lwm2m_malloc:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:26     .text.lwm2m_malloc:00000000 lwm2m_malloc
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:63     .text.lwm2m_free:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:70     .text.lwm2m_free:00000000 lwm2m_free
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:105    .text.lwm2m_strdup:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:112    .text.lwm2m_strdup:00000000 lwm2m_strdup
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:148    .text.lwm2m_strncmp:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:155    .text.lwm2m_strncmp:00000000 lwm2m_strncmp
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:196    .text.lwm2m_gettime:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:203    .text.lwm2m_gettime:00000000 lwm2m_gettime
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:235    .text.lwm2m_rand:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:242    .text.lwm2m_rand:00000000 lwm2m_rand
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:281    .text.lwm2m_delay:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\cczzWGuY.s:288    .text.lwm2m_delay:00000000 lwm2m_delay
+
+UNDEFINED SYMBOLS
+osal_malloc
+osal_free
+osal_strdup
+strncmp
+__aeabi_uldivmod
+osal_sys_time
+link_random
+osal_task_sleep
