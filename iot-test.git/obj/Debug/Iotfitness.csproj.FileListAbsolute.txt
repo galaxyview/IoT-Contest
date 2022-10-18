@@ -1,0 +1,10 @@
+G:\iot\iot-test.git\bin\Debug\Iotfitness.exe.config
+G:\iot\iot-test.git\bin\Debug\Iotfitness.exe
+G:\iot\iot-test.git\bin\Debug\Iotfitness.pdb
+G:\iot\iot-test.git\obj\Debug\Iotfitness.csprojAssemblyReference.cache
+G:\iot\iot-test.git\obj\Debug\Iotfitness.Form1.resources
+G:\iot\iot-test.git\obj\Debug\Iotfitness.Properties.Resources.resources
+G:\iot\iot-test.git\obj\Debug\Iotfitness.csproj.GenerateResource.cache
+G:\iot\iot-test.git\obj\Debug\Iotfitness.csproj.CoreCompileInputs.cache
+G:\iot\iot-test.git\obj\Debug\Iotfitness.exe
+G:\iot\iot-test.git\obj\Debug\Iotfitness.pdb
