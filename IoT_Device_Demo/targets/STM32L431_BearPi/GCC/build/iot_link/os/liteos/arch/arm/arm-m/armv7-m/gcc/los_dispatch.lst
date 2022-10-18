@@ -1,0 +1,759 @@
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"los_dispatch.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.LOS_StartToRun,"ax",%progbits
+  18              		.align	1
+  19              		.global	LOS_StartToRun
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	LOS_StartToRun:
+  27              	.LFB287:
+  28              		.file 1 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc/los_dispatch.c"
+   1:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** /** ----------------------------------------------------------------------------
+   2:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * Copyright (c) <2019>, <Huawei Technologies Co., Ltd>
+   3:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * All rights reserved.
+   4:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * are permitted provided that the following conditions are met:
+   6:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * conditions and the following disclaimer.
+   8:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * provided with the distribution.
+  11:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * permission.
+  14:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  *---------------------------------------------------------------------------*/
+  26:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** /** ----------------------------------------------------------------------------
+  27:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * Notice of Export Control Law
+  28:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * ===============================================
+  29:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 2
+
+
+  31:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  * applicable export control laws and regulations.
+  33:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  *---------------------------------------------------------------------------*/
+  34:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****  
+  35:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #include <los_config.h>
+  36:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #include <los_typedef.h>
+  37:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  38:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #define NVIC_INT_CTRL                   0xE000ED04  /* Interrupt Control and State Register. */
+  39:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #define NVIC_PENDSVSET                  0x10000000  /* Value to trigger PendSV exception. */
+  40:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  41:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #define NVIC_SYSPRI2                    0xE000ED20  /* System Handler Priority Register 2. */
+  42:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #define NVIC_PENDSV_SYSTICK_PRI         0xFFFF0000  /* SysTick + PendSV priority level (lowest). */
+  43:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #define MPU_RBAR                        0xE000ED9C  /* MPU Region Base Address register */
+  44:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  45:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #define OS_TASK_STATUS_RUNNING          0x00000010  /* Task Status Flag (RUNNING). */
+  46:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  47:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** /****************************************************************************************
+  48:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Function:
+  49:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        VOID LOS_StartToRun(VOID);
+  50:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Description:
+  51:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        Start the first task, which is the highest priority task in the priority queue.
+  52:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        Other tasks are started by task scheduling.
+  53:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** ****************************************************************************************/
+  54:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** __attribute__((naked)) void LOS_StartToRun(void)
+  55:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** {
+  29              		.loc 1 55 1
+  30              		.cfi_startproc
+  31              		@ Naked Function: prologue and epilogue provided by programmer.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 1, uses_anonymous_args = 0
+  56:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     asm (
+  34              		.loc 1 56 5
+  35              		.syntax unified
+  36              	@ 56 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc/los_dispatch.c" 1
+  37              		.syntax unified
+  38 0000 72B6     		CPSID  I
+  39 0002 1548     		LDR    R0, =#-536810208                 @ NVIC_SYSPRI2
+  40 0004 1549     		LDR    R1, =#-65536                 @ NVIC_PENDSV_SYSTICK_PRI
+  41 0006 0268     		LDR    R2, [R0]
+  42 0008 41EA0201 		ORR    R1, R1, R2
+  43 000c 0160     		STR    R1, [R0]
+  44 000e 1448     		LDR    R0, =g_bTaskScheduled
+  45 0010 4FF00101 		MOV    R1, #1
+  46 0014 0160     		STR    R1, [R0]
+  47 0016 1348     		LDR    R0, =g_stLosTask
+  48 0018 4168     		LDR    R1, [R0, #4]
+  49 001a 0160     		STR    R1, [R0]
+  50 001c 0168     		LDR    R1, [R0]
+  51 001e 8A88     		LDRH   R2, [R1, #4]
+  52 0020 4FF01003 		MOV    R3, #16                  @ OS_TASK_STATUS_RUNNING
+  53 0024 42EA0302 		ORR    R2, R2, R3
+  54 0028 8A80     		STRH   R2, [R1, #4]
+  55 002a D1F800C0 		LDR    R12, [R1]
+  56 002e 4FF00203 		MOV    R3, #2
+  57 0032 0CF1240C 		ADD    R12, R12, #36           @ skip R4-R11, PRIMASK.
+  58 0036 0CF1040C 		ADD    R12, R12, #4            @ if FPU exist, skip EXC_RETURN.
+  59 003a DCF80000 		LDR    R0, [R12]
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 3
+
+
+  60 003e DCF814E0 		LDR    LR, [R12, #4 * 5]
+  61 0042 DCF81820 		LDR    R2, [R12, #4 * 6]
+  62 0046 0CF1200C 		ADD    R12, R12, #4 * 8
+  63 004a 8CF30988 		MSR    PSP, R12
+  64 004e 62B6     		CPSIE  I
+  65 0050 83F31488 		MSR    CONTROL, R3
+  66 0054 1047     		BX     R2
+  67              		
+  68              	@ 0 "" 2
+  57:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     ".syntax unified\n\t"
+  58:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  59:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "CPSID  I\n\t"
+  60:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  61:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+  62:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set PendSV and SysTick prority to the lowest.
+  63:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * read ---> modify ---> write-back.
+  64:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+  65:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  66:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R0, =%0                 @ NVIC_SYSPRI2\n\t"
+  67:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R1, =%1                 @ NVIC_PENDSV_SYSTICK_PRI\n\t"
+  68:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R2, [R0]\n\t"
+  69:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "ORR    R1, R1, R2\n\t"
+  70:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STR    R1, [R0]\n\t"
+  71:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  72:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+  73:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set g_bTaskScheduled = 1.
+  74:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+  75:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  76:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R0, =g_bTaskScheduled\n\t"
+  77:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MOV    R1, #1\n\t"
+  78:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STR    R1, [R0]\n\t"
+  79:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  80:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+  81:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set g_stLosTask.pstRunTask = g_stLosTask.pstNewTask.
+  82:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+  83:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R0, =g_stLosTask\n\t"
+  84:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R1, [R0, #4]\n\t"
+  85:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STR    R1, [R0]\n\t"
+  86:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  87:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+  88:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set g_stLosTask.pstRunTask->usTaskStatus |= OS_TASK_STATUS_RUNNING.
+  89:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+  90:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R1, [R0]\n\t"
+  91:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDRH   R2, [R1, #4]\n\t"
+  92:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MOV    R3, %2                  @ OS_TASK_STATUS_RUNNING\n\t"
+  93:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "ORR    R2, R2, R3\n\t"
+  94:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STRH   R2, [R1, #4]\n\t"
+  95:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+  96:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+  97:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Restore the default stack frame(R0-R3,R12,LR,PC,xPSR) of g_stLosTask.pstRunTask to R0-R7.
+  98:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * [Initial EXC_RETURN ignore, if FPU supported] return by setting the CONTROL register.
+  99:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ 100:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * The initial stack of the current running task is as follows:
+ 101:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ 102:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       POP: Restore the context of the current running task ===>|
+ 103:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                                   High addr--->|
+ 104:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                         Bottom of the stack--->|
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 4
+
+
+ 105:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * ----------+-----------------------------+----------------------+
+ 106:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *           | R4-R11,PRIMASK[,EXC_RETURN] | R0-R3,R12,LR,PC,xPSR |
+ 107:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * ----------+-----------------------------+----------------------+
+ 108:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *           |<---Top of the stack, restored from g_stLosTask.pstRunTask->pStackPointer
+ 109:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *           |<---         skip        --->|<--- get r0,lr,pc --->|
+ 110:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                                  R12 to PSP--->|
+ 111:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                          Stack pointer after LOS_StartToRun--->|
+ 112:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 113:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 114:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R12, [R1]\n\t"
+ 115:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 116:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 117:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R0, [R1, #8]            @ TCB->pMpuSettings\n\t"
+ 118:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R1, =%3                 @ MPU_RBAR\n\t"
+ 119:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDM    R0!, {R2-R7}\n\t"
+ 120:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STM    R1, {R2-R7}\n\t"
+ 121:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDM    R0!, {R2-R7}\n\t"
+ 122:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STM    R1, {R2-R7}\n\t"
+ 123:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 124:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R3, [R12], #4           @ get the CONTROL value\n\t"
+ 125:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "ORR    R3, #2                  @ set CONTROL.SPSEL\n\t"
+ 126:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #else
+ 127:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MOV    R3, #2\n\t"
+ 128:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #endif
+ 129:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 130:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "ADD    R12, R12, #36           @ skip R4-R11, PRIMASK.\n\t"
+ 131:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 132:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #if defined (__VFP_FP__) && !defined(__SOFTFP__)
+ 133:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "ADD    R12, R12, #4            @ if FPU exist, skip EXC_RETURN.\n\t"
+ 134:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #endif
+ 135:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 136:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R0, [R12]\n\t"
+ 137:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    LR, [R12, #4 * 5]\n\t"
+ 138:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R2, [R12, #4 * 6]\n\t"
+ 139:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 140:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "ADD    R12, R12, #4 * 8\n\t"
+ 141:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 142:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 143:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set the stack pointer of g_stLosTask.pstRunTask to PSP.
+ 144:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 145:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MSR    PSP, R12\n\t"
+ 146:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 147:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 148:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Enable interrupt. (The default PRIMASK value is 0, so enable directly)
+ 149:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 150:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "CPSIE  I\n\t"
+ 151:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 152:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 153:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set the CONTROL register, after schedule start, privilege level and stack = PSP.
+ 154:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 155:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MSR    CONTROL, R3\n\t"
+ 156:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 157:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 158:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Jump directly to the default PC of g_stLosTask.pstRunTask, the field information
+ 159:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * of the main function will be destroyed and will never be returned.
+ 160:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 161:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BX     R2\n\t"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 5
+
+
+ 162:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     :
+ 163:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     : "X" (NVIC_SYSPRI2), "X" (NVIC_PENDSV_SYSTICK_PRI),
+ 164:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****       "I" (OS_TASK_STATUS_RUNNING), "X" (MPU_RBAR)
+ 165:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     );
+ 166:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** }
+  69              		.loc 1 166 1
+  70              		.thumb
+  71              		.syntax unified
+  72 0056 00BF     		nop
+  73              		.cfi_endproc
+  74              	.LFE287:
+  76              		.section	.text.LOS_IntLock,"ax",%progbits
+  77              		.align	1
+  78              		.global	LOS_IntLock
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  82              		.fpu fpv4-sp-d16
+  84              	LOS_IntLock:
+  85              	.LFB288:
+ 167:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 168:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** /****************************************************************************************
+ 169:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Function:
+ 170:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        UINTPTR LOS_IntLock(VOID);
+ 171:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Description:
+ 172:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        Disable all interrupts except Reset,NMI and HardFault.
+ 173:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        The value of currnet interruption state will be returned to the caller to save.
+ 174:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *
+ 175:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Function:
+ 176:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        VOID LOS_IntRestore(UINTPTR uvIntSave);
+ 177:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Description:
+ 178:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        Restore the locked interruption of LOS_IntLock.
+ 179:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        The caller must pass in the value of interruption state previously saved.
+ 180:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** ****************************************************************************************/
+ 181:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** __attribute__((naked)) UINTPTR LOS_IntLock(void)
+ 182:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** {
+  86              		.loc 1 182 1
+  87              		.cfi_startproc
+  88              		@ Naked Function: prologue and epilogue provided by programmer.
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 1, uses_anonymous_args = 0
+ 183:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     asm (
+  91              		.loc 1 183 5
+  92              		.syntax unified
+  93              	@ 183 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc/los_dispatch.c" 1
+  94              		.syntax unified
+  95 0000 EFF31080 		MRS    R0, PRIMASK
+  96 0004 72B6     		CPSID  I
+  97 0006 7047     		BX     LR
+  98              		
+  99              	@ 0 "" 2
+ 184:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     ".syntax unified\n\t"
+ 185:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 186:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MRS    R0, PRIMASK\n\t"
+ 187:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "CPSID  I\n\t"
+ 188:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BX     LR\n\t"
+ 189:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     );
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 6
+
+
+ 190:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** }
+ 100              		.loc 1 190 1
+ 101              		.thumb
+ 102              		.syntax unified
+ 103 0008 00BF     		nop
+ 104 000a 1846     		mov	r0, r3
+ 105              		.cfi_endproc
+ 106              	.LFE288:
+ 108              		.section	.text.LOS_IntUnLock,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	LOS_IntUnLock
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 114              		.fpu fpv4-sp-d16
+ 116              	LOS_IntUnLock:
+ 117              	.LFB289:
+ 191:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 192:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** __attribute__((naked)) UINTPTR LOS_IntUnLock(void)
+ 193:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** {
+ 118              		.loc 1 193 1
+ 119              		.cfi_startproc
+ 120              		@ Naked Function: prologue and epilogue provided by programmer.
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 1, uses_anonymous_args = 0
+ 194:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     asm (
+ 123              		.loc 1 194 5
+ 124              		.syntax unified
+ 125              	@ 194 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc/los_dispatch.c" 1
+ 126              		.syntax unified
+ 127 0000 EFF31080 		MRS    R0, PRIMASK
+ 128 0004 62B6     		CPSIE  I
+ 129 0006 7047     		BX     LR
+ 130              		
+ 131              	@ 0 "" 2
+ 195:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     ".syntax unified\n\t"
+ 196:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 197:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MRS    R0, PRIMASK\n\t"
+ 198:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "CPSIE  I\n\t"
+ 199:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BX     LR\n\t"
+ 200:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     );
+ 201:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** }
+ 132              		.loc 1 201 1
+ 133              		.thumb
+ 134              		.syntax unified
+ 135 0008 00BF     		nop
+ 136 000a 1846     		mov	r0, r3
+ 137              		.cfi_endproc
+ 138              	.LFE289:
+ 140              		.section	.text.LOS_IntRestore,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	LOS_IntRestore
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 146              		.fpu fpv4-sp-d16
+ 148              	LOS_IntRestore:
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 7
+
+
+ 149              	.LFB290:
+ 202:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 203:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** __attribute__((naked)) VOID LOS_IntRestore(UINTPTR key)
+ 204:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** {
+ 150              		.loc 1 204 1
+ 151              		.cfi_startproc
+ 152              		@ Naked Function: prologue and epilogue provided by programmer.
+ 153              		@ args = 0, pretend = 0, frame = 0
+ 154              		@ frame_needed = 1, uses_anonymous_args = 0
+ 205:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     asm (
+ 155              		.loc 1 205 5
+ 156              		.syntax unified
+ 157              	@ 205 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc/los_dispatch.c" 1
+ 158              		.syntax unified
+ 159 0000 80F31088 		MSR    PRIMASK, R0
+ 160 0004 7047     		BX     LR
+ 161              		
+ 162              	@ 0 "" 2
+ 206:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     ".syntax unified\n\t"
+ 207:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 208:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MSR    PRIMASK, R0\n\t"
+ 209:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BX     LR\n\t"
+ 210:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     );
+ 211:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** }
+ 163              		.loc 1 211 1
+ 164              		.thumb
+ 165              		.syntax unified
+ 166 0006 00BF     		nop
+ 167              		.cfi_endproc
+ 168              	.LFE290:
+ 170              		.section	.text.osTaskSchedule,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	osTaskSchedule
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 176              		.fpu fpv4-sp-d16
+ 178              	osTaskSchedule:
+ 179              	.LFB291:
+ 212:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 213:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** /****************************************************************************************
+ 214:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Function:
+ 215:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        VOID osTaskSchedule(VOID);
+ 216:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Description:
+ 217:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        Start the task swtich process by software trigger PendSV interrupt.
+ 218:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** ****************************************************************************************/
+ 219:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** __attribute__((naked)) VOID osTaskSchedule(VOID)
+ 220:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** {
+ 180              		.loc 1 220 1
+ 181              		.cfi_startproc
+ 182              		@ Naked Function: prologue and epilogue provided by programmer.
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 1, uses_anonymous_args = 0
+ 221:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     asm (
+ 185              		.loc 1 221 5
+ 186              		.syntax unified
+ 187              	@ 221 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc/los_dispatch.c" 1
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 8
+
+
+ 188              		.syntax unified
+ 189 0000 0248     		LDR    R0, =#-536810236                 @ NVIC_INT_CTRL
+ 190 0002 4FF08051 		LDR    R1, =#268435456                 @ NVIC_PENDSVSET
+ 191 0006 0160     		STR    R1, [R0]
+ 192 0008 7047     		BX     LR
+ 193              		
+ 194              	@ 0 "" 2
+ 222:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     ".syntax unified\n\t"
+ 223:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 224:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R0, =%0                 @ NVIC_INT_CTRL\n\t"
+ 225:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R1, =%1                 @ NVIC_PENDSVSET\n\t"
+ 226:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STR    R1, [R0]\n\t"
+ 227:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BX     LR\n\t"
+ 228:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     :
+ 229:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     : "X" (NVIC_INT_CTRL), "X" (NVIC_PENDSVSET)
+ 230:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     );
+ 231:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** }
+ 195              		.loc 1 231 1
+ 196              		.thumb
+ 197              		.syntax unified
+ 198 000a 00BF     		nop
+ 199              		.cfi_endproc
+ 200              	.LFE291:
+ 202              		.section	.text.PendSV_Handler,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	PendSV_Handler
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 208              		.fpu fpv4-sp-d16
+ 210              	PendSV_Handler:
+ 211              	.LFB292:
+ 232:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 233:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** /****************************************************************************************
+ 234:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Function:
+ 235:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        VOID PendSV_Handler(VOID);
+ 236:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** * Description:
+ 237:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        PendSV interrupt handler, switch the context of the task.
+ 238:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        First: Save the context of the current running task(g_stLosTask.pstRunTask)
+ 239:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *               to its own stack.
+ 240:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *        Second: Restore the context of the next running task(g_stLosTask.pstNewTask)
+ 241:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** *                from its own stack.
+ 242:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** ****************************************************************************************/
+ 243:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** __attribute__((naked)) VOID PendSV_Handler(VOID)
+ 244:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** {
+ 212              		.loc 1 244 1
+ 213              		.cfi_startproc
+ 214              		@ Naked Function: prologue and epilogue provided by programmer.
+ 215              		@ args = 0, pretend = 0, frame = 0
+ 216              		@ frame_needed = 1, uses_anonymous_args = 0
+ 245:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     asm (
+ 217              		.loc 1 245 5
+ 218              		.syntax unified
+ 219              	@ 245 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc/los_dispatch.c" 1
+ 220              		.syntax unified
+ 221 0000 EFF3108C 		MRS    R12, PRIMASK
+ 222 0004 72B6     		CPSID  I
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 9
+
+
+ 223 0006 194A     		LDR    R2, =g_pfnTskSwitchHook
+ 224 0008 1268     		LDR    R2, [R2]
+ 225 000a 22B1     		CBZ    R2, 0f
+ 226 000c 2DE90050 		PUSH   {R12, LR}
+ 227 0010 9047     		BLX    R2
+ 228 0012 BDE80050 		POP    {R12, LR}
+ 229              		0:
+ 230 0016 EFF30980 		MRS    R0, PSP
+ 231 001a 1EF0100F 		TST    R14, #0x10              @ if the task using the FPU context
+ 232 001e 01D1     		BNE    0f
+ 233 0020 20ED108B 		VSTMDB R0!, {D8-D15}
+ 234              		0:
+ 235 0024 40F804ED 		STMFD  R0!, {R14}              @ save EXC_RETURN
+ 236 0028 20E9F01F 		STMFD  R0!, {R4-R12}           @ save the core registers and PRIMASK.
+ 237 002c 104D     		LDR    R5, =g_stLosTask
+ 238 002e 4FF01008 		MOV    R8, #16                 @ OS_TASK_STATUS_RUNNING
+ 239 0032 2E68     		LDR    R6, [R5]
+ 240 0034 3060     		STR    R0, [R6]
+ 241 0036 B788     		LDRH   R7, [R6, #4]
+ 242 0038 27EA0807 		BIC    R7, R7, R8
+ 243 003c B780     		STRH   R7, [R6, #4]
+ 244 003e 6868     		LDR    R0, [R5, #4]
+ 245 0040 2860     		STR    R0, [R5]
+ 246 0042 8788     		LDRH   R7, [R0, #4]
+ 247 0044 47EA0807 		ORR    R7, R7, R8
+ 248 0048 8780     		STRH   R7, [R0, #4]
+ 249 004a 0168     		LDR    R1, [R0]
+ 250 004c B1E8F01F 		LDMFD  R1!, {R4-R12}           @ restore the core registers and PRIMASK
+ 251 0050 51F804EB 		LDMFD  R1!, {R14}              @ restore EXC_RETURN
+ 252 0054 1EF0100F 		TST    R14, #0x10              @ if the task using the FPU context
+ 253 0058 01D1     		BNE    0f
+ 254 005a B1EC108B 		VLDMIA R1!, {D8-D15}
+ 255              		0:
+ 256 005e 81F30988 		MSR    PSP, R1
+ 257 0062 8CF31088 		MSR    PRIMASK, R12
+ 258 0066 7047     		BX     LR
+ 259              		
+ 260              	@ 0 "" 2
+ 246:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     ".syntax unified\n\t"
+ 247:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 248:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 249:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * R12: Save the interruption state of the current running task.
+ 250:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Disable all interrupts except Reset,NMI and HardFault
+ 251:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 252:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MRS    R12, PRIMASK\n\t"
+ 253:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "CPSID  I\n\t"
+ 254:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 255:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 256:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Call task switch hook.
+ 257:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 258:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R2, =g_pfnTskSwitchHook\n\t"
+ 259:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R2, [R2]\n\t"
+ 260:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "CBZ    R2, 0f\n\t"
+ 261:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "PUSH   {R12, LR}\n\t"
+ 262:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BLX    R2\n\t"
+ 263:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "POP    {R12, LR}\n\t"
+ 264:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 10
+
+
+ 265:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "0:\n\t"
+ 266:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 267:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 268:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * R0 = now stack pointer of the current running task.
+ 269:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 270:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MRS    R0, PSP\n\t"
+ 271:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 272:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 273:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Save the stack frame([S16-S31,]R4-R11) of the current running task.
+ 274:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * R12 save the PRIMASK value of the current running task.
+ 275:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * NOTE: 1. Before entering the exception handler function, these registers
+ 276:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       ([NO_NAME,FPSCR,S15-S0],xPSR,PC,LR,R12,R3-R0) have been automatically
+ 277:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       saved by the CPU in the stack of the current running task.
+ 278:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       2. If lazy stacking is enabled, space is reserved on the stack for
+ 279:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       the floating-point context(FPSCR,S15-S0), but the floating-point state
+ 280:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       is not saved. when the floating-point instruction(VSTMDBEQ  R0!, {D8-D15})
+ 281:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       is executed, the floating-point context(FPSCR,S15-S0) is first saved into
+ 282:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       the space reserved on the stack. In other words, the instruction
+ 283:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       'VSTMDBEQ  R0!, {D8-D15}' will trigger the CPU to save 'FPSCR,S15-S0' first.
+ 284:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ 285:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * The stack of the current running task is as follows:
+ 286:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ 287:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *   |<=== PUSH: Save the context of the current running task
+ 288:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *   |                                                                        High addr--->|
+ 289:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * --+---------------------------------------+---------------------------------------------+---
+ 290:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *   | R4-R11,PRIMASK[,EXC_RETURN[,S16-S31]] | R0-R3,R12,LR,PC,xPSR[,S0-S15,FPSCR,NO_NAME] |
+ 291:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *   |                                                             [    lazy stacking    ] |
+ 292:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * --+---------------------------------------+---------------------------------------------+---
+ 293:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                              Stack pointer before entering exception--->|
+ 294:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                           |<---            cpu auto saved           --->|
+ 295:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                           |<---PSP to R0
+ 296:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *   |<---Top of the stack, save to g_stLosTask.pstRunTask->pStackPointer
+ 297:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 298:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #if defined (__VFP_FP__) && !defined(__SOFTFP__)       /* if FPU exist. */
+ 299:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "TST    R14, #0x10              @ if the task using the FPU context\n\t"
+ 300:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BNE    0f\n\t"
+ 301:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "VSTMDB R0!, {D8-D15}\n\t"
+ 302:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "0:\n\t"
+ 303:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STMFD  R0!, {R14}              @ save EXC_RETURN\n\t"
+ 304:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #endif
+ 305:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 306:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STMFD  R0!, {R4-R12}           @ save the core registers and PRIMASK.\n\t"
+ 307:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 308:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 309:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MRS    R1, CONTROL\n\t"
+ 310:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STR    R1, [R0, #-4]!\n\t"
+ 311:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #endif
+ 312:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 313:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 314:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * R5,R8.
+ 315:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 316:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R5, =g_stLosTask\n\t"
+ 317:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MOV    R8, %0                 @ OS_TASK_STATUS_RUNNING\n\t"
+ 318:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 319:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 320:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Save the stack pointer of the current running task to TCB.
+ 321:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * (g_stLosTask.pstRunTask->pStackPointer = R0)
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 11
+
+
+ 322:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 323:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R6, [R5]\n\t"
+ 324:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STR    R0, [R6]\n\t"
+ 325:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 326:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 327:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Clear the RUNNING state of the current running task.
+ 328:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * (g_stLosTask.pstRunTask->usTaskStatus &= ~OS_TASK_STATUS_RUNNING)
+ 329:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 330:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDRH   R7, [R6, #4]\n\t"
+ 331:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BIC    R7, R7, R8\n\t"
+ 332:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STRH   R7, [R6, #4]\n\t"
+ 333:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 334:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 335:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Switch the current running task to the next running task.
+ 336:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * (g_stLosTask.pstRunTask = g_stLosTask.pstNewTask)
+ 337:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 338:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R0, [R5, #4]\n\t"
+ 339:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STR    R0, [R5]\n\t"
+ 340:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 341:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 342:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set the RUNNING state of the next running task.
+ 343:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * (g_stLosTask.pstNewTask->usTaskStatus |= OS_TASK_STATUS_RUNNING)
+ 344:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 345:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDRH   R7, [R0, #4]\n\t"
+ 346:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "ORR    R7, R7, R8\n\t"
+ 347:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STRH   R7, [R0, #4]\n\t"
+ 348:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 349:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 350:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Restore the stack pointer of the next running task from TCB.
+ 351:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * (R1 = g_stLosTask.pstNewTask->pStackPointer)
+ 352:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 353:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R1, [R0]\n\t"
+ 354:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 355:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 356:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 357:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set the CONTROL register
+ 358:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 359:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 360:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R4, [R0, #8]            @ TCB->pMpuSettings\n\t"
+ 361:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R5, =%1                 @ MPU_RBAR\n\t"
+ 362:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDM    R4!, {R6-R11}\n\t"
+ 363:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STM    R5, {R6-R11}\n\t"
+ 364:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDM    R4!, {R6-R11}\n\t"
+ 365:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "STM    R5, {R6-R11}\n\t"
+ 366:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDR    R4, [R1], #4\n\t"
+ 367:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MSR    CONTROL, R4\n\t"
+ 368:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #endif
+ 369:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 370:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 371:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Restore the stack frame(R4-R11[,S16-S31]) of the next running task.
+ 372:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * R12 restore the PRIMASK value of the next running task.
+ 373:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * NOTE: After exiting the exception handler function, these registers
+ 374:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       (PC,xPSR,R0-R3,R12,LR[,S0-S15,FPSCR,NO_NAME]) will be automatically
+ 375:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *       restored by the CPU from the stack of the next running task.
+ 376:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ 377:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * 1. The stack of the next running task is as follows:
+ 378:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 12
+
+
+ 379:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                   POP: Restore the context of the next running task ===>|
+ 380:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                                                            High addr--->|
+ 381:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * --+---------------------------------------+---------------------------------------------+---
+ 382:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *   | R4-R11,PRIMASK[,EXC_RETURN[,S16-S31]] | R0-R3,R12,LR,PC,xPSR[,S0-S15,FPSCR,NO_NAME] |
+ 383:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * --+---------------------------------------+---------------------------------------------+---
+ 384:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *   |<---Top of the stack, restored from g_stLosTask.pstNewTask->pStackPointer
+ 385:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                              R1 to PSP--->|
+ 386:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                           |<---         cpu auto restoring          --->|
+ 387:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                                Stack pointer after exiting exception--->|
+ 388:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ 389:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * 2. If the next running task is run for the first time, the stack is as follows:
+ 390:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *
+ 391:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *          POP: Restore the context of the next running task ===>|
+ 392:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                                   High addr--->|
+ 393:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                         Bottom of the stack--->|
+ 394:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * ----------+-----------------------------+----------------------+
+ 395:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *           | R4-R11,PRIMASK[,EXC_RETURN] | R0-R3,R12,LR,PC,xPSR |
+ 396:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * ----------+-----------------------------+----------------------+
+ 397:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *           |<---Top of the stack, restored from g_stLosTask.pstNewTask->pStackPointer
+ 398:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                            R1 to PSP--->|
+ 399:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                                         |<---auto restoring--->|
+ 400:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      *                       Stack pointer after exiting exception--->|
+ 401:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 402:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDMFD  R1!, {R4-R12}           @ restore the core registers and PRIMASK\n\t"
+ 403:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 404:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #if defined (__VFP_FP__) && !defined(__SOFTFP__)       /* if FPU exist. */
+ 405:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "LDMFD  R1!, {R14}              @ restore EXC_RETURN\n\t"
+ 406:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "TST    R14, #0x10              @ if the task using the FPU context\n\t"
+ 407:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BNE    0f\n\t"
+ 408:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "VLDMIA R1!, {D8-D15}\n\t"
+ 409:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "0:\n\t"
+ 410:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** #endif
+ 411:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 412:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 413:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Set the stack pointer of the next running task to PSP.
+ 414:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 415:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MSR    PSP, R1\n\t"
+ 416:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** 
+ 417:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     /**
+ 418:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      * Restore the interruption state of the next running task.
+ 419:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****      */
+ 420:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "MSR    PRIMASK, R12\n\t"
+ 421:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     "BX     LR\n\t"
+ 422:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     :
+ 423:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     : "I" (OS_TASK_STATUS_RUNNING), "X" (MPU_RBAR)
+ 424:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c ****     );
+ 425:g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/armv7-m/gcc\los_dispatch.c **** }
+ 261              		.loc 1 425 1
+ 262              		.thumb
+ 263              		.syntax unified
+ 264 0068 00BF     		nop
+ 265              		.cfi_endproc
+ 266              	.LFE292:
+ 268 006a 0000     		.text
+ 269              	.Letext0:
+ 270              		.file 2 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\machine\\_d
+ 271              		.file 3 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\lock.h
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 13
+
+
+ 272              		.file 4 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_types
+ 273              		.file 5 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\lib\\gcc\\arm-none-eabi\\9.2.1\\inc
+ 274              		.file 6 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\reent.
+ 275              		.file 7 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_typedef.h"
+ 276              		.file 8 "g:\\iot\\.huawei-liteos-studio\\tools\\arm-none-eabi\\arm-none-eabi\\include\\sys\\_stdin
+ 277              		.file 9 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 278              		.file 10 "g:/iot/IoT_Device_Demo/targets/STM32L431_BearPi/Inc/system_stm32l4xx.h"
+ 279              		.file 11 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_err.h"
+ 280              		.file 12 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 281              		.file 13 "g:/iot/IoT_Device_Demo/iot_link/os/liteos/include/los_config.h"
+ARM GAS  C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 los_dispatch.c
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:18     .text.LOS_StartToRun:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:26     .text.LOS_StartToRun:00000000 LOS_StartToRun
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:77     .text.LOS_IntLock:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:84     .text.LOS_IntLock:00000000 LOS_IntLock
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:109    .text.LOS_IntUnLock:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:116    .text.LOS_IntUnLock:00000000 LOS_IntUnLock
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:141    .text.LOS_IntRestore:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:148    .text.LOS_IntRestore:00000000 LOS_IntRestore
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:171    .text.osTaskSchedule:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:178    .text.osTaskSchedule:00000000 osTaskSchedule
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:203    .text.PendSV_Handler:00000000 $t
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:210    .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:268    .text.PendSV_Handler:0000006a $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:2871   .text.PendSV_Handler:0000006c $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:2871   .text.osTaskSchedule:0000000c $d
+C:\Users\ADMINI~1\AppData\Local\Temp\ccfRYfoE.s:2871   .text.LOS_StartToRun:00000058 $d
+
+UNDEFINED SYMBOLS
+g_bTaskScheduled
+g_stLosTask
+g_pfnTskSwitchHook
